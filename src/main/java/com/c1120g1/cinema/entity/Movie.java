@@ -1,0 +1,65 @@
+package com.c1120g1.cinema.entity;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import javax.persistence.Column;
+import java.util.Set;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "movie")
+public class Movie {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movie_id")
+    private Integer movieId;
+
+    @Column(name = "poster_movie", columnDefinition = "varchar(255)")
+    private String posterMovie;
+
+    @Column(name = "movie_name", columnDefinition = "varchar(100)")
+    private String movieName;
+
+    @Column(name = "start_date", columnDefinition = "date")
+    private String startDate;
+
+    @Column(name = "end_date", columnDefinition = "date")
+    private String endDate;
+
+    @Column(name = "movie_studio ", columnDefinition = "varchar(50)")
+    private String movieStudio;
+
+    @Column(name = "actor", columnDefinition = "varchar(50)")
+    private String actor;
+
+    @Column(name = "director", columnDefinition = "varchar(50)")
+    private String director;
+
+    @Column(name = "movie_length", columnDefinition = "int")
+    private String movieLength;
+
+    @Column(name = "movie_type", columnDefinition = "char(2)")
+    private String movieType;
+
+    @Column(name = "trailer", columnDefinition = "varchar(255)")
+    private String trailer;
+
+    @OneToMany(mappedBy = "movie")
+    private Set<Rating> ratingSet;
+
+    @OneToMany(mappedBy = "movie")
+    private Set<Comment> commentSet;
+
+    @OneToMany(mappedBy = "movie")
+    private Set<MovieTicket> movieTicketSet;
+
+    @ManyToOne
+    @JoinColumn(name = "status")
+    private MovieStatus status;
+}
