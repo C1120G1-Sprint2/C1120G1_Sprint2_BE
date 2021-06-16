@@ -31,7 +31,7 @@ public class Ward {
     @JoinColumn(name = "district_id", referencedColumnName = "district_id", nullable = false)
     private District district;
 
-    @OneToOne(mappedBy = "ward")
+    @OneToMany(mappedBy = "ward")
     @JsonManagedReference
-    private User user;
+    private Set<User> userSet;
 }
