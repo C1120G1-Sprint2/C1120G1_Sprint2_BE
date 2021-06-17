@@ -23,13 +23,13 @@ public class MovieCategory {
     @Column(name = "movie_category_id")
     private Integer movieCategoryId;
 
-    @JsonBackReference
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @JsonBackReference
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "category_id")
     private Category category;
 
