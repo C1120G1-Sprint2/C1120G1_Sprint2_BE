@@ -22,13 +22,13 @@ public class AccountRole {
     @Column(name = "account_role_id")
     private Integer accountRoleId;
 
-    @JsonBackReference
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "username")
     private Account account;
 
-    @JsonBackReference
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "role_id")
     private Role role;
 
