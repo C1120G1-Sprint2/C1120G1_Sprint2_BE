@@ -23,10 +23,10 @@ public class Comment {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user", referencedColumnName = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "movive")
+    @JoinColumn(name = "movive", referencedColumnName = "movie_id")
     private Movie movie;
 }

@@ -30,7 +30,7 @@ public class Account {
     private String registerDate;
 
     @ManyToOne
-    @JoinColumn(name = "status")
+    @JoinColumn(name = "status", referencedColumnName = "account_status_id")
     private AccountStatus accountStatus;
 
     @OneToOne(mappedBy = "account")

@@ -20,21 +20,21 @@ public class Ticket {
     private Integer ticketId;
 
     @ManyToOne
-    @JoinColumn(name = "movie_ticket_id")
+    @JoinColumn(name = "movie_ticket_id", referencedColumnName = "movie_ticket_id")
     private MovieTicket movieTicket;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "seat_id")
+    @JoinColumn(name = "seat_id", referencedColumnName = "seat_id")
     private Seat seat;
 
     @Column(name = "time_create",columnDefinition = "date")
     private String timeCreate;
 
     @ManyToOne
-    @JoinColumn(name = "ticket_status")
+    @JoinColumn(name = "ticket_status", referencedColumnName = "ticket_status_id")
     private TicketStatus ticketStatus;
 }
