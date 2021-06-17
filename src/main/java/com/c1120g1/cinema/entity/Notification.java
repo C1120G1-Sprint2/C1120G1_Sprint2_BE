@@ -28,6 +28,6 @@ public class Notification {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "username", columnDefinition = "varchar(50)")
+    @JoinColumn(name = "username", columnDefinition = "varchar(50)", referencedColumnName = "username")
     private Account account;
 }

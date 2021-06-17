@@ -72,6 +72,6 @@ public class Movie {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "status")
-    private MovieStatus status;
+    @JoinColumn(name = "movie_status_id", referencedColumnName = "movie_status_id")
+    private MovieStatus movieStatus;
 }

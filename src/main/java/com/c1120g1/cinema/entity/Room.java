@@ -27,7 +27,7 @@ public class Room {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "status_room")
+    @JoinColumn(name = "status_room_id", referencedColumnName = "status_room_id")
     private StatusRoom statusRoom;
 
     @OneToMany(mappedBy = "room")
