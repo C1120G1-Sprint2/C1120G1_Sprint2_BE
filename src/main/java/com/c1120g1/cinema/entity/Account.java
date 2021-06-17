@@ -31,8 +31,8 @@ public class Account {
     private String registerDate;
 
     @ManyToOne
+    @JoinColumn(name = "account_status_id", referencedColumnName = "account_status_id")
     @JsonBackReference
-    @JoinColumn(name = "status")
     private AccountStatus accountStatus;
 
     @OneToOne(mappedBy = "account")

@@ -23,12 +23,12 @@ public class MovieTicket {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "movie_id")
+    @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")
     private Movie movie;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "show_time_id")
+    @JoinColumn(name = "show_time_id", referencedColumnName = "show_time_id")
     private ShowTime showTime;
 
     @Column(name = "show_date",columnDefinition = "date")
@@ -39,12 +39,12 @@ public class MovieTicket {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private Room room;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "projection_type_id")
+    @JoinColumn(name = "projection_type_id", referencedColumnName = "projection_type_id")
     private ProjectionType projectionType;
 
     @OneToMany(mappedBy = "movieTicket")

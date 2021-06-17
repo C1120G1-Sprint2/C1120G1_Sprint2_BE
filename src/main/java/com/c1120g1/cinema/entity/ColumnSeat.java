@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,5 +24,6 @@ public class ColumnSeat {
     private String columnNameId;
 
     @OneToMany(mappedBy = "column")
+    @JsonManagedReference
     private Set<Seat> seatSet;
 }
