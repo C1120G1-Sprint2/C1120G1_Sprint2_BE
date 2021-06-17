@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,9 +21,10 @@ public class ShowTime {
     @Column(name = "show_time_id")
     private Integer showTimeId;
 
-    @Column(name = "show_time", columnDefinition = "date")
+    @Column(name = "show_time", columnDefinition = "VARCHAR(50)")
     private String showTime;
 
     @OneToMany(mappedBy = "showTime")
+    @JsonManagedReference
     private Set<MovieTicket> movieTicketSet;
 }
