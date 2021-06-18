@@ -25,11 +25,12 @@ public class Comment {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "movie")
+    @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")
     private Movie movie;
+
 }

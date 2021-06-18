@@ -1,14 +1,11 @@
 package com.c1120g1.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.persistence.Column;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -26,13 +23,7 @@ public class Room {
     private String roomName;
 
     @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "status_room")
+    @JoinColumn(name = "status_room_id", referencedColumnName = "status_room_id")
     private StatusRoom statusRoom;
-
-    @OneToMany(mappedBy = "room")
-    @JsonManagedReference
-    private Set<MovieTicket> movieTicketSet;
-
 
 }

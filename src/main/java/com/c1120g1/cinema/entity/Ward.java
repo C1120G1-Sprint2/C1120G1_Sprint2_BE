@@ -1,6 +1,6 @@
 package com.c1120g1.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,7 +29,7 @@ public class Ward {
     @JoinColumn(name = "district_id", referencedColumnName = "district_id", nullable = false)
     private District district;
 
-    @OneToOne(mappedBy = "ward")
-    @JsonManagedReference
-    private User user;
+    @OneToMany(mappedBy = "ward")
+    @JsonIgnore
+    private Set<User> userSet;
 }
