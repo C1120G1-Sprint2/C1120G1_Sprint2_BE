@@ -1,3 +1,4 @@
+
 package com.c1120g1.cinema.entity;
 
 import lombok.Getter;
@@ -23,3 +24,4 @@ public class ProjectionType {
     private String projectTypeName;
 
 }
+
