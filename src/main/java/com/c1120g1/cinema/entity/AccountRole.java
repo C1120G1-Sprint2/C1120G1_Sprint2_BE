@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.persistence.Column;
+
 @Entity
 @Getter
 @Setter
@@ -31,5 +31,4 @@ public class AccountRole {
     @JsonBackReference
     @JoinColumn(name = "role_id")
     private Role role;
-
 }
