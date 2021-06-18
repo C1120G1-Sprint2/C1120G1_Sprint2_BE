@@ -21,17 +21,14 @@ public class Ticket {
     private Integer ticketId;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "movie_ticket_id", referencedColumnName = "movie_ticket_id")
     private MovieTicket movieTicket;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "seat_id", referencedColumnName = "seat_id")
     private Seat seat;
 
@@ -40,6 +37,5 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "ticket_status_id", referencedColumnName = "ticket_status_id")
-    @JsonBackReference
     private TicketStatus ticketStatus;
 }
