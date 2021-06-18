@@ -1,6 +1,8 @@
+
 package com.c1120g1.cinema.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -73,3 +75,4 @@ public class Movie {
     @JoinColumn(name = "movie_status_id", referencedColumnName = "movie_status_id")
     private MovieStatus movieStatus;
 }
+
