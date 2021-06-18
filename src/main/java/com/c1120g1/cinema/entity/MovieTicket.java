@@ -1,3 +1,4 @@
+
 package com.c1120g1.cinema.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -48,3 +49,4 @@ public class MovieTicket {
     @JsonIgnore
     private Set<Ticket> ticketSet;
 }
+

@@ -150,4 +150,26 @@ public class TicketController {
         this.ticketService.cancelBookedTicket(ticketId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+  
+    @GetMapping("/listShowTime/{date}/{movieId}")
+    public ResponseEntity<List<ShowTime>> getListShowTime(@PathVariable(name = "date") String date,
+                                                          @PathVariable(name = "movieId") Integer movieId){
+        List<ShowTime> listShowTime = showTimeService.getAllShowTimeByDateAndMovie(date, movieId);
+        if (listShowTime.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(listShowTime, HttpStatus.OK);
+    }
+
+    @GetMapping("/movieTicket/{movieId}/{date}/{showTimeId}")
+    public ResponseEntity<MovieTicket> getMovieTicket(@PathVariable(name = "movieId") Integer movieId,
+                                                      @PathVariable(name = "date") String date,
+                                                      @PathVariable(name = "showTimeId") Integer showTimeId){
+        MovieTicket movieTicket = this.movieTicketService.getMovieTicket(movieId, date, showTimeId);
+        if (movieTicket == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        System.err.println(movieTicket.getMovieTicketId());
+        return new ResponseEntity<>(movieTicket, HttpStatus.OK);
+    }
 }
