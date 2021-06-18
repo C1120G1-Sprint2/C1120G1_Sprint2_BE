@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,10 +24,12 @@ public class Comment {
     private String content;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "user")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "movive")
+    @JsonBackReference
+    @JoinColumn(name = "movie")
     private Movie movie;
 }

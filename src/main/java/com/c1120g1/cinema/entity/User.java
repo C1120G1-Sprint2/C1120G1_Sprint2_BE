@@ -54,7 +54,7 @@ public class User {
     private Ward ward;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonManagedReference
     private Set<Ticket> ticketSet;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
