@@ -8,9 +8,13 @@ public interface MovieTicketService {
     //    HanTH
     List<MovieTicket> showAllMovieTicket();
 
-    List<MovieTicket> showAllMovieTicketById(Integer movieId);
+    List<MovieTicket> showAllMovieTicketByMovieId(Integer movieId);
 
-    List<MovieTicket> showAllMovieTicketByIdAndShowDate(Integer movieId, String showDate);
+    List<MovieTicket> showAllMovieTicketByMovieIdAndShowDate(Integer movieId, String showDate);
+
+    MovieTicket findMovieTicketById(Integer movieTicketId);
+
+    MovieTicket findMovieTicketBySelect(Integer movieId, String showDate, Integer showTimeId);
 
 //    HanTH
 

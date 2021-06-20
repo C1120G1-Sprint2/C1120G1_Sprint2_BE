@@ -24,7 +24,4 @@ public class StatusRoom {
     @Column(name = "status_room_name", columnDefinition = "varchar(20)")
     private String statusRoomName;
 
-    @OneToMany(mappedBy = "statusRoom")
-    @JsonManagedReference
-    private Set<Room> roomSet;
 }

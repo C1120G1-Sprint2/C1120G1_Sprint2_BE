@@ -33,8 +33,8 @@ public class MovieTicketServiceImpl implements MovieTicketService {
      * @return
      */
     @Override
-    public List<MovieTicket> showAllMovieTicketById(Integer movieId) {
-        return movieTicketRepository.showAllMovieTicketById( movieId );
+    public List<MovieTicket> showAllMovieTicketByMovieId(Integer movieId) {
+        return movieTicketRepository.showAllMovieTicketByMovieId( movieId );
     }
 
     /**
@@ -45,7 +45,17 @@ public class MovieTicketServiceImpl implements MovieTicketService {
      * @return
      */
     @Override
-    public List<MovieTicket> showAllMovieTicketByIdAndShowDate(Integer movieId, String showDate) {
-        return movieTicketRepository.showAllMovieTicketByIdAndShowDate( movieId, showDate );
+    public List<MovieTicket> showAllMovieTicketByMovieIdAndShowDate(Integer movieId, String showDate) {
+        return movieTicketRepository.showAllMovieTicketByMovieIdAndShowDate( movieId, showDate );
+    }
+
+    @Override
+    public MovieTicket findMovieTicketById(Integer movieTicketId) {
+        return movieTicketRepository.findMovieTicketById( movieTicketId );
+    }
+
+    @Override
+    public MovieTicket findMovieTicketBySelect(Integer movieId, String showDate, Integer showTimeId) {
+        return movieTicketRepository.showAllMovieTicketBySelect(movieId,showDate,showTimeId );
     }
 }

@@ -40,11 +40,18 @@ public class MovieTicketController {
 
     }
 
+    /**
+     * Method: get all movie ticket by movie id
+     * Author: HanTH
+     *
+     * @param movieId
+     * @return
+     */
     @GetMapping("api/employee/saleTicket/listMovieTicket/{movieId}")
     public ResponseEntity<?> showAllMovieTicket(@PathVariable Integer movieId) {
 
         try {
-            List<MovieTicket> ticketList = movieTicketService.showAllMovieTicketById( movieId );
+            List<MovieTicket> ticketList = movieTicketService.showAllMovieTicketByMovieId( movieId );
             if (ticketList.isEmpty()) {
                 return new ResponseEntity<>( HttpStatus.NO_CONTENT );
             } else {
@@ -56,11 +63,19 @@ public class MovieTicketController {
 
     }
 
+    /**
+     * Method: get all movie ticket by movie id and show date
+     * Author: HanTH
+     *
+     * @param movieId
+     * @param showDate
+     * @return
+     */
     @GetMapping("api/employee/saleTicket/listMovieTicket/{movieId}/{showDate}")
     public ResponseEntity<?> showAllMovieTicket(@PathVariable Integer movieId, @PathVariable String showDate) {
 
         try {
-            List<MovieTicket> ticketList = movieTicketService.showAllMovieTicketByIdAndShowDate( movieId, showDate );
+            List<MovieTicket> ticketList = movieTicketService.showAllMovieTicketByMovieIdAndShowDate( movieId, showDate );
             if (ticketList.isEmpty()) {
                 return new ResponseEntity<>( HttpStatus.NO_CONTENT );
             } else {
@@ -70,5 +85,25 @@ public class MovieTicketController {
             return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
         }
 
+    }
+
+    @GetMapping("api/employee/saleTicket/movieTicket/{movieTicketId}")
+    public ResponseEntity<?> findMovieTicketById(@PathVariable Integer movieTicketId) {
+        try {
+            MovieTicket movieTicket = movieTicketService.findMovieTicketById( movieTicketId );
+            return new ResponseEntity<>( movieTicket, HttpStatus.OK );
+        } catch (Exception e) {
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
+        }
+    }
+
+    @GetMapping("api/employee/saleTicket/movieTicket/{movieId}/{showDate}/{showTimeId}")
+    public ResponseEntity<?> findMovieTicketById(@PathVariable Integer movieId, @PathVariable String showDate, @PathVariable Integer showTimeId) {
+        try {
+            MovieTicket movieTicket = movieTicketService.findMovieTicketBySelect( movieId, showDate, showTimeId );
+            return new ResponseEntity<>( movieTicket, HttpStatus.OK );
+        } catch (Exception e) {
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
+        }
     }
 }

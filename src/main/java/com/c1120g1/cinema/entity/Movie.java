@@ -66,12 +66,11 @@ public class Movie {
     @JsonManagedReference
     private Set<Comment> commentSet;
 
-    @OneToMany(mappedBy = "movie")
-    @JsonManagedReference
-    private Set<MovieTicket> movieTicketSet;
+//    @OneToMany(mappedBy = "movie")
+//    @JsonManagedReference
+//    private Set<MovieTicket> movieTicketSet;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "movie_status_id", referencedColumnName = "movie_status_id")
     private MovieStatus movieStatus;
 }

@@ -11,7 +11,7 @@ public interface MovieTicketRepository extends JpaRepository<MovieTicket, Intege
      * Method: get all movie ticket
      * Author: HanTH
      */
-    @Query(value = "SELECT * FROM cinema_db.movie_ticket", nativeQuery = true)
+    @Query(value = "SELECT * FROM cinema_db.movie_ticket GROUP BY movie_ticket.movie_id;", nativeQuery = true)
     List<MovieTicket> showAllMovieTicket();
 
     /**
@@ -21,8 +21,8 @@ public interface MovieTicketRepository extends JpaRepository<MovieTicket, Intege
      * @param movieId
      * @return
      */
-    @Query(value = "SELECT * FROM cinema_db.movie_ticket WHERE movie_ticket.movie_ticket_id=?1", nativeQuery = true)
-    List<MovieTicket> showAllMovieTicketById(Integer movieId);
+    @Query(value = "SELECT * FROM cinema_db.movie_ticket WHERE movie_ticket.movie_id=?1 GROUP BY movie_ticket.show_date ORDER BY movie_ticket.show_date ASC;", nativeQuery = true)
+    List<MovieTicket> showAllMovieTicketByMovieId(Integer movieId);
 
     /**
      * Method: get all movie by ticket by id and show date
@@ -32,6 +32,27 @@ public interface MovieTicketRepository extends JpaRepository<MovieTicket, Intege
      * @param showDate
      * @return
      */
-    @Query(value = "SELECT * FROM cinema_db.movie_ticket WHERE movie_ticket.movie_id=?1 and WHERE movie_ticket.show_date=?2", nativeQuery = true)
-    List<MovieTicket> showAllMovieTicketByIdAndShowDate(Integer movieId, String showDate);
+    @Query(value = "SELECT * FROM cinema_db.movie_ticket WHERE (movie_ticket.movie_id=?1 and movie_ticket.show_date=?2)", nativeQuery = true)
+    List<MovieTicket> showAllMovieTicketByMovieIdAndShowDate(Integer movieId, String showDate);
+
+    /**
+     * Method: get movie ticket by select
+     * Author: HanTH
+     * @param movieId
+     * @param showDate
+     * @param showTimeId
+     * @return
+     */
+    @Query(value = "SELECT * FROM cinema_db.movie_ticket WHERE (movie_ticket.movie_id=?1 and movie_ticket.show_date=?2 and movie_ticket.show_time_id = ?3)", nativeQuery = true)
+    MovieTicket showAllMovieTicketBySelect(Integer movieId, String showDate, Integer showTimeId);
+
+    /**
+     * Method: get movie ticket by id
+     * Author: HanTH
+     * @param movieTicketId
+     * @return
+     */
+    @Query(value = "SELECT * FROM cinema_db.movie_ticket WHERE movie_ticket.movie_ticket_id = ?1", nativeQuery = true)
+    MovieTicket findMovieTicketById(Integer movieTicketId);
+
 }
