@@ -17,8 +17,8 @@ public interface StatisticalRepository extends JpaRepository<Ticket, Integer> {
             "count(ticket.ticket_id) as ticketQuantity " +
             "from ticket " +
             "inner join movie_ticket " +
-            "on ticket.movie_ticket_id = movie_ticket.movive_ticket_id " +
-            "where ticket.ticket_status = 2 " +
+            "on ticket.movie_ticket_id = movie_ticket.movie_ticket_id " +
+            "where ticket.ticket_status_id = 2 " +
             "group by ticket.time_create " +
             "having ticket.time_create between ?1 and ?2", nativeQuery = true)
     List<MovieStatisticalDTO> getMovieStatisticsByDate(String startDate, String endDate);
@@ -28,8 +28,8 @@ public interface StatisticalRepository extends JpaRepository<Ticket, Integer> {
             "count(ticket.ticket_id) as ticketQuantity " +
             "from ticket " +
             "inner join movie_ticket " +
-            "on ticket.movie_ticket_id = movie_ticket.movive_ticket_id " +
-            "where ticket.ticket_status = 2 " +
+            "on ticket.movie_ticket_id = movie_ticket.movie_ticket_id " +
+            "where ticket.ticket_status_id = 2 " +
             "group by ticket.time_create " +
             "having month(ticket.time_create) = ?1 and year(ticket.time_create) = ?2", nativeQuery = true)
     List<MovieStatisticalDTO> getMovieStatisticsByMonth(int month, int year);
@@ -39,8 +39,8 @@ public interface StatisticalRepository extends JpaRepository<Ticket, Integer> {
             "count(ticket.ticket_id) as ticketQuantity " +
             "from ticket " +
             "inner join movie_ticket " +
-            "on ticket.movie_ticket_id = movie_ticket.movive_ticket_id " +
-            "where ticket.ticket_status = 2 " +
+            "on ticket.movie_ticket_id = movie_ticket.movie_ticket_id " +
+            "where ticket.ticket_status_id = 2 " +
             "group by month(ticket.time_create) " +
             "having year(ticket.time_create) = ?1", nativeQuery = true)
     List<MovieStatisticalDTO> getMovieStatisticsByYear(int year);
@@ -50,10 +50,10 @@ public interface StatisticalRepository extends JpaRepository<Ticket, Integer> {
             "sum(movie_ticket.ticket_price) as revenue " +
             "from ticket " +
             "inner join movie_ticket " +
-            "on ticket.movie_ticket_id = movie_ticket.movive_ticket_id " +
+            "on ticket.movie_ticket_id = movie_ticket.movie_ticket_id " +
             "inner join movie " +
             "on movie_ticket.movie_id = movie.movie_id " +
-            "where ticket.ticket_status = 2 " +
+            "where ticket.ticket_status_id = 2 " +
             "group by movie.movie_id " +
             "order by ticketQuantity desc, revenue desc " +
             "limit ?1", nativeQuery = true)
@@ -68,8 +68,8 @@ public interface StatisticalRepository extends JpaRepository<Ticket, Integer> {
             "inner join ticket " +
             "on user.user_id = ticket.user_id " +
             "inner join movie_ticket " +
-            "on ticket.movie_ticket_id = movie_ticket.movive_ticket_id " +
-            "where ticket.ticket_status = 2 " +
+            "on ticket.movie_ticket_id = movie_ticket.movie_ticket_id " +
+            "where ticket.ticket_status_id = 2 " +
             "group by user.user_id " +
             "order by totalMoney desc, point desc " +
             "limit ?1", nativeQuery = true)
@@ -79,14 +79,14 @@ public interface StatisticalRepository extends JpaRepository<Ticket, Integer> {
             "count(ticket.ticket_id) as ticketQuantity " +
             "from ticket " +
             "inner join movie_ticket " +
-            "on ticket.movie_ticket_id = movie_ticket.movive_ticket_id " +
+            "on ticket.movie_ticket_id = movie_ticket.movie_ticket_id " +
             "inner join movie " +
             "on movie_ticket.movie_id = movie.movie_id " +
             "inner join movie_category " +
             "on movie.movie_id = movie_category.movie_id " +
             "inner join category " +
             "on movie_category.category_id = category.category_id " +
-            "where ticket.ticket_status = 2 " +
+            "where ticket.ticket_status_id = 2 " +
             "group by category.category_id " +
             "order by ticketQuantity desc " +
 
@@ -97,10 +97,10 @@ public interface StatisticalRepository extends JpaRepository<Ticket, Integer> {
             "count(ticket.ticket_id) as ticketQuantity " +
             "from ticket " +
             "inner join movie_ticket " +
-            "on ticket.movie_ticket_id = movie_ticket.movive_ticket_id " +
+            "on ticket.movie_ticket_id = movie_ticket.movie_ticket_id " +
             "inner join show_time " +
             "on movie_ticket.show_time_id = show_time.show_time_id " +
-            "where ticket.ticket_status = 2 " +
+            "where ticket.ticket_status_id = 2 " +
             "group by show_time.show_time_id " +
             "order by ticketQuantity desc " +
             "limit ?1", nativeQuery = true)
