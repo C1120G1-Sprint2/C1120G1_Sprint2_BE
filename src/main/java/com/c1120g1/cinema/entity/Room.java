@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.persistence.Column;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -24,11 +23,7 @@ public class Room {
     private String roomName;
 
     @ManyToOne
-    @JoinColumn(name = "status_room")
+    @JoinColumn(name = "status_room_id", referencedColumnName = "status_room_id")
     private StatusRoom statusRoom;
-
-    @OneToMany(mappedBy = "room")
-    private Set<MovieTicket> movieTicketSet;
-
 
 }

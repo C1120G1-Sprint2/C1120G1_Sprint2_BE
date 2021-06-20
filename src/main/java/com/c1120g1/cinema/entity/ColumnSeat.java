@@ -22,6 +22,4 @@ public class ColumnSeat {
     @Column(name = "column_name", columnDefinition = "varchar(50)")
     private String columnNameId;
 
-    @OneToMany(mappedBy = "column")
-    private Set<Seat> seatSet;
 }

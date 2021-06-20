@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.persistence.Column;
 import java.util.Set;
 
 @Entity
@@ -22,7 +21,4 @@ public class RowSeat {
 
     @Column(name = "row_name", columnDefinition = "varchar(20)")
     private String rowName;
-
-    @OneToMany(mappedBy = "row")
-    private Set<Seat> seatSet;
 }

@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.persistence.Column;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -23,6 +22,4 @@ public class ProjectionType {
     @Column(name = "projection_type_name")
     private String projectTypeName;
 
-    @OneToMany(mappedBy = "projectionType")
-    private Set<MovieTicket> movieTicketSet;
 }
