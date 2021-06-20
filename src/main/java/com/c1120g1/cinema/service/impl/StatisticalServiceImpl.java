@@ -1,7 +1,9 @@
 package com.c1120g1.cinema.service.impl;
 
 import com.c1120g1.cinema.dto.MemberStatisticalDTO;
+import com.c1120g1.cinema.dto.MovieCategoryStatisticalDTO;
 import com.c1120g1.cinema.dto.MovieStatisticalDTO;
+import com.c1120g1.cinema.dto.ShowtimeStatisticalDTO;
 import com.c1120g1.cinema.repository.StatisticalRepository;
 import com.c1120g1.cinema.service.StatisticalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,22 @@ public class StatisticalServiceImpl implements StatisticalService {
     }
 
     @Override
+    public List<MovieStatisticalDTO> getTopMovie(int limit) {
+        return statisticalRepository.getTopMovie(limit);
+    }
+
+    @Override
     public List<MemberStatisticalDTO> getTopMember(int limit) {
         return statisticalRepository.getTopMember(limit);
+    }
+
+    @Override
+    public List<MovieCategoryStatisticalDTO> getTopMovieCategory(int limit) {
+        return statisticalRepository.getTopMovieCategory(limit);
+    }
+
+    @Override
+    public List<ShowtimeStatisticalDTO> getTopShowTime(int limit) {
+        return statisticalRepository.getTopShowTime(limit);
     }
 }

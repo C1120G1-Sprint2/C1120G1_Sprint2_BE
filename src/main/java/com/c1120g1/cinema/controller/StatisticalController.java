@@ -1,13 +1,16 @@
 package com.c1120g1.cinema.controller;
 
 import com.c1120g1.cinema.dto.MemberStatisticalDTO;
+import com.c1120g1.cinema.dto.MovieCategoryStatisticalDTO;
 import com.c1120g1.cinema.dto.MovieStatisticalDTO;
+import com.c1120g1.cinema.dto.ShowtimeStatisticalDTO;
 import com.c1120g1.cinema.service.StatisticalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -21,11 +24,17 @@ public class StatisticalController {
     @GetMapping(value = "/movie-date", params = {"startDate", "endDate"})
     public ResponseEntity<List<MovieStatisticalDTO>> getMovieStatisticsByDate(@RequestParam String startDate, @RequestParam String endDate) {
         try {
-            List<MovieStatisticalDTO> movieStatisticalDTOList = statisticalService.getMovieStatisticsByDate(startDate, endDate);
-            if (movieStatisticalDTOList.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            LocalDate sStartDate = LocalDate.parse(startDate);
+            LocalDate sEndDate = LocalDate.parse(endDate);
+            if (sStartDate.compareTo(sEndDate) > 0) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                List<MovieStatisticalDTO> movieStatisticalDTOList = statisticalService.getMovieStatisticsByDate(startDate, endDate);
+                if (movieStatisticalDTOList.isEmpty()) {
+                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                }
+                return new ResponseEntity<>(movieStatisticalDTOList, HttpStatus.OK);
             }
-            return new ResponseEntity<>(movieStatisticalDTOList, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -60,7 +69,21 @@ public class StatisticalController {
         }
     }
 
-    @GetMapping(value = "member-top", params = {"limit"})
+    @GetMapping(value = "/movie-top", params = {"limit"})
+    public ResponseEntity<List<MovieStatisticalDTO>> getTopMovie(@RequestParam int limit) {
+        try {
+            List<MovieStatisticalDTO> movieStatisticalDTOList = statisticalService.getTopMovie(limit);
+            if (movieStatisticalDTOList.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(movieStatisticalDTOList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/member-top", params = {"limit"})
     public ResponseEntity<List<MemberStatisticalDTO>> getTopMember(@RequestParam int limit) {
         try {
             List<MemberStatisticalDTO> memberStatisticalDTOList = statisticalService.getTopMember(limit);
@@ -68,6 +91,34 @@ public class StatisticalController {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(memberStatisticalDTOList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/category-top", params = {"limit"})
+    public ResponseEntity<List<MovieCategoryStatisticalDTO>> getTopMovieCategory(@RequestParam int limit) {
+        try {
+            List<MovieCategoryStatisticalDTO> movieCategoryStatisticalDTOList = statisticalService.getTopMovieCategory(limit);
+            if (movieCategoryStatisticalDTOList.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(movieCategoryStatisticalDTOList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/showtime-top", params = {"limit"})
+    public ResponseEntity<List<ShowtimeStatisticalDTO>> getTopShowtime(@RequestParam int limit) {
+        try {
+            List<ShowtimeStatisticalDTO> showtimeStatisticalDTOList = statisticalService.getTopShowTime(limit);
+            if (showtimeStatisticalDTOList.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(showtimeStatisticalDTOList, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
