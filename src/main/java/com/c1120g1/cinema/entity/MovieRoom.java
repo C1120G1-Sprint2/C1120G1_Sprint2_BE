@@ -23,13 +23,13 @@ public class MovieRoom {
     @Column(name = "movie_room_id")
     private Integer movieRoomId;
 
-    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @JsonBackReference
+    @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")
     private Movie movie;
 
-    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "room_id")
+    @JsonBackReference
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private Room room;
 }
