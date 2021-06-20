@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,8 @@ public class Account {
     private String registerDate;
 
     @ManyToOne
-    @JoinColumn(name = "status")
+    @JoinColumn(name = "account_status_id", referencedColumnName = "account_status_id")
+    @JsonBackReference
     private AccountStatus accountStatus;
 
     @OneToOne(mappedBy = "account")
@@ -41,8 +43,10 @@ public class Account {
     private String point;
 
     @OneToMany(mappedBy = "account")
+    @JsonManagedReference
     private Set<Notification> notificationSet;
 
     @OneToMany(mappedBy = "account")
+    @JsonManagedReference
     private Set<TransactionHistory> transactionHistorySet;
 }
