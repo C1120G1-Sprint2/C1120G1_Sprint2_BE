@@ -19,6 +19,13 @@ public interface TicketService {
 
     /**
      * author: QuangHL
+     * method: Find Ticket by ID
+     */
+
+    Ticket findById(Integer ticketId);
+
+    /**
+     * author: QuangHL
      * method: Search by ticket id
      */
     Page<Ticket> searchByTicketId(Integer ticketId, Pageable pageable);
@@ -43,7 +50,7 @@ public interface TicketService {
 
     /**
      * author: QuangHL
-     * method: Find ticket by ticket id
+     * method: Print ticket by ticket id
      */
     Ticket findTicketByTicketId(Integer ticketId);
 

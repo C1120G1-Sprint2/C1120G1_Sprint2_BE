@@ -33,6 +33,15 @@ public class TicketServiceImpl implements TicketService {
 
     /**
      * author: QuangHL
+     * method: Find Ticket by ID
+     */
+    @Override
+    public Ticket findById(Integer ticketId) {
+        return ticketRepository.findById(ticketId).orElse(null);
+    }
+
+    /**
+     * author: QuangHL
      * method: Search by ticket id
      */
     @Override
@@ -69,7 +78,7 @@ public class TicketServiceImpl implements TicketService {
 
     /**
      * author: QuangHL
-     * method: Find ticket by ticket id
+     * method: Print ticket by ticket id
      */
     @Override
     public Ticket findTicketByTicketId(Integer ticketId) {
