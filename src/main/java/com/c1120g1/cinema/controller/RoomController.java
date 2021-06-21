@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -57,7 +58,11 @@ public class RoomController {
      */
 
     @PostMapping(value = "/room/create-room", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createRoom(@RequestBody Room room, BindingResult bindingResult, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Void> createRoom(@Valid @RequestBody Room room, BindingResult bindingResult, UriComponentsBuilder ucBuilder) {
+        this.roomService.checkDup(room, bindingResult);
+        if (bindingResult.hasErrors() || room.getStatusRoom() == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         roomService.addRoom(room);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/room/{id}").buildAndExpand(room.getRoomId()).toUri());
@@ -72,8 +77,11 @@ public class RoomController {
      */
 
     @PutMapping("/room/edit-room/{id}")
-    public ResponseEntity<Room> updateRoom(@PathVariable Integer id, @RequestBody Room room) {
-
+    public ResponseEntity<Room> updateRoom(@Valid @PathVariable Integer id, @RequestBody Room room, BindingResult bindingResult) {
+        this.roomService.checkDup(room, bindingResult);
+        if (bindingResult.hasErrors() || room.getStatusRoom() == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         Room room1 = roomService.findRoomById(id);
 
         if (room1 == null || id == null) {
@@ -81,6 +89,7 @@ public class RoomController {
         } else {
 
             room1.setRoomName(room.getRoomName());
+            room1.setStatusRoom(room.getStatusRoom());
             room1.setRoomId(id);
 
             roomService.editRoom(room1);
@@ -105,5 +114,25 @@ public class RoomController {
             roomService.deleteRoom(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/room/search")
+    public ResponseEntity<List<Room>> searchName(@RequestParam(name = "roomName") String roomName) {
+        List<Room> roomList = roomService.findAllByRoomName(roomName);
+
+        if (roomList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(roomList, HttpStatus.OK);
+    }
+
+    @GetMapping("/room/searchAbsolute")
+    public ResponseEntity<List<Room>> searchAbsolute(@RequestParam(name = "roomName") String roomName) {
+        List<Room> roomList = roomService.searchAllRoom(roomName);
+
+        if (roomList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(roomList, HttpStatus.OK);
     }
 }

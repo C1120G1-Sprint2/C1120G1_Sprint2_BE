@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
 
 import java.util.List;
 
@@ -44,5 +45,24 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void deleteRoom(Integer roomId) {
         roomRepository.deleteAllByRoom(roomId);
+    }
+
+    @Override
+    public void checkDup(Room room, Errors errors) {
+        for (Room room1 : findAllRoom()){
+            if (room1.getRoomName().equals(room.getRoomName())) {
+                errors.rejectValue("roomName","checkDupRoomName");
+            }
+        }
+    }
+
+    @Override
+    public List<Room> searchAllRoom(String roomName) {
+        return roomRepository.searchAllRoom(roomName);
+    }
+
+    @Override
+    public List<Room> findAllByRoomName(String roomName) {
+        return roomRepository.findAllByRoomName(roomName);
     }
 }

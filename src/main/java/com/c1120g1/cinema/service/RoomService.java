@@ -3,6 +3,7 @@ package com.c1120g1.cinema.service;
 import com.c1120g1.cinema.entity.Room;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.Errors;
 
 import java.util.List;
 
@@ -19,4 +20,10 @@ public interface RoomService {
     void editRoom(Room room);
 
     void deleteRoom(Integer roomId);
+
+    void checkDup(Room room, Errors errors);
+
+    List<Room> searchAllRoom(String roomName);
+
+    List<Room> findAllByRoomName(String roomName);
 }
