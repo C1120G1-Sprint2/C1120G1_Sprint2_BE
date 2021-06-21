@@ -38,6 +38,7 @@ public interface MovieTicketRepository extends JpaRepository<MovieTicket, Intege
     /**
      * Method: get movie ticket by select
      * Author: HanTH
+     *
      * @param movieId
      * @param showDate
      * @param showTimeId
@@ -49,6 +50,7 @@ public interface MovieTicketRepository extends JpaRepository<MovieTicket, Intege
     /**
      * Method: get movie ticket by id
      * Author: HanTH
+     *
      * @param movieTicketId
      * @return
      */

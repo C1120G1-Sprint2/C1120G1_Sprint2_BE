@@ -87,6 +87,13 @@ public class MovieTicketController {
 
     }
 
+    /**
+     * Method: get movie ticket by id
+     * Author: HanTH
+     *
+     * @param movieTicketId
+     * @return
+     */
     @GetMapping("api/employee/saleTicket/movieTicket/{movieTicketId}")
     public ResponseEntity<?> findMovieTicketById(@PathVariable Integer movieTicketId) {
         try {
@@ -97,6 +104,14 @@ public class MovieTicketController {
         }
     }
 
+    /**
+     * Method: get movie ticket by select
+     * Author: HanTH
+     * @param movieId
+     * @param showDate
+     * @param showTimeId
+     * @return
+     */
     @GetMapping("api/employee/saleTicket/movieTicket/{movieId}/{showDate}/{showTimeId}")
     public ResponseEntity<?> findMovieTicketById(@PathVariable Integer movieId, @PathVariable String showDate, @PathVariable Integer showTimeId) {
         try {
