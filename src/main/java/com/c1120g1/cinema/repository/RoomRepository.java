@@ -17,4 +17,10 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query(value = "UPDATE cinema_db.room SET room.status_room_id = 2 WHERE room.room_id = ?1", nativeQuery = true)
     void deleteAllByRoom(Integer roomId);
+
+    @Query(value = "select * from cinema_db.room where room.room_name=?1",nativeQuery = true)
+    List<Room> searchAllRoom(String roomName);
+
+    @Query(value = "select * from cinema_db.room where room.room_name like concat('%',?1,'%')", nativeQuery = true)
+    List<Room> findAllByRoomName(String roomName);
 }
