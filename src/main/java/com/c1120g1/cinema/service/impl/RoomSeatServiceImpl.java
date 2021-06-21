@@ -10,4 +10,5 @@ public class RoomSeatServiceImpl implements RoomSeatService {
 
     @Autowired
     private RoomSeatRepository roomSeatRepository;
+
 }
