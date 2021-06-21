@@ -1,7 +1,6 @@
 package com.c1120g1.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,26 +25,22 @@ public class Seat {
     private Integer seatId;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "seat_status")
     private SeatStatus seatStatus;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "row_id")
     private RowSeat row;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "column_id")
     private ColumnSeat column;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "seat_type")
     private SeatType seatType;
 
     @OneToMany(mappedBy = "seat")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<Ticket> ticketSet;
 }
