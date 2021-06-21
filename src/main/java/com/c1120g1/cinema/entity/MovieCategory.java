@@ -23,14 +23,14 @@ public class MovieCategory {
     @Column(name = "movie_category_id")
     private Integer movieCategoryId;
 
-    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @JsonBackReference
+    @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")
     private Movie movie;
 
-    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JsonBackReference
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
 }

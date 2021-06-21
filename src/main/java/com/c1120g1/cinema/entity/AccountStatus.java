@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "account_stautus")
+@Table(name = "account_status")
 public class AccountStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +21,10 @@ public class AccountStatus {
     private Integer accountStatusId;
 
     @Column(name = "account_status_name",columnDefinition = "varchar(50)")
+    @JsonIgnore
     private String accountStatusName;
 
     @OneToMany(mappedBy = "accountStatus")
+    @JsonIgnore
     private Set<Account> accountSet;
 }

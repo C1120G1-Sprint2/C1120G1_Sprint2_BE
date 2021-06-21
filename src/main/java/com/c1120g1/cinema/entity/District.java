@@ -18,7 +18,7 @@ public class District {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @javax.persistence.Column(name = "district_id")
+    @Column(name = "district_id")
     private Integer districtId;
 
     @Column(name = "district_name", columnDefinition = "VARCHAR(50)")

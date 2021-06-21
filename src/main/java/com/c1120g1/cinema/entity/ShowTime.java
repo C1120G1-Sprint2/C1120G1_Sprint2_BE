@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.persistence.Column;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -20,9 +19,7 @@ public class ShowTime {
     @Column(name = "show_time_id")
     private Integer showTimeId;
 
-    @Column(name = "show_time", columnDefinition = "date")
+    @Column(name = "show_time", columnDefinition = "VARCHAR(50)")
     private String showTime;
 
-    @OneToMany(mappedBy = "showTime")
-    private Set<MovieTicket> movieTicketSet;
 }

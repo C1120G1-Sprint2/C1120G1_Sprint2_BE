@@ -2,6 +2,7 @@ package com.c1120g1.cinema.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,8 +27,7 @@ public class User {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
 
     @Column(name = "birthday", columnDefinition = "date")
@@ -48,9 +48,9 @@ public class User {
     @Column(name = "avatar_url", columnDefinition = "VARCHAR(255)")
     private String avatarUrl;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
-    @JoinColumn(name = "ward_id")
+    @ManyToOne
+    @JoinColumn(name = "ward_id", referencedColumnName = "ward_id")
+    @JsonIgnore
     private Ward ward;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -58,10 +58,10 @@ public class User {
     private Set<Ticket> ticketSet;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonManagedReference
     private Set<Comment> commentSet;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonManagedReference
     private Set<Rating> ratingSet;
 }

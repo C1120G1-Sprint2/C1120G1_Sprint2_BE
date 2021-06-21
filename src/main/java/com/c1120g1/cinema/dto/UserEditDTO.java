@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserDTO {
+public class UserEditDTO {
     private int userId;
     private String name;
     private String avatarUrl;
-    private String birthday;
     private String email;
+//    private AddressDTO address;
+    private String birthday;
     private String phone;
     private String username;
     private String password;
@@ -19,5 +20,4 @@ public class UserDTO {
     private String idCard;
     private int gender;
     private Ward ward;
-
 }

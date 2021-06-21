@@ -1,22 +1,35 @@
 package com.c1120g1.cinema.service.impl;
 
+import com.c1120g1.cinema.dto.UserDTO;
+import com.c1120g1.cinema.dto.UserEditDTO;
+import com.c1120g1.cinema.entity.Account;
+import com.c1120g1.cinema.entity.AccountStatus;
 import com.c1120g1.cinema.entity.User;
+import com.c1120g1.cinema.repository.AccountRepository;
 import com.c1120g1.cinema.repository.UserRepository;
 import com.c1120g1.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AccountRepository accountRepository;
+
     @Override
-    public List<User> findAll() {
-        return userRepository.getAllUser();
+    public List<User> findAll(int index) {
+        return userRepository.getAllUser(index);
     }
 
     @Override
@@ -25,10 +38,76 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
-        userRepository.updateUser(user.getUserId(), standardizeName(user.getName()),
-                                  user.getEmail(), user.getPhone(), user.getWard(),
-                                  user.getAvatarUrl(),user.getGender());
+    public void updateUser(UserDTO userDTO) {
+        userRepository.updateUser(userDTO.getUserId(), standardizeName(userDTO.getName()),
+                userDTO.getEmail(), userDTO.getPhone(), userDTO.getWard(),
+                userDTO.getAvatarUrl(),userDTO.getGender(),userDTO.getBirthday());
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.getUserByEmail(email);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.getUserByUsername(username);
+    }
+
+    @Override
+    public User findByIdCard(String idCard) {
+        return userRepository.getUserByIdCard(idCard);
+    }
+
+    @Override
+    public void saveUserCus(UserDTO userDTO) {
+
+        Account account = new Account();
+        account.setUsername(userDTO.getUsername());
+        account.setPassword((userDTO.getPassword()));
+        if (userDTO.getUsername() == null) {
+            account.setRegisterDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        }
+        accountRepository.saveUserAccount(account.getUsername(), account.getPassword(), LocalDate.now());
+
+        User user = new User();
+        user.setName(userDTO.getName());
+        user.setEmail(userDTO.getEmail());
+        user.setPhone(userDTO.getPhone());
+        user.setWard(userDTO.getWard());
+        user.setGender(userDTO.getGender());
+        user.setIdCard(userDTO.getIdCard());
+        user.setAvatarUrl(userDTO.getAvatarUrl());
+        user.setAccount(account);
+        userRepository.saveUserCus(user.getAvatarUrl(),
+                standardizeName(user.getName()),
+                user.getAccount().getUsername(),
+                user.getEmail(),
+                user.getBirthday(),
+                user.getIdCard(),
+                user.getGender(),
+                user.getPhone(),
+                user.getWard().getWardId());
+    }
+
+    @Override
+    public void deleteUserById(Integer id) {
+        User user= userRepository.findUserById(id);
+        if (user != null){
+            Account account = user.getAccount();
+            if (account != null) {
+                AccountStatus accountStatus = new AccountStatus();
+                accountStatus.setAccountStatusId(3);
+                account.setAccountStatus(accountStatus);
+                accountRepository.save(account);
+            }
+        }
+
+    }
+
+    @Override
+    public List<User> searchAllUserAttribute(String key) {
+        return userRepository.searchAll(key);
     }
 
 
