@@ -1,7 +1,6 @@
 package com.c1120g1.cinema.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,7 +49,9 @@ public class User {
     private String avatarUrl;
 
     @ManyToOne
+
     @JsonBackReference
+
     @JoinColumn(name = "ward_id", referencedColumnName = "ward_id")
     private Ward ward;
 
