@@ -14,4 +14,23 @@ public interface AccountService {
     Account getAccountByUsername(String username);
 
     void saveUserAccount(Account account);
+    /**
+     * ThuanNN
+     * @param username
+     * @return
+     */
+    Account findByUsername(String username);
+
+    /**
+     * ThuanNN
+     * @return
+     */
+    String generateCode();
+
+    /**
+     * ThuanNN
+     * @param email
+     * @param code
+     */
+    void sendEmail(String email, String code);
 }

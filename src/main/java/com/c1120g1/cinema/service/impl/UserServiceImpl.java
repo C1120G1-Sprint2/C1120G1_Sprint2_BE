@@ -6,6 +6,7 @@ import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.AccountStatus;
 import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.repository.AccountRepository;
+import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.repository.UserRepository;
 import com.c1120g1.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,5 +129,16 @@ public class UserServiceImpl implements UserService {
         }
         name = name2.trim();
         return name;
+
+    private UserRepository repository;
+
+    /**
+     * ThuanNN
+     * @param email
+     * @return
+     */
+    @Override
+    public User findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 }

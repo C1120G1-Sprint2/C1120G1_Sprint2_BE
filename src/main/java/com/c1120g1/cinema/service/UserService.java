@@ -24,4 +24,11 @@ public interface UserService {
     void deleteUserById(Integer id);
 
     List<User> searchAllUserAttribute(String key);
+
+    /**
+     * ThuanNN
+     * @param email
+     * @return
+     */
+    User findByEmail(String email);
 }

@@ -56,7 +56,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Modifying
     @Query(value = "INSERT INTO `user` ( avatar_url, birthday, email, gender, id_card, name, phone, username, ward_id) " +
-            "values " + "(:avatarUrl," + ":birthday " + ":email,"+" :gender,"+" :idCard," + ":name," + ":phone," + ":username," + ":wardId ) ",
+            "values " + "(:avatarUrl," + ":birthday," + ":email,"+" :gender,"+" :idCard," + ":name," + ":phone," + ":username," + ":wardId ) ",
             nativeQuery = true)
     @Transactional
     void saveUserCus(@Param("avatarUrl") String avatarUrl,
@@ -71,4 +71,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 
 
+    /**
+     * ThuanNN
+     * @param email
+     * @return
+     */
+    User findByEmail(String email);
 }
