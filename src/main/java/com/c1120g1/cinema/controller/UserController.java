@@ -1,14 +1,13 @@
 package com.c1120g1.cinema.controller;
 
 import com.c1120g1.cinema.dto.UserDTO;
-import com.c1120g1.cinema.entity.Account;
+
 import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.entity.Ward;
 import com.c1120g1.cinema.service.*;
 import com.c1120g1.cinema.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

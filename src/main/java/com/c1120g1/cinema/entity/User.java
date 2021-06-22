@@ -27,6 +27,7 @@ public class User {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
     @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
 
@@ -50,7 +51,6 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "ward_id", referencedColumnName = "ward_id")
-    @JsonIgnore
     private Ward ward;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

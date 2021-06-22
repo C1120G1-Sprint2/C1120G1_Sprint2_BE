@@ -32,10 +32,10 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "account_status_id", referencedColumnName = "account_status_id")
-    @JsonIgnore
     private AccountStatus accountStatus;
 
     @OneToOne(mappedBy = "account")
+    @JsonIgnore
     private User user;
 
     @Column(name = "point", columnDefinition = "varchar(50)")

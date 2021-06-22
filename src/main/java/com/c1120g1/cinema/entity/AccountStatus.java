@@ -21,7 +21,6 @@ public class AccountStatus {
     private Integer accountStatusId;
 
     @Column(name = "account_status_name",columnDefinition = "varchar(50)")
-    @JsonIgnore
     private String accountStatusName;
 
     @OneToMany(mappedBy = "accountStatus")
