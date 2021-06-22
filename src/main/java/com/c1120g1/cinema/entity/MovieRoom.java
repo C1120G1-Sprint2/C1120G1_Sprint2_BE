@@ -25,11 +25,11 @@ public class MovieRoom {
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "movie_id")
+    @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")
     private Movie movie;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private Room room;
 }
