@@ -19,7 +19,7 @@ public class SeatController {
     private SeatService seatService;
 
     @GetMapping("api/employee/saleTicket/listSeat/{roomId}")
-    public ResponseEntity<?> showAllSeatByRoomIdAndRowId(@PathVariable Integer roomId){
+    public ResponseEntity<List<Seat>> showAllSeatByRoomIdAndRowId(@PathVariable Integer roomId){
         try {
             List<Seat> seatList = seatService.showAllSeatByRoomId( roomId);
             if (seatList.isEmpty()){

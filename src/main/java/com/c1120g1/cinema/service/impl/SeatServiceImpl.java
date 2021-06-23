@@ -24,4 +24,16 @@ public class SeatServiceImpl implements SeatService {
     public List<Seat> showAllSeatByRoomId(Integer roomId) {
         return seatRepository.showAllSeatByRoomId( roomId );
     }
+
+    /**
+     * Method: update status seat
+     * Author: HanTH
+     *
+     * @param seatId
+     * @param seatStatusId
+     */
+    @Override
+    public void updateStatusSeat(Integer seatId, Integer seatStatusId) {
+        seatRepository.updateStatusSeat( seatId,seatStatusId );
+    }
 }

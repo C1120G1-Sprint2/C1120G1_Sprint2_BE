@@ -1,7 +1,6 @@
 package com.c1120g1.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +25,7 @@ public class MovieStatus {
     private String movieStatusName;
 
 
-//    @OneToMany(mappedBy = "movieStatus")
-//    @JsonBackReference
-//    private Set<Movie> movieSet;
+    @OneToMany(mappedBy = "movieStatus")
+    @JsonIgnore
+    private Set<Movie> movieSet;
 }

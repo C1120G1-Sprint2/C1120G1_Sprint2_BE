@@ -25,7 +25,7 @@ public class MovieTicketController {
      * @return
      */
     @GetMapping("api/employee/saleTicket/listMovieTicket")
-    public ResponseEntity<?> showAllMovieTicket() {
+    public ResponseEntity<List<MovieTicket>> showAllMovieTicket() {
 
         try {
             List<MovieTicket> ticketList = movieTicketService.showAllMovieTicket();
@@ -48,7 +48,7 @@ public class MovieTicketController {
      * @return
      */
     @GetMapping("api/employee/saleTicket/listMovieTicket/{movieId}")
-    public ResponseEntity<?> showAllMovieTicket(@PathVariable Integer movieId) {
+    public ResponseEntity<List<MovieTicket>> showAllMovieTicket(@PathVariable Integer movieId) {
 
         try {
             List<MovieTicket> ticketList = movieTicketService.showAllMovieTicketByMovieId( movieId );
@@ -72,7 +72,7 @@ public class MovieTicketController {
      * @return
      */
     @GetMapping("api/employee/saleTicket/listMovieTicket/{movieId}/{showDate}")
-    public ResponseEntity<?> showAllMovieTicket(@PathVariable Integer movieId, @PathVariable String showDate) {
+    public ResponseEntity<List<MovieTicket>> showAllMovieTicket(@PathVariable Integer movieId, @PathVariable String showDate) {
 
         try {
             List<MovieTicket> ticketList = movieTicketService.showAllMovieTicketByMovieIdAndShowDate( movieId, showDate );
@@ -95,7 +95,7 @@ public class MovieTicketController {
      * @return
      */
     @GetMapping("api/employee/saleTicket/movieTicket/{movieTicketId}")
-    public ResponseEntity<?> findMovieTicketById(@PathVariable Integer movieTicketId) {
+    public ResponseEntity<MovieTicket> findMovieTicketById(@PathVariable Integer movieTicketId) {
         try {
             MovieTicket movieTicket = movieTicketService.findMovieTicketById( movieTicketId );
             return new ResponseEntity<>( movieTicket, HttpStatus.OK );
@@ -113,7 +113,7 @@ public class MovieTicketController {
      * @return
      */
     @GetMapping("api/employee/saleTicket/movieTicket/{movieId}/{showDate}/{showTimeId}")
-    public ResponseEntity<?> findMovieTicketById(@PathVariable Integer movieId, @PathVariable String showDate, @PathVariable Integer showTimeId) {
+    public ResponseEntity<MovieTicket> findMovieTicketById(@PathVariable Integer movieId, @PathVariable String showDate, @PathVariable Integer showTimeId) {
         try {
             MovieTicket movieTicket = movieTicketService.findMovieTicketBySelect( movieId, showDate, showTimeId );
             return new ResponseEntity<>( movieTicket, HttpStatus.OK );

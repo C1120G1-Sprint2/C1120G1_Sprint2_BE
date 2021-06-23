@@ -2,6 +2,15 @@ plugins {
     id 'org.springframework.boot' version '2.5.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id "org.sonarqube" version "3.0"
+}
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'http://3.141.165.122:9000'
+        property 'sonar.login', 'f4570cffe1dd5bf39ecbeed0ef04eef921709b5a'
+        property 'sonar.projectKey', 'C1120G1_ReviewCode_HanTH'
+        property 'sonar.projectName', 'C1120G1_ReviewCode_HanTH'
+    }
 }
 
 group = 'com.c1120g1'

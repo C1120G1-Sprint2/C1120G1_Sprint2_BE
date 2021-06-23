@@ -1,6 +1,6 @@
 package com.c1120g1.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -66,9 +66,9 @@ public class Movie {
     @JsonManagedReference
     private Set<Comment> commentSet;
 
-//    @OneToMany(mappedBy = "movie")
-//    @JsonManagedReference
-//    private Set<MovieTicket> movieTicketSet;
+    @OneToMany(mappedBy = "movie")
+    @JsonIgnore
+    private Set<MovieTicket> movieTicketSet;
 
     @ManyToOne
     @JoinColumn(name = "movie_status_id", referencedColumnName = "movie_status_id")
