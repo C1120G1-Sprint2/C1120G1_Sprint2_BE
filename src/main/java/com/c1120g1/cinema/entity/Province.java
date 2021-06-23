@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,6 @@ public class Province {
     private String provinceName;
 
     @OneToMany(mappedBy = "province", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private Set<District> districtSet;
 }
