@@ -13,13 +13,23 @@ import java.util.List;
 @Transactional
 public interface UserRepository extends JpaRepository<User, Integer> {
 
+    /**
+     * SangTH
+     * @param key
+     * @return
+     */
     @Query(value = "select * from `user`\n" +
             "inner join `account` on `user`.username = `account`.username\n" +
             "inner join ward on `user`.ward_id = ward.ward_id\n" +
             "inner join account_status on account_status.account_status_id = `account`.account_status_id\n" +
-            "where concat( email , `name` , ward.ward_name , account_status.account_status_name ) like concat('%',?1,'%')" ,nativeQuery = true)
+            "where concat( email , `name` , ward.ward_name , account_status.account_status_name ) like concat('%',?1,'%')", nativeQuery = true)
     List<User> searchAll(String key);
 
+    /**
+     * SangTH
+     * @param index
+     * @return
+     */
     @Query(value = "select * from `user` \n" +
             "inner join `account` on `user`.username = `account`.username\n" +
             "inner join account_role on `account`.username = account_role.username\n" +
@@ -28,10 +38,18 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "limit ?1 , 3", nativeQuery = true)
     List<User> getAllUser(int index);
 
-
+    /**
+     * SangTH
+     * @param userId
+     * @return
+     */
     @Query(value = "select * from `user` where user_id = ?1", nativeQuery = true)
     User findUserById(Integer userId);
 
+    /**
+     * SangTH
+     * @param userId, name,email, phone, ward, avatarUrl, gender,birthday
+     */
     @Modifying
     @Query(value = "update User u" +
             " set u.name = ?2, " +
@@ -42,21 +60,32 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "u.gender = ?7, " +
             "u.birthday = ?8" +
             " where u.userId = ?1")
-    void updateUser(Integer userId, String name, String email, String phone, Ward ward, String avatarUrl,int gender, String birthday);
+    void updateUser(Integer userId, String name, String email, String phone,
+                    Ward ward, String avatarUrl, int gender, String birthday);
 
-    @Query(value = "select  * from `user` where `user`.email = ?1" ,nativeQuery = true)
+    /**
+     * SangTH
+     * @param email
+     * @return
+     */
+    @Query(value = "select  * from `user` where `user`.email = ?1", nativeQuery = true)
     User getUserByEmail(String email);
 
+    /**
+     * SangTH
+     * @param username
+     * @return
+     */
+    @Query(value = "select * from `user` where `user`.id_card = ?1", nativeQuery = true)
+    User getUserByIdCard(String username);
 
-    @Query(value = "select * from `user` where `user`.username = ?1" , nativeQuery = true)
-    User getUserByUsername (String username);
-
-    @Query(value = "select * from `user` where `user`.id_card = ?1" , nativeQuery = true)
-    User getUserByIdCard (String username);
-
+    /**
+     * SangTH
+     * @param avatarUrl,name,username,email,birthday,idCard,gender,phone,wardId
+     */
     @Modifying
     @Query(value = "INSERT INTO `user` ( avatar_url, birthday, email, gender, id_card, name, phone, username, ward_id) " +
-            "values " + "(:avatarUrl," + ":birthday," + ":email,"+" :gender,"+" :idCard," + ":name," + ":phone," + ":username," + ":wardId ) ",
+            "values " + "(:avatarUrl," + ":birthday," + ":email," + " :gender," + " :idCard," + ":name," + ":phone," + ":username," + ":wardId ) ",
             nativeQuery = true)
     @Transactional
     void saveUserCus(@Param("avatarUrl") String avatarUrl,
@@ -69,12 +98,20 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                      @Param("phone") String phone,
                      @Param("wardId") Integer wardId);
 
-
-
     /**
      * ThuanNN
      * @param email
      * @return
      */
     User findByEmail(String email);
+
+    /**
+     *ThuanNN
+     * @param username
+     * @return
+     */
+    @Query(value = "SELECT * FROM `user` " +
+            "INNER JOIN `account` ON `account`.username = `user`.username " +
+            "WHERE `account`.username = ?1", nativeQuery = true)
+    User getUserByUsername(String username);
 }

@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.security;
 
+import com.c1120g1.cinema.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
@@ -8,27 +9,26 @@ import java.util.Collection;
 public class JwtResponse implements Serializable {
     private static final long serialVersionUID = -8091879091924046844L;
     private final String jwttoken;
-    private String username;
+    private User user;
     private Collection<? extends GrantedAuthority> authorities;
 
     /**
      * ThuanNN
      * All functions below
      */
-    public JwtResponse(String jwttoken, String username, Collection<? extends GrantedAuthority> authorities) {
+    public JwtResponse(String jwttoken, User user, Collection<? extends GrantedAuthority> authorities) {
         this.jwttoken = jwttoken;
-        this.username = username;
+        this.user = user;
         this.authorities = authorities;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser(User user) {
+        this.user = user;
     }
-
 
     public String getToken() {
         return this.jwttoken;
