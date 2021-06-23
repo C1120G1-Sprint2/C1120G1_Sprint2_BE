@@ -1,6 +1,5 @@
 package com.c1120g1.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +26,6 @@ public class Notification {
     private String notifyDate;
 
     @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "username", columnDefinition = "varchar(50)")
+    @JoinColumn(name = "username", columnDefinition = "varchar(50)", referencedColumnName = "username")
     private Account account;
 }
