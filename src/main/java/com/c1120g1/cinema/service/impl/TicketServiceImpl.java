@@ -27,8 +27,8 @@ public class TicketServiceImpl implements TicketService {
      * method: Show list booked ticket
      */
     @Override
-    public List<Ticket> findAllByBookedTicket() {
-        return ticketRepository.findAllByBookedTicket();
+    public List<Ticket> findAllByBookedTicket(int index) {
+        return ticketRepository.findAllByBookedTicket(index);
     }
 
     /**

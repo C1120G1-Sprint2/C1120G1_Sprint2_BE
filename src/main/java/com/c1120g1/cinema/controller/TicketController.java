@@ -49,9 +49,9 @@ public class TicketController {
      * author: QuangHL
      * method: Show list booked ticket
      */
-    @GetMapping("/booked-ticket-list")
-    public ResponseEntity<List<Ticket>> getBookedTicketList() {
-        List<Ticket> bookedTicketList = ticketService.findAllByBookedTicket();
+    @GetMapping("/booked-ticket-list/")
+    public ResponseEntity<List<Ticket>> getBookedTicketList(@RequestParam("page") int page) {
+        List<Ticket> bookedTicketList = ticketService.findAllByBookedTicket(page);
         if (bookedTicketList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
