@@ -7,4 +7,27 @@ import java.util.List;
 public interface AccountService {
 
     List<Account> findAll();
+
+    Account findByUsername(String username);
+
+    void deleteUserAccount(String username);
+
+    List<Account> findAllAccount();
+
+    Account getAccountByUsername(String username);
+
+    void saveUserAccount(Account account);
+
+    /**
+     * ThuanNN
+     * @return
+     */
+    String generateCode();
+
+    /**
+     * ThuanNN
+     * @param email
+     * @param code
+     */
+    void sendEmail(String email, String code);
 }
