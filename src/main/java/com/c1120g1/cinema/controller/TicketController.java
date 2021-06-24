@@ -39,9 +39,22 @@ public class TicketController {
      * author: QuangHL
      * method: Show list booked ticket
      */
-    @GetMapping("/booked-ticket-list")
-    public ResponseEntity<Page<Ticket>> getBookedTicketList(@PageableDefault(size = 3) Pageable pageable) {
-        Page<Ticket> bookedTicketList = ticketService.findAllByBookedTicket(pageable);
+    @GetMapping("/booked-ticket-list/")
+    public ResponseEntity<List<Ticket>> getBookedTicketList(@RequestParam("page") int page) {
+        List<Ticket> bookedTicketList = ticketService.findAllByBookedTicket(page);
+        if (bookedTicketList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(bookedTicketList, HttpStatus.OK);
+    }
+
+    /**
+     * author: QuangHL
+     * method: Show list booked ticket no page
+     */
+    @GetMapping("/booked-ticket-list-no-page")
+    public ResponseEntity<List<Ticket>> getBookedTicketListNoPage() {
+        List<Ticket> bookedTicketList = ticketService.findAllByBookedTicketNoPage();
         if (bookedTicketList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -52,9 +65,9 @@ public class TicketController {
      * author: QuangHL
      * method: Find ticket by ticket id
      */
-    @GetMapping("/booked-ticket-list/{ticketId}")
+    @GetMapping("/booked-ticket-list/get-ticket/{ticketId}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable("ticketId") Integer ticketId) {
-        Ticket bookedTicket = ticketService.findTicketByTicketId(ticketId);
+        Ticket bookedTicket = ticketService.findById(ticketId);
         if (bookedTicket == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -66,7 +79,7 @@ public class TicketController {
      * method: Search by ticket id
      */
     @GetMapping("/booked-ticket-list/search-ticketId")
-    public ResponseEntity<Page<Ticket>> searchByTicketId(@RequestParam Integer ticketId, Pageable pageable) {
+    public ResponseEntity<Page<Ticket>> searchByTicketId(@RequestParam(name = "ticketId") Integer ticketId, Pageable pageable) {
         Page<Ticket> bookedTicketList = ticketService.searchByTicketId(ticketId, pageable);
         if (bookedTicketList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -79,7 +92,7 @@ public class TicketController {
      * method: Search by user id
      */
     @GetMapping("/booked-ticket-list/search-userId")
-    public ResponseEntity<Page<Ticket>> searchByUserId(@RequestParam Integer userId, Pageable pageable) {
+    public ResponseEntity<Page<Ticket>> searchByUserId(@RequestParam(name = "userId") Integer userId, Pageable pageable) {
         Page<Ticket> bookedTicketList = ticketService.searchByUserId(userId, pageable);
         if (bookedTicketList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -92,7 +105,7 @@ public class TicketController {
      * method: Search by id card
      */
     @GetMapping("/booked-ticket-list/search-idCard")
-    public ResponseEntity<Page<Ticket>> searchByIdCard(@RequestParam String idCard, Pageable pageable) {
+    public ResponseEntity<Page<Ticket>> searchByIdCard(@RequestParam(name = "idCard") String idCard, Pageable pageable) {
         Page<Ticket> bookedTicketList = ticketService.searchByIdCard(idCard, pageable);
         if (bookedTicketList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -105,7 +118,7 @@ public class TicketController {
      * method: Search by phone number
      */
     @GetMapping("/booked-ticket-list/search-phone")
-    public ResponseEntity<Page<Ticket>> searchByPhone(@RequestParam String phone, Pageable pageable) {
+    public ResponseEntity<Page<Ticket>> searchByPhone(@RequestParam(name = "phone") String phone, Pageable pageable) {
         Page<Ticket> bookedTicketList = ticketService.searchByPhone(phone, pageable);
         if (bookedTicketList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -117,9 +130,9 @@ public class TicketController {
      * author: QuangHL
      * method: Receive booked ticket
      */
-    @PutMapping("/booked-ticket-list/receive-ticket/{ticketId}")
+    @PutMapping("/booked-ticket-list/get-ticket/confirm-ticket/{ticketId}")
     public ResponseEntity<Ticket> receiveBookedTicket(@PathVariable("ticketId") Integer ticketId) {
-        Ticket receivedTicket = ticketService.findTicketByTicketId(ticketId);
+        Ticket receivedTicket = ticketService.findById(ticketId);
         if (receivedTicket == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -129,11 +142,24 @@ public class TicketController {
 
     /**
      * author: QuangHL
+     * method: Print ticket by ticket id
+     */
+    @GetMapping("/booked-ticket-list/get-ticket/print-ticket/{ticketId}")
+    public ResponseEntity<Ticket> printTicketById(@PathVariable("ticketId") Integer ticketId) {
+        Ticket printTicket = ticketService.findTicketByTicketId(ticketId);
+        if (printTicket == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(printTicket, HttpStatus.OK);
+    }
+
+    /**
+     * author: QuangHL
      * method: Cancel booked ticket
      */
     @PutMapping("/booked-ticket-list/cancel-ticket/{ticketId}")
     public ResponseEntity<Ticket> cancelBookedTicket(@PathVariable("ticketId") Integer ticketId) {
-        Ticket receivedTicket = ticketService.findTicketByTicketId(ticketId);
+        Ticket receivedTicket = ticketService.findById(ticketId);
         if (receivedTicket == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
