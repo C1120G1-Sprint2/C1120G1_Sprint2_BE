@@ -1,6 +1,5 @@
 package com.c1120g1.cinema.controller;
 
-import com.c1120g1.cinema.dto.TicketDTO;
 import com.c1120g1.cinema.entity.Movie;
 import com.c1120g1.cinema.entity.MovieTicket;
 import com.c1120g1.cinema.entity.ShowTime;
@@ -31,19 +30,10 @@ public class TicketController {
     private MovieTicketService movieTicketService;
 
     @Autowired
-    private TicketStatusService ticketStatusService;
-
-    @Autowired
     private ShowTimeService showTimeService;
 
-    @GetMapping("/listMovie")
-    public ResponseEntity<List<Movie>> getListMovie(){
-        List<Movie> listMovie = movieService.findAll();
-        if (listMovie.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(listMovie, HttpStatus.OK);
-    }
+    @Autowired
+    private RoomSeatService roomSeatService;
 
     /**
      * author: QuangHL
@@ -176,26 +166,99 @@ public class TicketController {
         this.ticketService.cancelBookedTicket(ticketId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-  
+
+    /**
+     * author : HoangTQ
+     * method : getListMovie()
+     * @return : listMovie
+     */
+    @GetMapping("/listMovie")
+    public ResponseEntity<List<Movie>> getListMovie(){
+        try {
+            List<Movie> listMovie = movieService.findAll();
+            if (listMovie.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(listMovie, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * author : HoangTQ
+     * method : getListShowTime()
+     * @param date : the date time
+     * @param movieId : id of a movie
+     * @return : listShowTime
+     */
     @GetMapping("/listShowTime/{date}/{movieId}")
     public ResponseEntity<List<ShowTime>> getListShowTime(@PathVariable(name = "date") String date,
                                                           @PathVariable(name = "movieId") Integer movieId){
-        List<ShowTime> listShowTime = showTimeService.getAllShowTimeByDateAndMovie(date, movieId);
-        if (listShowTime.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            List<ShowTime> listShowTime = showTimeService.getAllShowTimeByDateAndMovie(date, movieId);
+            if (listShowTime.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(listShowTime, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(listShowTime, HttpStatus.OK);
     }
 
+    /**
+     * author : HoangTQ
+     * method : getMovieTicket()
+     * @param movieId : id of a movie
+     * @param date : the date time
+     * @param showTimeId : if of a showTime
+     * @return a movieTicket object
+     */
     @GetMapping("/movieTicket/{movieId}/{date}/{showTimeId}")
     public ResponseEntity<MovieTicket> getMovieTicket(@PathVariable(name = "movieId") Integer movieId,
                                                       @PathVariable(name = "date") String date,
                                                       @PathVariable(name = "showTimeId") Integer showTimeId){
-        MovieTicket movieTicket = this.movieTicketService.getMovieTicket(movieId, date, showTimeId);
-        if (movieTicket == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            MovieTicket movieTicket = this.movieTicketService.getMovieTicket(movieId, date, showTimeId);
+            if (movieTicket == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(movieTicket, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        System.err.println(movieTicket.getMovieTicketId());
-        return new ResponseEntity<>(movieTicket, HttpStatus.OK);
+    }
+
+    /**
+     * author : HoangTQ
+     * method : getMovieTicketById()
+     * @param movieTicketId : if of a Movie
+     * @return a movieTicket object
+     */
+    @GetMapping("/getMovieTicket/{movieTicketId}")
+    public ResponseEntity<MovieTicket> getMovieTicketById(@PathVariable(name = "movieTicketId") Integer movieTicketId){
+        try {
+            MovieTicket movieTicket = this.movieTicketService.getMovieTicketById(movieTicketId);
+            if (movieTicket == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(movieTicket, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/createTicketDTO/{movieTicketId}/{userId}/{seatId}")
+    public ResponseEntity<Void> createTicketDTO(@PathVariable(name = "movieTicketId") Integer movieTicketId,
+                                                @PathVariable(name = "userId") Integer userId,
+                                                @PathVariable(name = "seatId") Integer seatId) {
+        try {
+            this.ticketService.saveTicketDTO(movieTicketId, userId, seatId);
+            MovieTicket movieTicket = this.movieTicketService.getMovieTicketById(movieTicketId);
+            this.roomSeatService.updateRoomSeatStatus(seatId, movieTicket.getRoom().getRoomId());
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

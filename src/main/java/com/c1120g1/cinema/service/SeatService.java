@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface SeatService {
 
-    List<Seat> findAllByRoomId(Integer roomId);
 }
