@@ -15,7 +15,20 @@ public interface TicketService {
      * author: QuangHL
      * method: Show list booked ticket
      */
-    Page<Ticket> findAllByBookedTicket(Pageable pageable);
+    List<Ticket> findAllByBookedTicket();
+
+    /**
+     * author: QuangHL
+     * method: Show list booked ticket no page
+     */
+    List<Ticket> findAllByBookedTicketNoPage();
+
+    /**
+     * author: QuangHL
+     * method: Find Ticket by ID
+     */
+
+    Ticket findById(Integer ticketId);
 
     /**
      * author: QuangHL
@@ -43,7 +56,7 @@ public interface TicketService {
 
     /**
      * author: QuangHL
-     * method: Find ticket by ticket id
+     * method: Print ticket by ticket id
      */
     Ticket findTicketByTicketId(Integer ticketId);
 

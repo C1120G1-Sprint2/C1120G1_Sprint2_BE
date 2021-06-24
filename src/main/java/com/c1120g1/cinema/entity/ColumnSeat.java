@@ -21,6 +21,6 @@ public class ColumnSeat {
     private Integer columnId;
 
     @Column(name = "column_name", columnDefinition = "varchar(50)")
-    private String columnNameId;
+    private String columnName;
 
 }
