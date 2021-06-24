@@ -1,14 +1,12 @@
 
 package com.c1120g1.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.persistence.Column;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -37,7 +35,4 @@ public class Seat {
     @JoinColumn(name = "seat_type")
     private SeatType seatType;
 
-    @OneToMany(mappedBy = "seat")
-    @JsonIgnore
-    private Set<Ticket> ticketSet;
 }

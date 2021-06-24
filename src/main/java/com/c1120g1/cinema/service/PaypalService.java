@@ -1,4 +1,4 @@
-package com.c1120g1.cinema.service.impl;
+package com.c1120g1.cinema.service;
 
 import com.c1120g1.cinema.common.PaypalPaymentIntent;
 import com.c1120g1.cinema.common.PaypalPaymentMethod;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PaypalServiceImpl {
+public class PaypalService {
 
     @Autowired
     private APIContext apiContext;

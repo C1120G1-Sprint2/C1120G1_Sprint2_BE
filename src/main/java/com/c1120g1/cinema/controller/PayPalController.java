@@ -2,7 +2,7 @@ package com.c1120g1.cinema.controller;
 
 import com.c1120g1.cinema.common.PaypalPaymentIntent;
 import com.c1120g1.cinema.common.PaypalPaymentMethod;
-import com.c1120g1.cinema.service.impl.PaypalServiceImpl;
+import com.c1120g1.cinema.service.PaypalService;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
@@ -11,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/paypal")
 public class PayPalController {
 
@@ -20,17 +22,18 @@ public class PayPalController {
     public static final String URL_PAYPAL_CANCEL = "/pay/cancel";
 
     public final String cancelUrl = "http://localhost:4200/confirm";
-    public final String successUrl = "http://localhost:4200/confirm/success";
+    public final String successUrl = "http://localhost:4200/admin";
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private PaypalServiceImpl paypalService;
+    private PaypalService paypalService;
 
     @PostMapping("/pay")
-    public String pay(@RequestParam(name = "price") double price) {
+    public String pay(HttpServletRequest request, @RequestBody Double price) {
 
         try {
+            System.err.println("PRICE : "+price); //test
             Payment payment = paypalService.createPayment(
                     price,
                     "USD",
@@ -41,7 +44,7 @@ public class PayPalController {
                     successUrl);
             for(Links links : payment.getLinks()){
                 if(links.getRel().equals("approval_url")){
-                    return "redirect:" + links.getHref();
+                    return successUrl;
                 }
             }
         } catch (PayPalRESTException e) {
@@ -53,7 +56,7 @@ public class PayPalController {
 
     @GetMapping(URL_PAYPAL_CANCEL)
     public String cancelPay() {
-        return "http://localhost:4200/api/confirm";
+        return cancelUrl;
     }
 
     @GetMapping(URL_PAYPAL_SUCCESS)
@@ -67,6 +70,6 @@ public class PayPalController {
         } catch (PayPalRESTException e) {
             log.error(e.getMessage());
         }
-        return "redirect:/";
+        return successUrl;
     }
 }
