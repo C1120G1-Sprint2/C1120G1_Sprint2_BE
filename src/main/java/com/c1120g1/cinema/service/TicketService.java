@@ -15,7 +15,7 @@ public interface TicketService {
      * author: QuangHL
      * method: Show list booked ticket
      */
-    List<Ticket> findAllByBookedTicket();
+    List<Ticket> findAllByBookedTicket(int index);
 
     /**
      * author: QuangHL

@@ -21,15 +21,15 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
      * method: Show list booked ticket
      */
     @Query(value = "SELECT * " +
-            "FROM ticket WHERE ticket.ticket_status_id = 2", nativeQuery = true)
-    List<Ticket> findAllByBookedTicket();
+            "FROM ticket WHERE ticket.ticket_status_id = 2 GROUP BY ticket_id limit ?1, 3", nativeQuery = true)
+    List<Ticket> findAllByBookedTicket(int index);
 
     /**
      * author: QuangHL
      * method: Show list booked ticket no page
      */
     @Query(value = "SELECT * " +
-            "FROM ticket WHERE ticket.ticket_status_id = 2", nativeQuery = true)
+            "FROM ticket WHERE ticket.ticket_status_id = 2 GROUP BY ticket_id", nativeQuery = true)
     List<Ticket> findAllByBookedTicketNoPage();
 
     /**
