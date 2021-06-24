@@ -31,11 +31,4 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query(value = "select * from `account`" ,nativeQuery = true)
     List<Account> getListAccount();
-    /**
-     * ThuanNN
-     * @param username
-     * @return
-     */
-    Account findByUsername(String username);
-
 }
