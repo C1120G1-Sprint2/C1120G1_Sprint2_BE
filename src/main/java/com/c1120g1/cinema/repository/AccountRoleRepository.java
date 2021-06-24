@@ -7,14 +7,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 public interface AccountRoleRepository extends JpaRepository<AccountRole,Integer> {
-
-    @Transactional
-    @Modifying
-    @Query(value = "insert into account_role (account_role.username,account_role.role_id) values (?1,?2) ",nativeQuery = true)
-    void saveAccountRole(String username , Integer roleId);
-
 
     /**
      * ThuanNN

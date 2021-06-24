@@ -52,23 +52,8 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.saveUserAccount(account.getUsername(), account.getPassword(), LocalDate.now());
     }
 
-
-
-    private AccountRepository repository;
-
     @Autowired
     private JavaMailSender emailSender;
-
-    /**
-     * ThuanNN
-     *
-     * @param username
-     * @return
-     */
-    @Override
-    public Account findByUsername(String username) {
-        return repository.findByUsername(username);
-    }
 
     /**
      * ThuanNN

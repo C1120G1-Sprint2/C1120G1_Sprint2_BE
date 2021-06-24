@@ -99,13 +99,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                      @Param("wardId") Integer wardId);
 
     /**
-     * ThuanNN
-     * @param email
-     * @return
-     */
-    User findByEmail(String email);
-
-    /**
      *ThuanNN
      * @param username
      * @return

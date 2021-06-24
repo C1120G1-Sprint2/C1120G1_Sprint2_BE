@@ -14,12 +14,6 @@ public interface AccountService {
     Account getAccountByUsername(String username);
 
     void saveUserAccount(Account account);
-    /**
-     * ThuanNN
-     * @param username
-     * @return
-     */
-    Account findByUsername(String username);
 
     /**
      * ThuanNN
