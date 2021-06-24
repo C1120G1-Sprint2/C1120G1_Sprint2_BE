@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -21,6 +20,6 @@ public class ColumnSeat {
     private Integer columnId;
 
     @Column(name = "column_name", columnDefinition = "varchar(50)")
-    private String columnNameId;
+    private String columnName;
 
 }

@@ -31,4 +31,8 @@ public class RoomSeat {
     @ManyToOne
     @JoinColumn(name = "seat_id")
     private Seat seat;
+
+    @ManyToOne
+    @JoinColumn(name = "seat_status")
+    private SeatStatus seatStatus;
 }

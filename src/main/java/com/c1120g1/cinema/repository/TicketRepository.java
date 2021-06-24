@@ -1,6 +1,5 @@
 package com.c1120g1.cinema.repository;
 
-import com.c1120g1.cinema.dto.TicketDTO;
 import com.c1120g1.cinema.entity.Ticket;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket,Integer> {
@@ -16,21 +16,6 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
      * author: QuangHL
      * method: Show list booked ticket
      */
-//    @Query(value = "SELECT ticket.ticket_id as ticketId, " +
-//            "`user`.user_id as userId , " +
-//            "`user`.`name`, " +
-//            "`user`.id_card as idCard, " +
-//            "movie.movie_name as movieName, " +
-//            "movie_ticket.show_date as showDate," +
-//            "show_time.show_time as showTime " +
-//            "FROM ticket " +
-//            "INNER JOIN `user` ON `user`.user_id = ticket.user_id " +
-//            "INNER JOIN movie_ticket ON movie_ticket.movie_ticket_id = ticket.movie_ticket_id " +
-//            "INNER JOIN movie ON movie.movie_id = movie_ticket.movie_id " +
-//            "INNER JOIN show_time ON show_time.show_time_id = movie_ticket.show_time_id " +
-//            "WHERE ticket.ticket_status_id = 2 ", countQuery = "SELECT count(*) FROM ticket ", nativeQuery = true)
-//    Page<TicketDTO> findAllByBookedTicket(Pageable pageable);
-
     @Query(value = "SELECT * " +
             "FROM ticket WHERE ticket.ticket_status_id = 2", nativeQuery = true)
     Page<Ticket> findAllByBookedTicket(Pageable pageable);
@@ -136,5 +121,22 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
             "SET ticket.ticket_status_id = 4 " +
             "WHERE ticket.ticket_id = ?1", nativeQuery = true)
     void cancelBookedTicket(Integer ticketId);
+
+
+    /**
+     * author : HoangTQ
+     * function : saveTicket()
+     * @param movieTicketId : id of MovieTicket
+     * @param seatId : id of a Seat
+     * @param userId : id of a User
+     * @param ticketStatusId : id of a TicketStatus
+     * @param timeCreate : create Ticket time
+     */
+    @Modifying
+    @Transactional
+    @Query( value =  "INSERT INTO ticket(movie_ticket_id, seat_id, user_id,ticket_status_id,time_create) " +
+                    "VALUES (?1, ?2, ?3, ?4, ?5) ",
+            nativeQuery = true)
+    void saveTicket(Integer movieTicketId, Integer seatId, Integer userId, Integer ticketStatusId, String timeCreate);
 
 }
