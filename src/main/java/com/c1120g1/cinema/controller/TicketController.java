@@ -50,8 +50,21 @@ public class TicketController {
      * method: Show list booked ticket
      */
     @GetMapping("/booked-ticket-list")
-    public ResponseEntity<Page<Ticket>> getBookedTicketList(Pageable pageable) {
-        Page<Ticket> bookedTicketList = ticketService.findAllByBookedTicket(pageable);
+    public ResponseEntity<List<Ticket>> getBookedTicketList() {
+        List<Ticket> bookedTicketList = ticketService.findAllByBookedTicket();
+        if (bookedTicketList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(bookedTicketList, HttpStatus.OK);
+    }
+
+    /**
+     * author: QuangHL
+     * method: Show list booked ticket no page
+     */
+    @GetMapping("/booked-ticket-list-no-page")
+    public ResponseEntity<List<Ticket>> getBookedTicketListNoPage() {
+        List<Ticket> bookedTicketList = ticketService.findAllByBookedTicketNoPage();
         if (bookedTicketList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

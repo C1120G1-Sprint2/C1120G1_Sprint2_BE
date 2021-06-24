@@ -27,8 +27,17 @@ public class TicketServiceImpl implements TicketService {
      * method: Show list booked ticket
      */
     @Override
-    public Page<Ticket> findAllByBookedTicket(Pageable pageable) {
-        return ticketRepository.findAllByBookedTicket(pageable);
+    public List<Ticket> findAllByBookedTicket() {
+        return ticketRepository.findAllByBookedTicket();
+    }
+
+    /**
+     * author: QuangHL
+     * method: Show list booked ticket no page
+     */
+    @Override
+    public List<Ticket> findAllByBookedTicketNoPage() {
+        return ticketRepository.findAllByBookedTicketNoPage();
     }
 
     /**

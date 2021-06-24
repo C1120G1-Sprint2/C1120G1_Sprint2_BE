@@ -15,7 +15,13 @@ public interface TicketService {
      * author: QuangHL
      * method: Show list booked ticket
      */
-    Page<Ticket> findAllByBookedTicket(Pageable pageable);
+    List<Ticket> findAllByBookedTicket();
+
+    /**
+     * author: QuangHL
+     * method: Show list booked ticket no page
+     */
+    List<Ticket> findAllByBookedTicketNoPage();
 
     /**
      * author: QuangHL

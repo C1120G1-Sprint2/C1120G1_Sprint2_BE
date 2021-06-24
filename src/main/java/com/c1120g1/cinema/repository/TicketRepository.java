@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public interface TicketRepository extends JpaRepository<Ticket,Integer> {
@@ -20,8 +22,15 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
      */
     @Query(value = "SELECT * " +
             "FROM ticket WHERE ticket.ticket_status_id = 2", nativeQuery = true)
-    Page<Ticket> findAllByBookedTicket(Pageable pageable);
+    List<Ticket> findAllByBookedTicket();
 
+    /**
+     * author: QuangHL
+     * method: Show list booked ticket no page
+     */
+    @Query(value = "SELECT * " +
+            "FROM ticket WHERE ticket.ticket_status_id = 2", nativeQuery = true)
+    List<Ticket> findAllByBookedTicketNoPage();
 
     /**
      * author: QuangHL
