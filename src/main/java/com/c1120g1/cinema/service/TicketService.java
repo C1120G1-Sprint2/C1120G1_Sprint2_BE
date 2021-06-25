@@ -50,6 +50,12 @@ public interface TicketService {
 
     /**
      * author: QuangHL
+     * method: Search by name customer
+     */
+    Page<Ticket> searchByName(String name, Pageable pageable);
+
+    /**
+     * author: QuangHL
      * method: Search by phone number
      */
     Page<Ticket> searchByPhone(String phone, Pageable pageable);
