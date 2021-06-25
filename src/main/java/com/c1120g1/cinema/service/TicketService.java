@@ -1,6 +1,6 @@
 package com.c1120g1.cinema.service;
 
-import com.c1120g1.cinema.dto.TicketDTO;
+import com.c1120g1.cinema.dto.MemberTicketDTO;
 import com.c1120g1.cinema.entity.Ticket;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -77,4 +77,12 @@ public interface TicketService {
      * method: Cancel booked ticket
      */
     void cancelBookedTicket(Integer ticketId);
+
+    /**
+     * author : HoangTQ
+     * @param memberTicketDTO : a MemberTicketDTO object
+     */
+    void saveTicket(MemberTicketDTO memberTicketDTO);
+
+    void saveTicketDTO(Integer movieTicketId, Integer userId, Integer seatId);
 }

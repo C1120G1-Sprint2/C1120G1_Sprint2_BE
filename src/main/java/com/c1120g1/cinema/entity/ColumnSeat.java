@@ -1,6 +1,7 @@
 
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,4 +24,7 @@ public class ColumnSeat {
     @Column(name = "column_name", columnDefinition = "varchar(50)")
     private String columnName;
 
+    @OneToMany(mappedBy = "column")
+    @JsonIgnore
+    private Set<Seat> seatSet;
 }

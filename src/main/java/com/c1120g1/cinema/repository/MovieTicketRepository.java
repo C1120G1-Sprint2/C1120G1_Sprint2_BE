@@ -10,4 +10,8 @@ public interface MovieTicketRepository extends JpaRepository<MovieTicket,Integer
                     "where movie_id = ?1 and show_date = ?2 and show_time_id = ?3 ",
             nativeQuery = true)
     MovieTicket getMovieTicket(Integer movieId, String date, Integer showTimeId);
+
+    @Query(value =  "select * from movie_ticket " +
+                    "where movie_ticket_id = ?1 ", nativeQuery = true)
+    MovieTicket getMovieTicketById(Integer movieTicketId);
 }

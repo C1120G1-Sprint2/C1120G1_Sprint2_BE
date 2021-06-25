@@ -16,4 +16,9 @@ public class MovieTicketServiceImpl implements MovieTicketService {
     public MovieTicket getMovieTicket(Integer movieId, String date, Integer showTimeId) {
         return movieTicketRepository.getMovieTicket(movieId, date, showTimeId);
     }
+
+    @Override
+    public MovieTicket getMovieTicketById(Integer movieTicketId) {
+        return movieTicketRepository.getMovieTicketById(movieTicketId);
+    }
 }

@@ -1,6 +1,5 @@
 package com.c1120g1.cinema.repository;
 
-import com.c1120g1.cinema.dto.TicketDTO;
 import com.c1120g1.cinema.entity.Ticket;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -105,5 +104,22 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
             "SET ticket_status_id = 4 " +
             "WHERE ticket_id = ?1", nativeQuery = true)
     void cancelBookedTicket(Integer ticketId);
+
+
+    /**
+     * author : HoangTQ
+     * function : saveTicket()
+     * @param movieTicketId : id of MovieTicket
+     * @param seatId : id of a Seat
+     * @param userId : id of a User
+     * @param ticketStatusId : id of a TicketStatus
+     * @param timeCreate : create Ticket time
+     */
+    @Modifying
+    @Transactional
+    @Query( value =  "INSERT INTO ticket(movie_ticket_id, seat_id, user_id,ticket_status_id,time_create) " +
+                    "VALUES (?1, ?2, ?3, ?4, ?5) ",
+            nativeQuery = true)
+    void saveTicket(Integer movieTicketId, Integer seatId, Integer userId, Integer ticketStatusId, String timeCreate);
 
 }

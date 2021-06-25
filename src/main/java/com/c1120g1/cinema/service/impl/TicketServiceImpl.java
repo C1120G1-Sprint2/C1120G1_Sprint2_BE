@@ -1,14 +1,19 @@
 package com.c1120g1.cinema.service.impl;
 
-import com.c1120g1.cinema.dto.TicketDTO;
+import com.c1120g1.cinema.dto.MemberTicketDTO;
+import com.c1120g1.cinema.entity.Seat;
 import com.c1120g1.cinema.entity.Ticket;
+import com.c1120g1.cinema.entity.TicketStatus;
 import com.c1120g1.cinema.repository.TicketRepository;
 import com.c1120g1.cinema.service.TicketService;
+import com.c1120g1.cinema.service.TicketStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,6 +21,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private TicketRepository ticketRepository;
+
+    @Autowired
+    private TicketStatusService ticketStatusService;
 
     @Override
     public List<Ticket> findAll() {
@@ -119,5 +127,30 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void cancelBookedTicket(Integer ticketId) {
         ticketRepository.cancelBookedTicket(ticketId);
+    }
+
+    /**
+     * author : HoangTQ
+     * @param memberTicketDTO : a MemberTicketDTO object
+     */
+    @Override
+    public void saveTicket(MemberTicketDTO memberTicketDTO) {
+
+        TicketStatus ticketStatus = this.ticketStatusService.findById(1);
+        String createTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+        ticketRepository.saveTicket(memberTicketDTO.getMovieTicketId(),
+                                    memberTicketDTO.getSeatId(),
+                                    memberTicketDTO.getUserId(),
+                                    ticketStatus.getTicketStatusId(),
+                                    createTime);
+    }
+
+    @Override
+    public void saveTicketDTO(Integer movieTicketId, Integer userId, Integer seatId) {
+        TicketStatus ticketStatus = this.ticketStatusService.findById(1);
+        String createTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        ticketRepository.saveTicket(movieTicketId, seatId, userId,
+                                    ticketStatus.getTicketStatusId(), createTime);
     }
 }
