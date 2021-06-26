@@ -22,7 +22,7 @@ public class TicketController {
     private MovieService movieService;
 
     @Autowired
-    private SeatService seatService;
+    private RoomSeatService roomSeatService;
 
     @Autowired
     private MovieTicketService movieTicketService;
@@ -49,11 +49,13 @@ public class TicketController {
      * @param memberTicketDTO
      * @return
      */
-    @PostMapping("/api/employee/saleTicket/createTicket")
-    public ResponseEntity<Void> createTicket(@RequestBody MemberTicketDTO memberTicketDTO) {
+    @PostMapping("/api/employee/saleTicket/createTicket/{roomId}")
+    public ResponseEntity<Void> createTicket(@RequestBody List<MemberTicketDTO> memberTicketDTO, @PathVariable Integer roomId) {
         try {
-            ticketService.createTicket( memberTicketDTO );
-            seatService.updateStatusSeat( memberTicketDTO.getSeatId(), 2 );
+            for (MemberTicketDTO ticketDTO : memberTicketDTO) {
+                ticketService.createTicket( ticketDTO );
+                roomSeatService.updateStatusSeat( roomId, ticketDTO.getSeatId(), 2 );
+            }
             return new ResponseEntity<>( HttpStatus.OK );
         } catch (Exception e) {
             return new ResponseEntity<>( HttpStatus.BAD_REQUEST );

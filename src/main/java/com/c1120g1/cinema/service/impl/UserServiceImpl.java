@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.service.impl;
 
+import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.repository.UserRepository;
 import com.c1120g1.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,4 +11,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Override
+    public User findUserByCardId(String cardId) {
+        return userRepository.findUserByCardId( cardId );
+    }
 }

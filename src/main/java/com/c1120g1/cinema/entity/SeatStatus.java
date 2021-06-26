@@ -26,5 +26,5 @@ public class SeatStatus {
 
     @OneToMany(mappedBy = "seatStatus")
     @JsonIgnore
-    private Set<Seat> seatSet;
+    private Set<RoomSeat> roomSeatSet;
 }

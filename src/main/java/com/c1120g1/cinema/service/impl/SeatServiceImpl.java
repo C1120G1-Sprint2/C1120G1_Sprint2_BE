@@ -14,26 +14,5 @@ public class SeatServiceImpl implements SeatService {
     @Autowired
     private SeatRepository seatRepository;
 
-    /**
-     * Method: get all room seat by room id and row id
-     * Author: HanTH
-     * @param roomId
-     * @return
-     */
-    @Override
-    public List<Seat> showAllSeatByRoomId(Integer roomId) {
-        return seatRepository.showAllSeatByRoomId( roomId );
-    }
 
-    /**
-     * Method: update status seat
-     * Author: HanTH
-     *
-     * @param seatId
-     * @param seatStatusId
-     */
-    @Override
-    public void updateStatusSeat(Integer seatId, Integer seatStatusId) {
-        seatRepository.updateStatusSeat( seatId,seatStatusId );
-    }
 }
