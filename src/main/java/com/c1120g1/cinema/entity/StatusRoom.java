@@ -1,4 +1,3 @@
-
 package com.c1120g1.cinema.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,5 +27,6 @@ public class StatusRoom {
     @OneToMany(mappedBy = "statusRoom")
     @JsonIgnore
     private Set<Room> roomSet;
+
 }
 

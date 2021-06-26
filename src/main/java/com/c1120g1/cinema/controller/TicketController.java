@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.controller;
 
+import com.c1120g1.cinema.dto.MemberTicketDTO;
 import com.c1120g1.cinema.entity.Movie;
 import com.c1120g1.cinema.entity.MovieTicket;
 import com.c1120g1.cinema.entity.ShowTime;
@@ -8,7 +9,6 @@ import com.c1120g1.cinema.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +27,14 @@ public class TicketController {
     private MovieService movieService;
 
     @Autowired
+    private RoomSeatService roomSeatService;
+
+    @Autowired
     private MovieTicketService movieTicketService;
 
     @Autowired
     private ShowTimeService showTimeService;
 
-    @Autowired
-    private RoomSeatService roomSeatService;
 
     /**
      * author: QuangHL
@@ -266,12 +267,31 @@ public class TicketController {
                                                 @PathVariable(name = "userId") Integer userId,
                                                 @PathVariable(name = "seatId") Integer seatId) {
         try {
-            this.ticketService.saveTicketDTO(movieTicketId, userId, seatId);
-            MovieTicket movieTicket = this.movieTicketService.getMovieTicketById(movieTicketId);
-            this.roomSeatService.updateRoomSeatStatus(seatId, movieTicket.getRoom().getRoomId());
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            this.ticketService.saveTicketDTO( movieTicketId, userId, seatId );
+            MovieTicket movieTicket = this.movieTicketService.getMovieTicketById( movieTicketId );
+            this.roomSeatService.updateRoomSeatStatus( seatId, movieTicket.getRoom().getRoomId() );
+            return new ResponseEntity<>( HttpStatus.CREATED );
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
+        }
+    }
+    /**
+     * Method: create ticket
+     * Author: HanTH
+     *
+     * @param memberTicketDTO
+     * @return
+     */
+    @PostMapping("/saleTicket/createTicket/{roomId}")
+    public ResponseEntity<Void> createTicket(@RequestBody List<MemberTicketDTO> memberTicketDTO, @PathVariable Integer roomId) {
+        try {
+            for (MemberTicketDTO ticketDTO : memberTicketDTO) {
+                ticketService.createTicket( ticketDTO );
+                roomSeatService.updateStatusSeat( roomId, ticketDTO.getSeatId(), 2 );
+            }
+            return new ResponseEntity<>( HttpStatus.OK );
+        } catch (Exception e) {
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
         }
     }
 }

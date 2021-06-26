@@ -1,41 +1,22 @@
 package com.c1120g1.cinema.dto;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class MemberTicketDTO {
-
+    private Integer ticketId;
     private Integer movieTicketId;
-    private Integer userId;
     private Integer seatId;
-
-    public MemberTicketDTO() {
-    }
+    private Integer userId;
+    private String createTime;
+    private Integer ticketStatusId;
 
     public MemberTicketDTO(Integer movieTicketId, Integer userId, Integer seatId) {
         this.movieTicketId = movieTicketId;
         this.userId = userId;
-        this.seatId = seatId;
-    }
-
-    public Integer getMovieTicketId() {
-        return movieTicketId;
-    }
-
-    public void setMovieTicketId(Integer movieTicketId) {
-        this.movieTicketId = movieTicketId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getSeatId() {
-        return seatId;
-    }
-
-    public void setSeatId(Integer seatId) {
         this.seatId = seatId;
     }
 }

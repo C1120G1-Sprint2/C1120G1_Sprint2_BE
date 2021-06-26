@@ -34,4 +34,8 @@ public interface UserService {
     User findByEmail(String email);
 
     User getUserByUsername(String username);
+
+    //HanTH
+    User findUserByCardId(String cardId);
+    //HanTH
 }

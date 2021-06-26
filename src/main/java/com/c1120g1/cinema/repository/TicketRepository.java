@@ -122,4 +122,20 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
             nativeQuery = true)
     void saveTicket(Integer movieTicketId, Integer seatId, Integer userId, Integer ticketStatusId, String timeCreate);
 
+    /**
+     * Method: create ticket
+     * Author: HanTH
+     *
+     * @param movieTicketId
+     * @param seatId
+     * @param userId
+     * @param timeCreate
+     * @param ticketStatusId
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO cinema_db.ticket(ticket.movie_ticket_id, ticket.seat_id, ticket.user_id, ticket.time_create, ticket.ticket_status_id)\n" +
+            "VALUE (?1,?2,?3,?4,?5)", nativeQuery = true)
+    void createTicket(Integer movieTicketId, Integer seatId, Integer userId, String timeCreate, Integer ticketStatusId);
+
 }

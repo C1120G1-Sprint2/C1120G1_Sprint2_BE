@@ -107,4 +107,13 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "INNER JOIN `account` ON `account`.username = `user`.username " +
             "WHERE `account`.username = ?1", nativeQuery = true)
     User getUserByUsername(String username);
+
+    /**
+     * HanTH
+     * @param cardId
+     * @return
+     */
+    @Query(value = "SELECT * FROM cinema_db.user WHERE user.id_card = ?1",nativeQuery = true)
+    User findUserByCardId(String cardId);
+
 }
