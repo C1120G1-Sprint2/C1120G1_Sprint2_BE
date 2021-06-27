@@ -12,8 +12,6 @@ public interface UserService {
 
     void updateUser(UserDTO userDTO);
 
-    User findByEmail(String email);
-
     User findByUsername(String username);
 
     User findByIdCard(String idCard);
@@ -24,4 +22,11 @@ public interface UserService {
 
     List<User> searchAllUserAttribute(String key);
     List<User> findAllUser( );
+
+    /**
+     * ThuanNN
+     * @param email
+     * @return
+     */
+    User findByEmail(String email);
 }
