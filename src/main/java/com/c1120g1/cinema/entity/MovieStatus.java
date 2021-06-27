@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class MovieStatus {
     @Column(name = "movie_status_name",columnDefinition = "varchar(50)")
     private String movieStatusName;
 
-    @OneToMany(mappedBy = "status")
+    @OneToMany(mappedBy = "movieStatus")
+    @JsonManagedReference
     private Set<Movie> movieSet;
 }
