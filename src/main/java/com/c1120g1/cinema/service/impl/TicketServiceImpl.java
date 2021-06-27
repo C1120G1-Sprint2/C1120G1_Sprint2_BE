@@ -68,6 +68,15 @@ public class TicketServiceImpl implements TicketService {
 
     /**
      * author: QuangHL
+     * method: Search by name customer
+     */
+    @Override
+    public Page<Ticket> searchByName(String name, Pageable pageable) {
+        return ticketRepository.searchByName(name, pageable);
+    }
+
+    /**
+     * author: QuangHL
      * method: Search by user id
      */
     @Override

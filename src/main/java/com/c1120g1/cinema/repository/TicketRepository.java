@@ -54,7 +54,7 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
     @Query(value = "SELECT * " +
             "FROM ticket " +
             "INNER JOIN `user` ON `user`.user_id = ticket.user_id " +
-            "WHERE ticket_status_id = 2 AND `user`.id_card = ?1", nativeQuery = true)
+            "WHERE ticket_status_id = 2 AND `user`.id_card LIKE concat('%',?1,'%')", nativeQuery = true)
     Page<Ticket> searchByIdCard(String idCard, Pageable pageable);
 
     /**
@@ -64,8 +64,18 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
     @Query(value = "SELECT * " +
             "FROM ticket " +
             "INNER JOIN `user` ON `user`.user_id = ticket.user_id " +
-            "WHERE ticket_status_id = 2 AND `user`.phone = ?1", nativeQuery = true)
+            "WHERE ticket_status_id = 2 AND `user`.phone LIKE concat('%',?1,'%')", nativeQuery = true)
     Page<Ticket> searchByPhone(String phone, Pageable pageable);
+
+    /**
+     * author: QuangHL
+     * method: Search by name customer
+     */
+    @Query(value = "SELECT * " +
+            "FROM ticket " +
+            "INNER JOIN `user` ON `user`.user_id = ticket.user_id " +
+            "WHERE ticket_status_id = 2 AND `user`.`name` LIKE concat('%',?1,'%')", nativeQuery = true)
+    Page<Ticket> searchByName(String name, Pageable pageable);
 
     /**
      * author: QuangHL

@@ -115,6 +115,19 @@ public class TicketController {
 
     /**
      * author: QuangHL
+     * method: Search by name customer
+     */
+    @GetMapping("/booked-ticket-list/search-name")
+    public ResponseEntity<Page<Ticket>> searchByName(@RequestParam(name = "name") String name, Pageable pageable) {
+        Page<Ticket> bookedTicketList = ticketService.searchByName(name, pageable);
+        if (bookedTicketList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(bookedTicketList, HttpStatus.OK);
+    }
+
+    /**
+     * author: QuangHL
      * method: Search by phone number
      */
     @GetMapping("/booked-ticket-list/search-phone")
