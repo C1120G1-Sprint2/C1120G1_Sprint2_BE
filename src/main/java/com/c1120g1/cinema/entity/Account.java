@@ -45,10 +45,10 @@ public class Account {
     private String point;
 
     @OneToMany(mappedBy = "account")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<Notification> notificationSet;
 
     @OneToMany(mappedBy = "account")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<TransactionHistory> transactionHistorySet;
 }

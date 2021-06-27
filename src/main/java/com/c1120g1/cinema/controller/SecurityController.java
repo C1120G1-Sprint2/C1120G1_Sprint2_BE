@@ -41,15 +41,23 @@ public class SecurityController {
      */
     @PostMapping("/api/login")
     public ResponseEntity<?> login(@RequestBody AuthLogin authLogin) {
-        System.out.println(authLogin.getPassword());
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authLogin.getUsername(), authLogin.getPassword())
-        );
-        UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authentication.getName());
-        String jwtToken = jwtTokenUtil.generateToken(userDetails);
-        JwtResponse jwtResponse = new JwtResponse(jwtToken, userDetails.getUsername(), userDetails.getAuthorities());
-        return ResponseEntity.ok(jwtResponse);
+        try {
+            System.out.println(authLogin.getPassword());
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authLogin.getUsername(), authLogin.getPassword())
+            );
+            UserDetails userDetails = userDetailsService
+                    .loadUserByUsername(authentication.getName());
+            String jwtToken = jwtTokenUtil.generateToken(userDetails);
+            User user = this.userService.getUserByUsername(userDetails.getUsername());
+            if (user == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            JwtResponse jwtResponse = new JwtResponse(jwtToken, user, userDetails.getAuthorities());
+            return ResponseEntity.ok(jwtResponse);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**

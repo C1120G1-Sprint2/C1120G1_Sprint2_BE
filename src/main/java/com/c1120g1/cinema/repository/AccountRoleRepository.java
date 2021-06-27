@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface AccountRoleRepository extends JpaRepository<AccountRole, Integer> {
+public interface AccountRoleRepository extends JpaRepository<AccountRole,Integer> {
+
     /**
      * ThuanNN
      * @param account
