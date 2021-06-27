@@ -11,7 +11,7 @@ public interface RoomService {
 
     List<Room> findAllRoom();
 
-    Page<Room> findAllRoom(Pageable pageable);
+    Page<Room> findAllRoom(Pageable pageable, String roomName);
 
     Room findRoomById(Integer id);
 
@@ -25,5 +25,5 @@ public interface RoomService {
 
     List<Room> searchAllRoom(String roomName);
 
-    List<Room> findAllByRoomName(String roomName);
+    Page<Room> findAllByRoomName(String roomName, Pageable pageable);
 }
