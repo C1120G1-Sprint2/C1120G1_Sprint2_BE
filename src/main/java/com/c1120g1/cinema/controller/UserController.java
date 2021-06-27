@@ -1,7 +1,6 @@
 package com.c1120g1.cinema.controller;
 
 import com.c1120g1.cinema.dto.UserDTO;
-
 import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.entity.Ward;
 import com.c1120g1.cinema.service.*;
@@ -117,8 +116,6 @@ public class UserController {
         }
     }
 
-    ;
-
     @GetMapping(value = "/employee/listUser/search")
     public ResponseEntity<?> searchAll(@RequestParam(name = "q") String q) {
         try {
@@ -130,15 +127,13 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    };
+    }
 
     @PutMapping(value = "/employee/listUser/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    ;
-
 
     public ResponseEntity<List<Ward>> getWard() {
         try {
@@ -148,7 +143,6 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    ;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
