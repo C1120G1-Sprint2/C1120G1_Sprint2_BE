@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.persistence.Column;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -18,11 +17,9 @@ public class ProjectionType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "projection_type_id")
-    private Integer projectTypeId;
+    private Integer projectionId;
 
     @Column(name = "projection_type_name")
-    private String projectTypeName;
+    private String projectionName;
 
-    @OneToMany(mappedBy = "projectionType")
-    private Set<MovieTicket> movieTicketSet;
 }

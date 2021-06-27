@@ -1,6 +1,8 @@
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +20,7 @@ public class District {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @javax.persistence.Column(name = "district_id")
+    @Column(name = "district_id")
     private Integer districtId;
 
     @Column(name = "district_name", columnDefinition = "VARCHAR(50)")

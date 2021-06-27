@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,13 +21,15 @@ public class Rating {
     private Integer ratingId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @Column(name = "rating", columnDefinition = "int")
     private Integer rating;
 
     @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @JsonBackReference
+    @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")
     private Movie movie;
 }
