@@ -12,7 +12,6 @@ sonarqube{
         property 'sonar.projectKey', 'C1120G1_ReviewCode_ThinhTHB'
         property 'sonar.projectName', 'C1120G1_ReviewCode_ThinhTHB'
     }
-    id 'org.sonarqube' version '3.0'
 }
 
 group = 'com.c1120g1'
