@@ -1,20 +1,20 @@
 package com.c1120g1.cinema.controller;
 
 import com.c1120g1.cinema.entity.Movie;
-import com.c1120g1.cinema.entity.Ticket;
-import com.c1120g1.cinema.entity.TicketStatus;
 import com.c1120g1.cinema.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/ticket")
 public class TicketController {
 
     @Autowired

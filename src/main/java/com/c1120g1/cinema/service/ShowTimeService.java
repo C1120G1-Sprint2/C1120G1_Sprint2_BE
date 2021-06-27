@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ShowTimeService {
     List<ShowTime> findAll();
+
+    ShowTime findById(Integer id);
 }

@@ -18,4 +18,9 @@ public class ProjectionTypeServiceImpl implements ProjectionTypeService {
     public List<ProjectionType> findAll() {
         return projectionTypeRepository.findAll();
     }
+
+    @Override
+    public ProjectionType findById(Integer id) {
+        return projectionTypeRepository.findById(id).orElse(null);
+    }
 }

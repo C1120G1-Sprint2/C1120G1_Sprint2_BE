@@ -18,4 +18,9 @@ public class ShowTimeServiceImpl implements ShowTimeService {
     public List<ShowTime> findAll() {
         return showTimeRepository.findAll();
     }
+
+    @Override
+    public ShowTime findById(Integer id) {
+        return showTimeRepository.findById(id).orElse(null);
+    }
 }

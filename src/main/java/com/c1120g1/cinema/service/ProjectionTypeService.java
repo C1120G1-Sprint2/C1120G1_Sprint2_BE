@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ProjectionTypeService {
     List<ProjectionType> findAll();
+
+    ProjectionType findById(Integer id);
 }

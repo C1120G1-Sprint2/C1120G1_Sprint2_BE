@@ -1,7 +1,6 @@
 package com.c1120g1.cinema.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -57,6 +56,9 @@ public class Movie {
 
     @Column(name = "promote", columnDefinition = "BIT(1)")
     private Boolean promote;
+
+    @Column(name = "`description`", columnDefinition = "TEXT")
+    private String description;
 
     @OneToMany(mappedBy = "movie")
     @JsonIgnore
