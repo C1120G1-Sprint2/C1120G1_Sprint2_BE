@@ -3,6 +3,9 @@ package com.c1120g1.cinema.controller;
 import com.c1120g1.cinema.entity.Room;
 import com.c1120g1.cinema.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,12 +33,12 @@ public class RoomController {
      */
 
     @GetMapping("/room")
-    public ResponseEntity<List<Room>> getListRoom() {
-        List<Room> roomList = roomService.findAllRoom();
+    public ResponseEntity<Page<Room>> getListRoom(@PageableDefault(size = 5) Pageable pageable, @RequestParam String roomName) {
+        Page<Room> roomList = roomService.findAllRoom(pageable,roomName);
         if (roomList.isEmpty()) {
-            return new ResponseEntity<List<Room>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Page<Room>>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Room>>(roomList, HttpStatus.OK);
+        return new ResponseEntity<Page<Room>>(roomList, HttpStatus.OK);
     }
 
     /**
@@ -114,16 +117,6 @@ public class RoomController {
             roomService.deleteRoom(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
-    }
-
-    @GetMapping("/room/search")
-    public ResponseEntity<List<Room>> searchName(@RequestParam(name = "roomName") String roomName) {
-        List<Room> roomList = roomService.findAllByRoomName(roomName);
-
-        if (roomList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(roomList, HttpStatus.OK);
     }
 
     @GetMapping("/room/searchAbsolute")

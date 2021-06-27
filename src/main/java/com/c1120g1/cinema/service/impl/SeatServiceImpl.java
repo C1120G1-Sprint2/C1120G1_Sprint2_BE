@@ -16,7 +16,7 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public List<Seat> findAllSeat() {
-        return seatRepository.findAll();
+        return seatRepository.showSeat();
     }
 
     @Override
@@ -30,8 +30,8 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
-    public void updateSeat(Seat seat) {
-        seatRepository.save(seat);
+    public void updateSeat(Integer seatType, Integer seatId) {
+        seatRepository.updateSeat(seatType,seatId);
     }
 
 

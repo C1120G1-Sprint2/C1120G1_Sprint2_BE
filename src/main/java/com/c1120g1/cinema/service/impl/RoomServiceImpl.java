@@ -19,12 +19,12 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<Room> findAllRoom() {
-        return roomRepository.showAllRoom();
+        return roomRepository.findAll();
     }
 
     @Override
-    public Page<Room> findAllRoom(Pageable pageable) {
-        return roomRepository.findAll(pageable);
+    public Page<Room> findAllRoom(Pageable pageable, String roomName) {
+        return roomRepository.findAllByRoomName(roomName, pageable);
     }
 
     @Override
@@ -49,9 +49,9 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void checkDup(Room room, Errors errors) {
-        for (Room room1 : findAllRoom()){
+        for (Room room1 : findAllRoom()) {
             if (room1.getRoomName().equals(room.getRoomName())) {
-                errors.rejectValue("roomName","checkDupRoomName");
+                errors.rejectValue("roomName", "checkDupRoomName");
             }
         }
     }
@@ -62,7 +62,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> findAllByRoomName(String roomName) {
-        return roomRepository.findAllByRoomName(roomName);
+    public Page<Room> findAllByRoomName(String roomName, Pageable pageable) {
+        return roomRepository.findAllByRoomName(roomName, pageable);
     }
 }

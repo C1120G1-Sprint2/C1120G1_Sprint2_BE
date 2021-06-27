@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface RoomSeatRepository extends JpaRepository<RoomSeat,Integer> {
-    @Query(value = "SELECT * FROM room_seat",nativeQuery = true)
-    List<RoomSeat> findAllByRoomId(Integer room_roomId);
+
+    @Query(value = "select * from cinema_db.room_seat where room_id = ?1",nativeQuery = true)
+    List<RoomSeat> showAllSeatByRoomId(Integer roomId);
+
 }

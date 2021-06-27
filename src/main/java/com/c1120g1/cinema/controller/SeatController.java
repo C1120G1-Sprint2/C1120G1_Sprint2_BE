@@ -84,7 +84,7 @@ public class SeatController {
      */
     @PutMapping("/seat/edit-seat")
     public ResponseEntity<Void> updateSeat(@RequestBody Seat seat){
-        seatService.updateSeat(seat);
+        seatService.updateSeat(seat.getSeatType().getSeatTypeId(),seat.getSeatId());
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
