@@ -38,7 +38,7 @@ public class PayPalController {
                     price,
                     "USD",
                     PaypalPaymentMethod.paypal,
-                    PaypalPaymentIntent.sale,
+                    PaypalPaymentIntent.authorize,
                     "payment description",
                     cancelUrl,
                     successUrl);
@@ -70,6 +70,6 @@ public class PayPalController {
         } catch (PayPalRESTException e) {
             log.error(e.getMessage());
         }
-        return successUrl;
+        return "redirect:/";
     }
 }

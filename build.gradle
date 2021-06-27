@@ -44,7 +44,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 
-    compile group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.14.0'
+    compile group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.4.2'
 
 
 
