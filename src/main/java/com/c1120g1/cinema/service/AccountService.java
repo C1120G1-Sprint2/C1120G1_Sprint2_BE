@@ -22,4 +22,8 @@ public interface AccountService {
      * @param code
      */
     void sendEmail(String email, String code);
+
+    Account findByAccount(String username);
+
+    void setNewPassword(Account account, String newPassword);
 }

@@ -6,6 +6,7 @@ import com.c1120g1.cinema.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -56,5 +57,17 @@ public class AccountServiceImpl implements AccountService {
                 + "Thanks and regards!");
 
         this.emailSender.send(message);
+    }
+
+    @Override
+    public Account findByAccount(String username) {
+        return repository.findByUsername(username);
+    }
+
+    @Override
+    public void setNewPassword(Account account, String newPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        account.setPassword(passwordEncoder.encode(newPassword));
+        repository.save(account);
     }
 }

@@ -1,20 +1,16 @@
 package com.c1120g1.cinema.controller;
-
-import com.c1120g1.cinema.entity.Movie;
 import com.c1120g1.cinema.entity.Ticket;
-import com.c1120g1.cinema.entity.TicketStatus;
 import com.c1120g1.cinema.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/member")
 public class TicketController {
 
     @Autowired
@@ -32,12 +28,21 @@ public class TicketController {
     @Autowired
     private ShowTimeService showTimeService;
 
-    @GetMapping("/api/booking/listMovie")
-    public ResponseEntity<List<Movie>> getListMovie(){
-        List<Movie> listMovie = movieService.findAll();
-        if (listMovie.isEmpty()) {
+    @GetMapping("/booking/{username}")
+    public ResponseEntity<List<Ticket>> getListTickets(@PathVariable("username") String username){
+       List <Ticket> tickets = ticketService.findAllTicketByUsername(username);
+        if (tickets==null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(listMovie, HttpStatus.OK);
+        return new ResponseEntity<>(tickets, HttpStatus.OK);
+    }
+    @DeleteMapping("/cancelTicket/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        Ticket currentTicket = ticketService.findById(id);
+        if (currentTicket == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        ticketService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
