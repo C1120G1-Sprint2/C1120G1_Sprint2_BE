@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private AccountService accountService;
     @Autowired
@@ -26,6 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
     /**
      * ThuanNN
+     *
      * @param username
      * @return
      * @throws UsernameNotFoundException
@@ -45,6 +46,6 @@ public class UserDetailsServiceImpl implements UserDetailsService{
                 grantedAuthorities.add(grantedAuthority);
             }
         }
-        return (UserDetails) new User(account.getUsername(), account.getPassword(),grantedAuthorities);
+        return (UserDetails) new User(account.getUsername(), account.getPassword(), grantedAuthorities);
     }
 }

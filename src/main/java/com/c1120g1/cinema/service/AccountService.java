@@ -15,7 +15,7 @@ public interface AccountService {
 
     void saveUserAccount(Account account);
 
-     void sendEmailDelete(String email) throws  MessagingException;
+    void sendEmailDelete(String email) throws  MessagingException;
 
     void sendEmailApprove(String email) throws MessagingException;
     /**

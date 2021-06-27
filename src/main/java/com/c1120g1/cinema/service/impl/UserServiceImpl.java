@@ -142,16 +142,15 @@ public class UserServiceImpl implements UserService {
         }
         name = name2.trim();
         return name;
-
-    private UserRepository repository;
+    }
 
     /**
      * ThuanNN
-     * @param email
+     * @param username
      * @return
      */
     @Override
-    public User findByEmail(String email) {
-        return repository.findByEmail(email);
+    public User getUserByUsername(String username) {
+        return userRepository.getUserByUsername(username);
     }
 }
