@@ -1,10 +1,8 @@
 package com.c1120g1.cinema.service.mapper.impl;
 
 import com.c1120g1.cinema.dto.*;
-import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.service.mapper.UserMapper;
-import io.jsonwebtoken.lang.Collections;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,9 +12,6 @@ import java.util.List;
 public class UserMapperImpl implements UserMapper {
     @Override
     public UserPreviewDTO toDto(User entity) {
-        if (entity == null) {
-            return null;
-        }
         AccountStatusDTO accountStatusDTO = null;
         AddressDTO addressDTO = null;
         if (entity.getAccount() != null && entity.getAccount().getAccountStatus() != null) {
@@ -46,9 +41,6 @@ public class UserMapperImpl implements UserMapper {
 
     @Override
     public List<UserPreviewDTO> toDto(List<User> lstEntity) {
-        if (Collections.isEmpty(lstEntity)) {
-            return null;
-        }
         List<UserPreviewDTO> lstDto = new ArrayList<>();
         for (User user : lstEntity) {
             lstDto.add(toDto(user));
@@ -58,9 +50,6 @@ public class UserMapperImpl implements UserMapper {
 
     @Override
     public UserEditDTO toEditDto(User entity) {
-        if (entity == null) {
-            return null;
-        }
         UserEditDTO userEditDTO = new UserEditDTO();
         if (entity.getAccount() != null ) {
             userEditDTO.setUsername(entity.getAccount().getUsername());
@@ -77,9 +66,6 @@ public class UserMapperImpl implements UserMapper {
 
     @Override
     public List<UserPreviewDTO> toSearchDto(List<User> lstSearch) {
-        if (Collections.isEmpty(lstSearch)) {
-            return null;
-        }
         List<UserPreviewDTO> lstDto = new ArrayList<>();
         for (User user : lstSearch) {
             lstDto.add(toDto(user));

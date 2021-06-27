@@ -11,7 +11,6 @@ public class UserEditDTO {
     private String name;
     private String avatarUrl;
     private String email;
-//    private AddressDTO address;
     private String birthday;
     private String phone;
     private String username;

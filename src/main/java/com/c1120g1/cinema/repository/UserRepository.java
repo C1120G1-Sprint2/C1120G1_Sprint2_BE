@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "inner join `account` on `user`.username = `account`.username\n" +
             "inner join ward on `user`.ward_id = ward.ward_id\n" +
             "inner join account_status on account_status.account_status_id = `account`.account_status_id\n" +
-            "where concat( email , `name` , ward.ward_name , account_status.account_status_name ) like concat('%',?1,'%')" ,nativeQuery = true)
+            "where concat( email , `name` ,`account`.username, ward.ward_name , account_status.account_status_name ) like concat('%',?1,'%')" ,nativeQuery = true)
     List<User> searchAll(String key);
 
     @Query(value = "select * from `user` \n" +
@@ -25,8 +25,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "inner join account_role on `account`.username = account_role.username\n" +
             "where account_role.role_id = 1\n" +
             "group by `user`.user_id \n" +
-            "limit ?1 , 3", nativeQuery = true)
+            "limit ?1 , 5", nativeQuery = true)
     List<User> getAllUser(int index);
+
+    @Query(value = "select * from `user` \n" +
+            "inner join `account` on `user`.username = `account`.username\n" +
+            "inner join account_role on `account`.username = account_role.username\n" +
+            "where account_role.role_id = 1\n", nativeQuery = true)
+    List<User> findAllUser();
 
 
     @Query(value = "select * from `user` where user_id = ?1", nativeQuery = true)
@@ -68,7 +74,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                      @Param("gender") int gender,
                      @Param("phone") String phone,
                      @Param("wardId") Integer wardId);
-
 
 
     /**

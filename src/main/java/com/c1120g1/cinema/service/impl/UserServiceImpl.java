@@ -8,8 +8,10 @@ import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.repository.AccountRepository;
 import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.repository.UserRepository;
+import com.c1120g1.cinema.service.AccountService;
 import com.c1120g1.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +23,17 @@ import java.util.List;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private AccountService accountService;
 
     @Override
     public List<User> findAll(int index) {
@@ -76,6 +83,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setPhone(userDTO.getPhone());
         user.setWard(userDTO.getWard());
+        user.setBirthday(userDTO.getBirthday());
         user.setGender(userDTO.getGender());
         user.setIdCard(userDTO.getIdCard());
         user.setAvatarUrl(userDTO.getAvatarUrl());
@@ -109,6 +117,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> searchAllUserAttribute(String key) {
         return userRepository.searchAll(key);
+    }
+
+    @Override
+    public List<User> findAllUser() {
+        return userRepository.findAllUser();
     }
 
 

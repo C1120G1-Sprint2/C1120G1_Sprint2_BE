@@ -1,7 +1,8 @@
 package com.c1120g1.cinema.controller;
 
 import com.c1120g1.cinema.dto.UserDTO;
-
+import com.c1120g1.cinema.dto.UserEditDTO;
+import com.c1120g1.cinema.dto.UserPreviewDTO;
 import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.entity.Ward;
 import com.c1120g1.cinema.service.*;
@@ -13,6 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,12 +49,20 @@ public class UserController {
 
 
     @GetMapping(value = "/employee/listUser")
-    public ResponseEntity<?> listUser(@RequestParam int index) {
+    public ResponseEntity<List<UserPreviewDTO>> listUser(@RequestParam int index) {
         List<User> userList = this.userService.findAll(index);
         if (userList != null) {
             return new ResponseEntity<>(userMapper.toDto(userList), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    @GetMapping(value = "/employee/listUser/getAll")
+    public ResponseEntity<List<UserPreviewDTO>> findListUser() {
+        List<User> userList = this.userService.findAllUser();
+        if (userList != null) {
+            return new ResponseEntity<>(userMapper.toDto(userList), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
     }
 
     @PostMapping(value = "/employee/listUser/create")
@@ -71,6 +81,7 @@ public class UserController {
             if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
                 listError.put("notCorrect", "Mật khẩu không trùng khớp , vui lòng nhập lại !");
             }
+
             if (!listError.isEmpty()) {
                 return ResponseEntity
                         .badRequest()
@@ -85,13 +96,20 @@ public class UserController {
     }
 
     @GetMapping("/employee/listUser/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable("id") Integer id) {
+    public ResponseEntity<UserEditDTO> getUserById(@PathVariable("id") Integer id) {
         User user = userService.findById(id);
         if (user != null) {
             return new ResponseEntity<>(userMapper.toEditDto(user), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping(value = "/employee/listUser/email")
+    public ResponseEntity<?> sendEmailApprove(@RequestParam(name = "email") String email) throws MessagingException {
+        accountService.sendEmailApprove(email);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     @PutMapping(value = "/employee/listUser/edit")
     public ResponseEntity<?> editUser(@RequestBody UserDTO userDTO) {
@@ -110,17 +128,14 @@ public class UserController {
                         .body(listError);
             }
             userService.updateUser(userDTO);
-//            accountRoleService.saveAccountRoleUser(userDTO.getUsername(), 1);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    ;
-
     @GetMapping(value = "/employee/listUser/search")
-    public ResponseEntity<?> searchAll(@RequestParam(name = "q") String q) {
+    public ResponseEntity<List<UserPreviewDTO>> searchAll(@RequestParam(name = "q") String q) {
         try {
             List<User> userList = this.userService.searchAllUserAttribute(q);
             if (userList != null) {
@@ -130,14 +145,13 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    };
+    }
 
     @PutMapping(value = "/employee/listUser/delete/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
+    public ResponseEntity<User> deleteUser(@PathVariable("id") Integer id) {
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    ;
 
 
     public ResponseEntity<List<Ward>> getWard() {
@@ -148,14 +162,13 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    ;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
