@@ -7,4 +7,10 @@ import java.util.List;
 public interface ShowTimeService {
 
     List<ShowTime> getAllShowTimeByDateAndMovie(String date, Integer movieId);
+
+    /**
+     * Author: ViNTT
+     */
+    List<ShowTime> findAll();
+
 }

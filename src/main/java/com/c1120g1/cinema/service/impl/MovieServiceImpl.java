@@ -4,12 +4,19 @@ import com.c1120g1.cinema.entity.Movie;
 import com.c1120g1.cinema.repository.MovieRepository;
 import com.c1120g1.cinema.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
+
+    public static final int DEFAULT_PAGE = 0;
+    public static final int DEFAULT_PAGE_SIZE = 8;
 
     @Autowired
     private MovieRepository movieRepository;
@@ -17,5 +24,80 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> findAll() {
         return movieRepository.findAll();
+    }
+
+    /**
+     * Author: ViNTT
+     */
+    @Override
+    public Page<Movie> findOnShowingMovies(Pageable pageable) {
+        return movieRepository.findOnShowingMovies(pageable);
+    }
+
+    /**
+     * Author: ViNTT
+     */
+    @Override
+    public Page<Movie> findUpComingMovies(Pageable pageable) {
+        return movieRepository.findUpComingMovies(pageable);
+    }
+
+    /**
+     * Author: ViNTT
+     */
+    @Override
+    public List<Movie> findTop3BySales() {
+        return movieRepository.findTop3BySales();
+    }
+
+    /**
+     * Author: ViNTT
+     */
+    @Override
+    public List<Movie> findPromotingMovies() {
+        return movieRepository.findPromotingMovies();
+    }
+
+    /**
+     * Author: ViNTT
+     */
+    @Override
+    public Page<Movie> findByTitleContaining(String keySearch, Pageable pageable) {
+        return movieRepository.findByTitleContaining(keySearch, pageable);
+    }
+
+    /**
+     * Author: ViNTT
+     */
+    @Override
+    public Page<Movie> advancedSearch(String keySearch, String categoryId, String date, String showTimeId, Pageable pageable) {
+        if (categoryId.equals("")) {
+            categoryId = "%" + categoryId + "%";
+        }
+        if (date.equals("")) {
+            date = "%" + date + "%";
+        }
+        if (showTimeId.equals("")) {
+            showTimeId = "%" + showTimeId + "%";
+        }
+        return movieRepository.findByTitleAndCategoryAndDateAndShowTime(keySearch, categoryId, date, showTimeId, pageable);
+    }
+
+    /**
+     * Author: ViNTT
+     */
+    @Override
+    public Pageable getPageable(Optional<String> pageParam, Optional<String> pageSizeParam) {
+        int page = DEFAULT_PAGE;
+        int pageSize = DEFAULT_PAGE_SIZE;
+
+        if (pageParam.isPresent() && !pageParam.get().trim().equals("")) {
+            page = Integer.parseInt(pageParam.get().trim());
+        }
+        if (pageSizeParam.isPresent() && !pageSizeParam.get().trim().equals("")) {
+            pageSize = Integer.parseInt(pageSizeParam.get().trim());
+        }
+
+        return PageRequest.of(page, pageSize);
     }
 }
