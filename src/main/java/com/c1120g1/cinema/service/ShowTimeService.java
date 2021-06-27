@@ -7,4 +7,8 @@ import java.util.List;
 public interface ShowTimeService {
 
     List<ShowTime> getAllShowTimeByDate(String date);
+    /**
+     * Author: ViNTT
+     */
+    List<ShowTime> findAll();
 }

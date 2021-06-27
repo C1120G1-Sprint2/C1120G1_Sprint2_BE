@@ -22,7 +22,6 @@ public class MovieTicket {
     private Integer movieTicketId;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")
     private Movie movie;
 

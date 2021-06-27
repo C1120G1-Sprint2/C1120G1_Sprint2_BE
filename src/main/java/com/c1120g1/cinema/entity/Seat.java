@@ -25,6 +25,10 @@ public class Seat {
     private Integer seatId;
 
     @ManyToOne
+    @JoinColumn(name = "seat_status")
+    private SeatStatus seatStatus;
+
+    @ManyToOne
     @JoinColumn(name = "row_id")
     private RowSeat row;
 
