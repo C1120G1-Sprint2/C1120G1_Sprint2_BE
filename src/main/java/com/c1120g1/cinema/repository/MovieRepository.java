@@ -1,7 +1,6 @@
 package com.c1120g1.cinema.repository;
 
 import com.c1120g1.cinema.entity.Movie;
-import com.c1120g1.cinema.entity.MovieStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
