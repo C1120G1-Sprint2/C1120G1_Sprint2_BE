@@ -2,6 +2,7 @@ package com.c1120g1.cinema.controller;
 
 import com.c1120g1.cinema.entity.Room;
 import com.c1120g1.cinema.entity.RoomSeat;
+import com.c1120g1.cinema.entity.Seat;
 import com.c1120g1.cinema.service.RoomSeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,4 +29,23 @@ public class RoomSeatController {
         return new ResponseEntity<List<RoomSeat>>(roomList, HttpStatus.OK);
     }
 
+
+    /**
+     * Method: delete seat
+     * Author: TuanLHM
+     *
+     * @return
+     */
+
+    @GetMapping(value = "/seat/delete-seat/{id}")
+    public ResponseEntity<RoomSeat> deleteRoom(@PathVariable("id") Integer id) {
+
+        RoomSeat roomSeat = roomSeatService.findById(id);
+        if (roomSeat.getRoomSeatId() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            roomSeatService.deleteSeat(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
 }

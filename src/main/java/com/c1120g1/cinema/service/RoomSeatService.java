@@ -7,4 +7,8 @@ import java.util.List;
 public interface RoomSeatService {
 
     List<RoomSeat> showAllSeatByRoomId(Integer roomId);
+
+    void deleteSeat(Integer roomSeatId);
+
+    RoomSeat findById(Integer id);
 }

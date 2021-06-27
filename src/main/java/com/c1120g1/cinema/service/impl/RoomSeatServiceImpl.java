@@ -18,4 +18,14 @@ public class RoomSeatServiceImpl implements RoomSeatService {
     public List<RoomSeat> showAllSeatByRoomId(Integer roomId) {
         return roomSeatRepository.showAllSeatByRoomId(roomId);
     }
+
+    @Override
+    public void deleteSeat(Integer roomSeatId) {
+        roomSeatRepository.deleteSeat(roomSeatId);
+    }
+
+    @Override
+    public RoomSeat findById(Integer id) {
+        return roomSeatRepository.findById(id).orElse(null);
+    }
 }
