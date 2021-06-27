@@ -18,4 +18,9 @@ public class RoomServiceImpl implements RoomService {
     public List<Room> findAll() {
         return roomRepository.findAll();
     }
+
+    @Override
+    public Room findById(Integer id) {
+        return roomRepository.findById(id).orElse(null);
+    }
 }

@@ -5,21 +5,19 @@ import com.c1120g1.cinema.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api")
 public class MovieController {
 
     @Autowired
     private MovieService movieService;
 
-    @GetMapping("/api/admin/list-movie")
+    @GetMapping("/admin/list-movie")
     public ResponseEntity<?> getAllMovie() {
         try {
             List<Movie> movieList = this.movieService.findAll();
@@ -29,7 +27,7 @@ public class MovieController {
         }
     }
 
-    @GetMapping("api/detail-movie/{id}")
+    @GetMapping("/detail-movie/{id}")
     public ResponseEntity<Movie> getMovieById(@PathVariable("id") Integer id) {
         Movie movie = this.movieService.findById(id);
         if (movie == null) {
