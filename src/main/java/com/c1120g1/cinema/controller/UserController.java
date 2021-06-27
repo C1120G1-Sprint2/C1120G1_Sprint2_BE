@@ -1,11 +1,8 @@
 package com.c1120g1.cinema.controller;
 
 import com.c1120g1.cinema.dto.UserDTO;
-<<<<<<< HEAD
-=======
 import com.c1120g1.cinema.dto.UserEditDTO;
 import com.c1120g1.cinema.dto.UserPreviewDTO;
->>>>>>> Management-Account
 import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.entity.Ward;
 import com.c1120g1.cinema.service.*;
@@ -59,13 +56,14 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     @GetMapping(value = "/employee/listUser/getAll")
     public ResponseEntity<List<UserPreviewDTO>> findListUser() {
         List<User> userList = this.userService.findAllUser();
         if (userList != null) {
             return new ResponseEntity<>(userMapper.toDto(userList), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(value = "/employee/listUser/create")
