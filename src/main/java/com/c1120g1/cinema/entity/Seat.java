@@ -32,7 +32,7 @@ public class Seat {
     private ColumnSeat column;
 
     @ManyToOne
-    @JoinColumn(name = "seat_type")
+    @JoinColumn(name = "seat_type_id")
     private SeatType seatType;
 
 }

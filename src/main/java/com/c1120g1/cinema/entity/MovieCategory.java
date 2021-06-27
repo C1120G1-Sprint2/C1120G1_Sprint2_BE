@@ -29,7 +29,6 @@ public class MovieCategory {
     private Movie movie;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
