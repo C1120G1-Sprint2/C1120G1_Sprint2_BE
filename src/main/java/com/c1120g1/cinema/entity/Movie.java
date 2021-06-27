@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -50,13 +51,17 @@ public class Movie {
     @Column(name = "trailer", columnDefinition = "varchar(255)")
     private String trailer;
 
+
     @OneToMany(mappedBy = "movie")
+    @JsonIgnore
     private Set<Rating> ratingSet;
 
     @OneToMany(mappedBy = "movie")
+    @JsonIgnore
     private Set<Comment> commentSet;
 
     @OneToMany(mappedBy = "movie")
+    @JsonIgnore
     private Set<MovieTicket> movieTicketSet;
 
     @ManyToOne
