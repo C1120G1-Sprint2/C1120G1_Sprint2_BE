@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,6 @@ public class Ward {
     private District district;
 
     @OneToMany(mappedBy = "ward")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<User> userSet;
 }
