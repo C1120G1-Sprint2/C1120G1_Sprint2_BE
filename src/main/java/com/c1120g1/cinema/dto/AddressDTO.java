@@ -1,6 +1,5 @@
 package com.c1120g1.cinema.dto;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
