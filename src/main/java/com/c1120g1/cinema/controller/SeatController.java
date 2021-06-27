@@ -84,27 +84,9 @@ public class SeatController {
      */
     @PutMapping("/seat/edit-seat")
     public ResponseEntity<Void> updateSeat(@RequestBody Seat seat){
-        seatService.updateSeat(seat.getSeatType().getSeatTypeId(),seat.getSeatId());
+        seatService.updateSeat(seat);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    /**
-     * Method: delete seat
-     * Author: TuanLHM
-     *
-     * @return
-     */
-
-    @GetMapping(value = "/seat/delete-seat/{id}")
-    public ResponseEntity<Seat> deleteRoom(@PathVariable("id") Integer id) {
-
-        Seat seat = seatService.findSeatById(id);
-        if (seat.getSeatId() == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            seatService.deleteSeat(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-    }
 }
 

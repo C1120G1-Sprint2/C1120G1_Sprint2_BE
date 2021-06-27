@@ -30,15 +30,14 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
-    public void updateSeat(Integer seatType, Integer seatId) {
-        seatRepository.updateSeat(seatType,seatId);
+    public void updateSeat(Seat seat) {
+        if (seat.getSeatType().getSeatTypeId()==1){
+            seatRepository.updateSeat(2,seat.getSeatId());
+        } else {
+            seatRepository.updateSeat(1,seat.getSeatId());
+        }
     }
 
-
-    @Override
-    public void deleteSeat(Integer id) {
-        seatRepository.deleteById(id);
-    }
 
     @Override
     public Seat findSeatByColumn_ColumnIdAndRow_RowId(Integer column_columnId, Integer row_rowId) {
