@@ -15,6 +15,8 @@ public interface MovieTicketService {
 
     List<MovieTicket> showAllMovieTicketByMovieId(Integer movieId);
 
+    List<MovieTicket> showAllMovieTicketByShowDate(String showDate);
+
     List<MovieTicket> showAllMovieTicketByMovieIdAndShowDate(Integer movieId, String showDate);
 
     MovieTicket findMovieTicketById(Integer movieTicketId);

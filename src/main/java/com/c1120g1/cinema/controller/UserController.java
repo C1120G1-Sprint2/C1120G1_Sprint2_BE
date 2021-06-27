@@ -176,13 +176,13 @@ public class UserController {
     /**
      * Method: Get user by cardId
      * Author: HanTH
-     * @param cardId
+     * @param username
      * @return
      */
-    @GetMapping("api/employee/saleTicket/user/{cardId}")
-    public ResponseEntity<User> findUserByCardId(@PathVariable String cardId) {
+    @GetMapping("api/employee/saleTicket/user/{username}")
+    public ResponseEntity<User> findUserByUserName(@PathVariable String username) {
         try {
-            User user = userService.findByIdCard( cardId );
+            User user = userService.findByUsername( username );
             return new ResponseEntity<>( user, HttpStatus.OK );
         } catch (Exception e) {
             return new ResponseEntity<>( HttpStatus.BAD_REQUEST );

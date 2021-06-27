@@ -47,11 +47,34 @@ public class MovieTicketController {
      * @param movieId
      * @return
      */
-    @GetMapping("api/employee/saleTicket/listMovieTicket/{movieId}")
+    @GetMapping("api/employee/saleTicket/listMovieTicket/movie/{movieId}")
     public ResponseEntity<List<MovieTicket>> showAllMovieTicket(@PathVariable Integer movieId) {
 
         try {
             List<MovieTicket> ticketList = movieTicketService.showAllMovieTicketByMovieId( movieId );
+            if (ticketList.isEmpty()) {
+                return new ResponseEntity<>( HttpStatus.NO_CONTENT );
+            } else {
+                return new ResponseEntity<>( ticketList, HttpStatus.OK );
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
+        }
+
+    }
+
+    /**
+     * Method: get all movie ticket by movie id
+     * Author: HanTH
+     *
+     * @param showDate
+     * @return
+     */
+    @GetMapping("api/employee/saleTicket/listMovieTicket/showDate/{showDate}")
+    public ResponseEntity<List<MovieTicket>> showAllMovieTicket(@PathVariable String showDate) {
+
+        try {
+            List<MovieTicket> ticketList = movieTicketService.showAllMovieTicketByShowDate( showDate );
             if (ticketList.isEmpty()) {
                 return new ResponseEntity<>( HttpStatus.NO_CONTENT );
             } else {

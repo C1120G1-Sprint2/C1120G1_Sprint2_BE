@@ -18,7 +18,7 @@ public interface UserService {
 
     User findByUsername(String username);
 
-    User findByIdCard(String idCard);
+    User findByIdCard(String username);
 
     void saveUserCus(UserDTO userDTO);
 
@@ -35,7 +35,4 @@ public interface UserService {
 
     User getUserByUsername(String username);
 
-    //HanTH
-    User findUserByCardId(String cardId);
-    //HanTH
 }

@@ -29,7 +29,7 @@ public class RoomSeatController {
      * @return listRoomSeat
      */
     @GetMapping("/getAllSeat/{roomId}")
-    public ResponseEntity<List<RoomSeat>> getAllSeat(@PathVariable(name = "roomId") Integer roomId) {
+    public ResponseEntity<List<RoomSeat>> getAllSeat(@PathVariable(name =  "roomId") Integer roomId) {
         List<RoomSeat> listRoomSeat = roomSeatService.findAllByRoomId( roomId );
         if (listRoomSeat.isEmpty()) {
             return new ResponseEntity<>( HttpStatus.NO_CONTENT );
@@ -45,7 +45,7 @@ public class RoomSeatController {
      * @param roomId
      * @return
      */
-    @GetMapping("api/employee/saleTicket/listRoomSeat/{roomId}")
+    @GetMapping("/saleTicket/listRoomSeat/{roomId}")
     public ResponseEntity<List<RoomSeat>> showAllSeatByRoomId(@PathVariable Integer roomId) {
         try {
             List<RoomSeat> seatList = roomSeatService.showAllSeatByRoomId( roomId );

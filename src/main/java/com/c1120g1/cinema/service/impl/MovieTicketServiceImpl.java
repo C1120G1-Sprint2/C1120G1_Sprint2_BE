@@ -48,6 +48,18 @@ public class MovieTicketServiceImpl implements MovieTicketService {
     }
 
     /**
+     * Method: get all movie ticket by id
+     * Author: HanTH
+     *
+     * @param showDate
+     * @return
+     */
+    @Override
+    public List<MovieTicket> showAllMovieTicketByShowDate(String showDate) {
+        return movieTicketRepository.showAllMovieTicketByShowDate( showDate );
+    }
+
+    /**
      * Method: get all movie ticket by id and show date
      *
      * @param movieId

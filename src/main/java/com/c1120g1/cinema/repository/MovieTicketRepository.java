@@ -36,6 +36,16 @@ public interface MovieTicketRepository extends JpaRepository<MovieTicket,Integer
     List<MovieTicket> showAllMovieTicketByMovieId(Integer movieId);
 
     /**
+     * Method: get all movie ticket by id
+     * Author: HanTH
+     *
+     * @param showDate
+     * @return
+     */
+    @Query(value = "SELECT * FROM cinema_db.movie_ticket WHERE movie_ticket.show_date=?1 GROUP BY movie_ticket.movie_id;", nativeQuery = true)
+    List<MovieTicket> showAllMovieTicketByShowDate(String showDate);
+
+    /**
      * Method: get all movie by ticket by id and show date
      * Author: HanTH
      *

@@ -146,14 +146,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserByUsername( username );
     }
 
-    /**
-     * HanTH
-     *
-     * @param cardId
-     * @return
-     */
-    @Override
-    public User findUserByCardId(String cardId) {
-        return userRepository.findUserByCardId( cardId );
-    }
 }
