@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/api/admin")
+@RequestMapping("/api/roomSeat")
 public class RoomSeatController {
 
     @Autowired
@@ -24,9 +24,9 @@ public class RoomSeatController {
     public ResponseEntity<List<RoomSeat>> getListRoom(@PathVariable Integer roomId) {
         List<RoomSeat> roomList = roomSeatService.showAllSeatByRoomId(roomId);
         if (roomList.isEmpty()) {
-            return new ResponseEntity<List<RoomSeat>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<RoomSeat>>(roomList, HttpStatus.OK);
+        return new ResponseEntity<>(roomList, HttpStatus.OK);
     }
 
 
