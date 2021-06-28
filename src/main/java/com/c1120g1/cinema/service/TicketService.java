@@ -85,4 +85,8 @@ public interface TicketService {
     void saveTicket(MemberTicketDTO memberTicketDTO);
 
     void saveTicketDTO(Integer movieTicketId, Integer userId, Integer seatId);
+
+    //HanTH
+    void createTicket(MemberTicketDTO memberTicketDTO);
+    //HanTH
 }

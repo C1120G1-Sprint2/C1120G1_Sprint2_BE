@@ -5,7 +5,6 @@ plugins {
     id "org.sonarqube" version "3.0"
 }
 
-
 group = 'com.c1120g1'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
@@ -13,6 +12,7 @@ sourceCompatibility = '1.8'
 repositories {
     mavenCentral()
 }
+
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -25,11 +25,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation('io.jsonwebtoken:jjwt:0.9.1')
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    compile group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.14.0'
 
 
     compile group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.4.2'
-
-
 
 //    Security
     implementation 'org.springframework.boot:spring-boot-starter-security'

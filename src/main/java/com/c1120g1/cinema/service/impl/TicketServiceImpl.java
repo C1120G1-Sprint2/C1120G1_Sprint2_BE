@@ -1,7 +1,7 @@
 package com.c1120g1.cinema.service.impl;
 
 import com.c1120g1.cinema.dto.MemberTicketDTO;
-import com.c1120g1.cinema.entity.Seat;
+
 import com.c1120g1.cinema.entity.Ticket;
 import com.c1120g1.cinema.entity.TicketStatus;
 import com.c1120g1.cinema.repository.TicketRepository;
@@ -31,6 +31,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     /**
+<<<<<<< HEAD
      * author: QuangHL
      * method: Show list booked ticket
      */
@@ -148,9 +149,22 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void saveTicketDTO(Integer movieTicketId, Integer userId, Integer seatId) {
-        TicketStatus ticketStatus = this.ticketStatusService.findById(1);
+        TicketStatus ticketStatus = this.ticketStatusService.findById( 1 );
+        String createTime = new SimpleDateFormat( "yyyy-MM-dd" ).format( new Date() );
+        ticketRepository.saveTicket( movieTicketId, seatId, userId,
+                ticketStatus.getTicketStatusId(), createTime );
+
+    }
+
+    /**
+     * Method: create Ticket by memberticketDTO
+     * Author: HanTH
+     * @param memberTicketDTO
+     */
+    @Override
+    public void createTicket(MemberTicketDTO memberTicketDTO) {
         String createTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        ticketRepository.saveTicket(movieTicketId, seatId, userId,
-                                    ticketStatus.getTicketStatusId(), createTime);
+        memberTicketDTO.setCreateTime( createTime );
+        ticketRepository.createTicket( memberTicketDTO.getMovieTicketId(), memberTicketDTO.getSeatId(), memberTicketDTO.getUserId(), memberTicketDTO.getCreateTime(), memberTicketDTO.getTicketStatusId() );
     }
 }

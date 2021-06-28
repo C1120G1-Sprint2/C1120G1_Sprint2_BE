@@ -21,6 +21,29 @@ public class RoomSeatServiceImpl implements RoomSeatService {
 
     @Override
     public void updateRoomSeatStatus(Integer seatId, Integer roomId) {
-        roomSeatRepository.updateRoomSeatStatus(seatId, roomId);
+        roomSeatRepository.updateRoomSeatStatus( seatId, roomId );
+    }
+
+    /**
+     * Method: get all room seat by room id and row id
+     * Author: HanTH
+     * @param roomId
+     * @return
+     */
+    @Override
+    public List<RoomSeat> showAllSeatByRoomId(Integer roomId) {
+        return roomSeatRepository.showAllRoomSeatByRoomId( roomId );
+    }
+
+    /**
+     * Method: update status seat
+     * Author: HanTH
+     *
+     * @param seatId
+     * @param seatStatusId
+     */
+    @Override
+    public void updateStatusSeat(Integer roomId, Integer seatId, Integer seatStatusId) {
+        roomSeatRepository.updateStatusSeat(roomId, seatId,seatStatusId );
     }
 }

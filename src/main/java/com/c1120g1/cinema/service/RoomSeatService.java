@@ -9,4 +9,11 @@ public interface RoomSeatService {
     List<RoomSeat> findAllByRoomId(Integer roomId);
 
     void updateRoomSeatStatus(Integer seatId, Integer roomId);
+
+    //    HanTH
+    List<RoomSeat> showAllSeatByRoomId(Integer roomId);
+
+    void updateStatusSeat(Integer roomId, Integer seatId, Integer seatStatusId);
+//    HanTH
+
 }
