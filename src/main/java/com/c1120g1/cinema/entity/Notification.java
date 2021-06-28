@@ -27,7 +27,10 @@ public class Notification {
     private String notifyDate;
 
     @ManyToOne
+<<<<<<< HEAD
     @JsonBackReference
+=======
+>>>>>>> 5b07947d6c599ccedd717a83c5d3165bfda7a07e
     @JoinColumn(name = "username", columnDefinition = "varchar(50)", referencedColumnName = "username")
     private Account account;
 }

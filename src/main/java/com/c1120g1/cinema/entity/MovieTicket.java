@@ -28,7 +28,10 @@ public class MovieTicket {
     private Movie movie;
 
     @ManyToOne
+<<<<<<< HEAD
     @JsonBackReference
+=======
+>>>>>>> 5b07947d6c599ccedd717a83c5d3165bfda7a07e
     @JoinColumn(name = "show_time_id", referencedColumnName = "show_time_id")
     private ShowTime showTime;
 
@@ -39,12 +42,18 @@ public class MovieTicket {
     private String ticketPrice;
 
     @ManyToOne
+<<<<<<< HEAD
     @JsonBackReference
+=======
+>>>>>>> 5b07947d6c599ccedd717a83c5d3165bfda7a07e
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private Room room;
 
     @ManyToOne
+<<<<<<< HEAD
     @JsonBackReference
+=======
+>>>>>>> 5b07947d6c599ccedd717a83c5d3165bfda7a07e
     @JoinColumn(name = "projection_type_id", referencedColumnName = "projection_type_id")
     private ProjectionType projectionType;
 

@@ -2,10 +2,12 @@ package com.c1120g1.cinema.service;
 
 import com.c1120g1.cinema.entity.Account;
 
+
 import javax.mail.MessagingException;
 import java.util.List;
 
 public interface AccountService {
+
 
     void deleteUserAccount(String username);
 
@@ -41,4 +43,5 @@ public interface AccountService {
     Account findByAccount(String username);
 
     void setNewPassword(Account account, String newPassword);
+
 }

@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.service.impl;
 
+
 import com.c1120g1.cinema.dto.UserDTO;
 import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.AccountStatus;
@@ -12,12 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 
 
 @Service
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
 
     @Autowired
     private AccountRepository accountRepository;

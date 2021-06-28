@@ -1,6 +1,7 @@
 package com.c1120g1.cinema.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +38,7 @@ public class Movie {
     @Column(name = "movie_studio", columnDefinition = "varchar(50)")
     private String movieStudio;
 
-    @Column(name = "actor", columnDefinition = "varchar(50)")
+    @Column(name = "actor", columnDefinition = "varchar(255)")
     private String actor;
 
     @Column(name = "director", columnDefinition = "varchar(50)")
@@ -52,27 +53,41 @@ public class Movie {
     @Column(name = "trailer", columnDefinition = "varchar(255)")
     private String trailer;
 
+    @OneToMany(mappedBy = "movie")
     @Column(name = "banner", columnDefinition = "VARCHAR(255)")
     private String banner;
 
     @Column(name = "promote", columnDefinition = "BIT(1)")
     private Boolean promote;
 
+    @Column(name = "`description`", columnDefinition = "TEXT")
+    private String description;
+
     @OneToMany(mappedBy = "movie")
     @JsonManagedReference
+    private Set<MovieCategory> movieCategorySet;
+
+    @OneToMany(mappedBy = "movie")
+    @JsonIgnore
     private Set<Rating> ratingSet;
 
     @OneToMany(mappedBy = "movie")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<Comment> commentSet;
 
     @OneToMany(mappedBy = "movie")
+<<<<<<< HEAD
 //    @JsonManagedReference
+=======
+>>>>>>> 5b07947d6c599ccedd717a83c5d3165bfda7a07e
     @JsonIgnore
     private Set<MovieTicket> movieTicketSet;
 
     @ManyToOne
+<<<<<<< HEAD
 //    @JsonBackReference
+=======
+>>>>>>> 5b07947d6c599ccedd717a83c5d3165bfda7a07e
     @JoinColumn(name = "movie_status_id", referencedColumnName = "movie_status_id")
     private MovieStatus movieStatus;
 }

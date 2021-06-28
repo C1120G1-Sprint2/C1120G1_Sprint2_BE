@@ -35,6 +35,7 @@ public class Account {
     @JoinColumn(name = "account_status_id", referencedColumnName = "account_status_id")
 
     @JsonBackReference
+
     private AccountStatus accountStatus;
 
     @OneToOne(mappedBy = "account")
