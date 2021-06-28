@@ -52,6 +52,7 @@ public class Movie {
     @Column(name = "trailer", columnDefinition = "varchar(255)")
     private String trailer;
 
+    @OneToMany(mappedBy = "movie")
     @Column(name = "banner", columnDefinition = "VARCHAR(255)")
     private String banner;
 
