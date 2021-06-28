@@ -18,4 +18,11 @@ public class ShowTimeServiceImpl implements ShowTimeService {
     public List<ShowTime> getAllShowTimeByDateAndMovie(String date, Integer movieId) {
         return showTimeRepository.getAllShowTimeByDateAndMovie(date, movieId);
     }
+    /**
+     * Author: ViNTT
+     */
+    @Override
+    public List<ShowTime> findAll() {
+        return showTimeRepository.findAll();
+    }
 }

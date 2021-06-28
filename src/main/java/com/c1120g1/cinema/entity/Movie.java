@@ -35,7 +35,7 @@ public class Movie {
     @Column(name = "movie_studio", columnDefinition = "varchar(50)")
     private String movieStudio;
 
-    @Column(name = "actor", columnDefinition = "varchar(50)")
+    @Column(name = "actor", columnDefinition = "varchar(255)")
     private String actor;
 
     @Column(name = "director", columnDefinition = "varchar(50)")
@@ -56,6 +56,12 @@ public class Movie {
     @Column(name = "promote", columnDefinition = "BIT(1)")
     private Boolean promote;
 
+    @Column(name = "`description`", columnDefinition = "TEXT")
+    private String description;
+
+    @OneToMany(mappedBy = "movie")
+    private Set<MovieCategory> movieCategorySet;
+
     @OneToMany(mappedBy = "movie")
     @JsonIgnore
     private Set<Rating> ratingSet;
@@ -71,5 +77,6 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name = "movie_status_id", referencedColumnName = "movie_status_id")
     private MovieStatus movieStatus;
+
 }
 
