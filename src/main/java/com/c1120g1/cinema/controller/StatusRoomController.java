@@ -1,6 +1,5 @@
 package com.c1120g1.cinema.controller;
 
-import com.c1120g1.cinema.entity.Room;
 import com.c1120g1.cinema.entity.StatusRoom;
 import com.c1120g1.cinema.service.StatusRoomService;
 import org.springframework.beans.factory.annotation.Autowired;

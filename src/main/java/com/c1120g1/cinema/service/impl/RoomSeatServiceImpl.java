@@ -25,6 +25,16 @@ public class RoomSeatServiceImpl implements RoomSeatService {
     }
 
     @Override
+    public List<RoomSeat> getSeatTotal(Integer roomId) {
+        return roomSeatRepository.getSeatTotal(roomId);
+    }
+
+    @Override
+    public void creatSeat(Integer roomSeatId) {
+        roomSeatRepository.creatSeat(roomSeatId);
+    }
+
+    @Override
     public RoomSeat findById(Integer id) {
         return roomSeatRepository.findById(id).orElse(null);
     }

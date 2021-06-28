@@ -45,9 +45,9 @@ public class SeatController {
     public ResponseEntity<List<Seat>> getListSeat() {
         List<Seat> seatList = seatService.findAllSeat();
         if (seatList.isEmpty()) {
-            return new ResponseEntity<List<Seat>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Seat>>(seatList, HttpStatus.OK);
+        return new ResponseEntity<>(seatList, HttpStatus.OK);
     }
 
     /**
@@ -63,21 +63,6 @@ public class SeatController {
     }
 
     /**
-     * Method: create seat
-     * Author: TuanLHM
-     *
-     * @return
-     */
-
-    @PostMapping(value = "/seat/create-seat", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createSeat(@RequestBody Seat seat, BindingResult bindingResult, UriComponentsBuilder ucBuilder) {
-        seatService.addSeat(seat);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/room/{id}").buildAndExpand(seat.getSeatId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-    }
-
-    /**
      * Author: TuanLHM
      * @param seat
      * @return
@@ -87,6 +72,5 @@ public class SeatController {
         seatService.updateSeat(seat);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
-
 }
 

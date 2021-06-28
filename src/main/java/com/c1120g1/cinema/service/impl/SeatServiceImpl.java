@@ -38,11 +38,8 @@ public class SeatServiceImpl implements SeatService {
         }
     }
 
-
     @Override
     public Seat findSeatByColumn_ColumnIdAndRow_RowId(Integer column_columnId, Integer row_rowId) {
         return seatRepository.findSeatByColumn_ColumnIdAndRow_RowId(column_columnId, row_rowId);
     }
-
-
 }
