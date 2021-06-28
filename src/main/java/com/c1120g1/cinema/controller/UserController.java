@@ -2,6 +2,7 @@ package com.c1120g1.cinema.controller;
 
 import com.c1120g1.cinema.dto.UserDTO;
 import com.c1120g1.cinema.entity.Account;
+import com.c1120g1.cinema.entity.TransactionHistory;
 import com.c1120g1.cinema.entity.User;
 
 import com.c1120g1.cinema.dto.UserEditDTO;
@@ -72,6 +73,14 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+    @GetMapping("/transaction/{username}")
+    public ResponseEntity <List<TransactionHistory>> getTransactionByUsername(@PathVariable(name = "username") String username) {
+        List <TransactionHistory> transaction = transactionHistoryService.findByTransaction(username);
+        if (transaction == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(transaction, HttpStatus.OK);
     }
 
     @PutMapping(value = "/editUser/{username}", produces = {MediaType.APPLICATION_JSON_VALUE})

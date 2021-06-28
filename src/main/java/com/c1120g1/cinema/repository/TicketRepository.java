@@ -1,11 +1,12 @@
 package com.c1120g1.cinema.repository;
 
 import com.c1120g1.cinema.entity.Ticket;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 
 public interface TicketRepository extends JpaRepository<Ticket,Integer> {
 
@@ -16,7 +17,7 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
             "inner join `movie` on `movie_ticket`.movie_id = `movie`.movie_id\n" +
             "inner join `movie_status` on `movie`.movie_status_id=`movie_status`.movie_status_id\n" +
             "where username = ?1",nativeQuery = true)
-    List<Ticket> findTicketOfUser(String username);
+    Page<Ticket> findTicketOfUser(Pageable pageable, String username);
 
     @Modifying
     @Query(value = "update ticket\n" +
