@@ -10,4 +10,8 @@ public class AccountRoleServiceImpl implements AccountRoleService {
     @Autowired
     private AccountRoleRepository accountRoleRepository;
 
+    @Override
+    public void saveAccountRoleUser(String username, int i) {
+        accountRoleRepository.saveAccountRole(username,i);
+    }
 }

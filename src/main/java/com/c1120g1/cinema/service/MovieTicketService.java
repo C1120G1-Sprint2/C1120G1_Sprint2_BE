@@ -27,4 +27,8 @@ public interface MovieTicketService {
     Page<MovieTicket> searchMovieTicket(Pageable pageable,String q);
 
     List<MovieTicket> findAllByDate(String showDate);
+
+
+    MovieTicket getMovieTicket(Integer movieId, String date, Integer showTimeId);
+
 }

@@ -15,4 +15,9 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
             "inner join category c on mc.category_id = c.category_id " +
             "where mc.movie_id = ?1", nativeQuery = true)
     List<Category> getMovieCategoryByMovieId(Integer id);
+
+    @Query(value = "select * from category", nativeQuery = true)
+    List<Category> getCategory();
+
+
 }
