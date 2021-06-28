@@ -52,6 +52,7 @@ public class Movie {
     @Column(name = "trailer", columnDefinition = "varchar(255)")
     private String trailer;
 
+    @OneToMany(mappedBy = "movie")
     @Column(name = "banner", columnDefinition = "VARCHAR(255)")
     private String banner;
 
@@ -80,5 +81,4 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name = "movie_status_id", referencedColumnName = "movie_status_id")
     private MovieStatus movieStatus;
-
 }
