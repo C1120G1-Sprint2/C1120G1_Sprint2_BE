@@ -1,7 +1,5 @@
 package com.c1120g1.cinema.controller;
 
-
-
 import com.c1120g1.cinema.entity.MovieTicket;
 import com.c1120g1.cinema.service.MovieTicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +115,5 @@ public class MovieTicketController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 }

@@ -6,5 +6,16 @@ import java.util.List;
 
 public interface CategoryService {
 
+
     List<Category> getMovieCategoryById(Integer movieId);
+
+    List<Category> getCategory();
+
+
+    /**
+     * Author: ViNTT
+     */
+    List<Category> findAll();
+
+
 }

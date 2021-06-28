@@ -19,4 +19,9 @@ public class MovieCategoryServiceImpl implements MovieCategoryService {
     public List<MovieCategory> findAll() {
         return movieCategoryRepository.findAll();
     }
+
+    public void createMovieCategory(Integer movie, Integer category) {
+        movieCategoryRepository.createMovieCategory(movie, category);
+
+    }
 }

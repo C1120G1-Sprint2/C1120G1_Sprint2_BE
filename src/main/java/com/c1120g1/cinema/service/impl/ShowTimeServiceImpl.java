@@ -14,13 +14,23 @@ public class ShowTimeServiceImpl implements ShowTimeService {
     @Autowired
     private ShowTimeRepository showTimeRepository;
 
-    @Override
-    public List<ShowTime> findAll() {
-        return showTimeRepository.findAll();
-    }
+
 
     @Override
     public ShowTime findById(Integer id) {
         return showTimeRepository.findById(id).orElse(null);
+
+    }
+    @Override
+    public List<ShowTime> getAllShowTimeByDate(String date) {
+        return showTimeRepository.getAllShowTimeByDate(date);
+    }
+
+    /**
+     * Author: ViNTT
+     */
+    @Override
+    public List<ShowTime> findAll() {
+        return showTimeRepository.findAll();
     }
 }

@@ -8,4 +8,7 @@ public interface MovieCategoryService {
 
 
     List<MovieCategory> findAll();
+
+    void createMovieCategory(Integer movie, Integer category);
+
 }
