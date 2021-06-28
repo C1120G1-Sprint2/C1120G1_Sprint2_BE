@@ -1,12 +1,12 @@
 package com.c1120g1.cinema.service.impl;
 
+
 import com.c1120g1.cinema.dto.UserDTO;
 import com.c1120g1.cinema.dto.UserEditDTO;
 import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.AccountStatus;
 import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.repository.AccountRepository;
-import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.repository.UserRepository;
 import com.c1120g1.cinema.service.AccountService;
 import com.c1120g1.cinema.service.UserService;
@@ -14,11 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
 
 @Service
 @Transactional
@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
 
     @Autowired
     private AccountRepository accountRepository;

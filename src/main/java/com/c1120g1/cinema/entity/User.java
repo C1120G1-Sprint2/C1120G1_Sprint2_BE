@@ -27,6 +27,7 @@ public class User {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
     @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
 
