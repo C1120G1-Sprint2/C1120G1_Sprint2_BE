@@ -81,5 +81,4 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name = "movie_status_id", referencedColumnName = "movie_status_id")
     private MovieStatus movieStatus;
-
 }
