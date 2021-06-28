@@ -35,4 +35,6 @@ public interface UserService {
 
     User getUserByUsername(String username);
 
+    User createUserNoAccount(User user);
+
 }

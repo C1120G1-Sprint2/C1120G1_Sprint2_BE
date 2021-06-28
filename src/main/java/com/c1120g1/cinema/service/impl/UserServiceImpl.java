@@ -146,4 +146,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserByUsername( username );
     }
 
+    @Override
+    public User createUserNoAccount(User user) {
+       return userRepository.save( user );
+    }
+
 }

@@ -189,4 +189,14 @@ public class UserController {
         }
     }
 
+    @PostMapping("api/employee/saleTicket/user/create")
+    public ResponseEntity<User> creatUserNoAccount(@RequestBody User user){
+        try{
+            User user1 = userService.createUserNoAccount( user );
+            return new ResponseEntity<>( user1, HttpStatus.OK );
+        }catch (Exception e){
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
+        }
+    }
+
 }
