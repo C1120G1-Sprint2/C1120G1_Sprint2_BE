@@ -33,7 +33,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
      * Author : ThinhTHB
      * function to get all movie have status = "Đang chiếu"
      */
-    @Query(value = "select * from movie where `status` = 1", nativeQuery = true)
+    @Query(value = "select * from movie where movie_status_id = 1", nativeQuery = true)
     Page<Movie> getAllMovieAvailable(Pageable pageable);
 
     /**
@@ -42,7 +42,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
      */
     @Transactional
     @Modifying
-    @Query(value = "update movie set status = 2 where movie_id = :movieId", nativeQuery = true)
+    @Query(value = "update movie set movie_status_id = 2 where movie_id = :movieId", nativeQuery = true)
     void setMovieStatusById(@Param(value = "movieId") Integer movieId);
 
     /**
