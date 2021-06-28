@@ -37,7 +37,7 @@ public class Seat {
     private ColumnSeat column;
 
     @ManyToOne
-    @JoinColumn(name = "seat_type_id")
+    @JoinColumn(name = "seat_type")
     private SeatType seatType;
 
     @OneToMany(mappedBy = "seat")
