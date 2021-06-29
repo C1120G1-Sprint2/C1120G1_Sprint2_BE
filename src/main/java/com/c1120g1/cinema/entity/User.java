@@ -27,12 +27,9 @@ public class User {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
-<<<<<<< HEAD
 //    @JsonBackReference
     @JsonIgnore
-=======
     @JsonBackReference
->>>>>>> 5b07947d6c599ccedd717a83c5d3165bfda7a07e
     @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
 
@@ -55,10 +52,7 @@ public class User {
     private String avatarUrl;
 
     @ManyToOne
-<<<<<<< HEAD
 //    @JsonBackReference
-=======
->>>>>>> 5b07947d6c599ccedd717a83c5d3165bfda7a07e
     @JoinColumn(name = "ward_id", referencedColumnName = "ward_id")
     private Ward ward;
 

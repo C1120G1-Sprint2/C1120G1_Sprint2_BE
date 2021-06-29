@@ -29,7 +29,6 @@ import java.util.Map;
 
 @RestController
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/member")
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class UserController {
 
@@ -58,7 +57,7 @@ public class UserController {
 
     private TicketService ticketService;
 
-    @GetMapping("/user/{username}")
+    @GetMapping("/member/user/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable(name = "username") String username) {
         User user = userService.findByUsername1(username);
         if (user == null) {
@@ -67,7 +66,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("/account/{username}")
+    @GetMapping("/member/account/{username}")
     public ResponseEntity<Account> getAccountByUsername(@PathVariable(name = "username") String username) {
         Account account = accountService.findByAccount(username);
         if (account == null) {
@@ -75,7 +74,7 @@ public class UserController {
         }
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
-    @GetMapping("/transaction/{username}")
+    @GetMapping("/member/transaction/{username}")
     public ResponseEntity <List<TransactionHistory>> getTransactionByUsername(@PathVariable(name = "username") String username) {
         List <TransactionHistory> transaction = transactionHistoryService.findByTransaction(username);
         if (transaction == null) {
@@ -84,7 +83,7 @@ public class UserController {
         return new ResponseEntity<>(transaction, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/editUser/{username}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value = "/member/editUser/{username}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<User> editUser(@PathVariable("username") String username, @RequestBody User user) {
         try {
             userService.updateUser(user, username);
@@ -183,7 +182,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PostMapping("/setPass/{username}/{newPassword}")
+    @PostMapping("/member/setPass/{username}/{newPassword}")
     public ResponseEntity<Void> setNewPassword(@PathVariable(name = "username") String username,
                                                @PathVariable(name = "newPassword") String newPassword) {
         Account account = accountService.findByUsername(username);

@@ -53,7 +53,6 @@ public class Movie {
     @Column(name = "trailer", columnDefinition = "varchar(255)")
     private String trailer;
 
-    @OneToMany(mappedBy = "movie")
     @Column(name = "banner", columnDefinition = "VARCHAR(255)")
     private String banner;
 
@@ -76,18 +75,16 @@ public class Movie {
     private Set<Comment> commentSet;
 
     @OneToMany(mappedBy = "movie")
-<<<<<<< HEAD
+
 //    @JsonManagedReference
-=======
->>>>>>> 5b07947d6c599ccedd717a83c5d3165bfda7a07e
+
     @JsonIgnore
     private Set<MovieTicket> movieTicketSet;
 
     @ManyToOne
-<<<<<<< HEAD
+
 //    @JsonBackReference
-=======
->>>>>>> 5b07947d6c599ccedd717a83c5d3165bfda7a07e
+
     @JoinColumn(name = "movie_status_id", referencedColumnName = "movie_status_id")
     private MovieStatus movieStatus;
 }

@@ -30,10 +30,7 @@ public class Ward {
     private District district;
 
     @OneToMany(mappedBy = "ward")
-<<<<<<< HEAD
 //    @JsonManagedReference
-=======
->>>>>>> 5b07947d6c599ccedd717a83c5d3165bfda7a07e
     @JsonIgnore
     private Set<User> userSet;
 }
