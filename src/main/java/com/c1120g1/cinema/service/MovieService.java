@@ -15,12 +15,12 @@ public interface MovieService {
     /**
      * Author: ThinhTHB
      */
-    Movie getMovieById(Integer id);
+    Movie getMovieById(Integer movieId);
 
-    /**
-     * Author: ThinhTHB
-     */
-    List<Movie> getAllMovie();
+//    /**
+//     * Author: ThinhTHB
+//     */
+//    List<Movie> getAllMovie();
 
     /**
      * Author: ThinhTHB
@@ -74,5 +74,10 @@ public interface MovieService {
      * Author: ViNTT
      */
     Pageable getPageable(Optional<String> pageParam, Optional<String> pageSizeParam);
+
+    /**
+     * Author: ThinhTHB
+     */
+    void editMovie(Movie movie);
 
 }
