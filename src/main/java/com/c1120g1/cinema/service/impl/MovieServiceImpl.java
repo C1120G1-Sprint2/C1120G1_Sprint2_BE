@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,14 +29,14 @@ public class MovieServiceImpl implements MovieService {
     private MovieCategoryRepository movieCategoryRepository;
 
     @Override
-    public Movie getMovieById(Integer id) {
-        return movieRepository.getMovieById(id);
+    public Movie getMovieById(Integer movieId) {
+        return movieRepository.getMovieById(movieId);
     }
 
-    @Override
-    public List<Movie> getAllMovie() {
-        return movieRepository.getAllMovie();
-    }
+//    @Override
+//    public List<Movie> getAllMovie() {
+//        return movieRepository.getAllMovie();
+//    }
 
     @Override
     public Page<Movie> getAllMovieAvailable(Pageable pageable) {
@@ -44,8 +45,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void addMovie(List<MovieDTO> listMovieDTO) {
+
+        Integer idMovie = listMovieDTO.get(0).getMovie().getMovieId();
+        this.movieRepository.save(listMovieDTO.get(0).getMovie());
+
         for (MovieDTO movieDTO : listMovieDTO) {
-            movieRepository.save(movieDTO.getMovie());
+            movieCategoryRepository.createMovieCategory(idMovie, movieDTO.getCategoryId());
         }
 
     }
@@ -133,5 +138,16 @@ public class MovieServiceImpl implements MovieService {
         }
 
         return PageRequest.of(page, pageSize);
+    }
+
+    @Override
+    public void editMovie(Movie movie) {
+        movieRepository.editMovie(movie.getMovieName(), movie.getPosterMovie(), movie.getStartDate(), movie.getEndDate(),
+                movie.getMovieStudio(), movie.getActor(), movie.getDirector(), movie.getMovieLength(), movie.getTrailer(),
+                movie.getMovieId());
+
+//        for (MovieDTO movieDTO : movie) {
+//            movieCategoryRepository.editMovieCategory(temp.getMovieId(), movieDTO.getCategoryId());
+//        }
     }
 }
