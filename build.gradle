@@ -2,7 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.5.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id 'org.sonarqube' version '3.0'
+    id "org.sonarqube" version "3.0"
 }
 
 group = 'com.c1120g1'
@@ -13,14 +13,6 @@ repositories {
     mavenCentral()
 }
 
-sonarqube {
-    properties {
-        property 'sonar.host.url', 'http://3.141.165.122:9000'
-        property 'sonar.login', 'f4570cffe1dd5bf39ecbeed0ef04eef921709b5a'
-        property 'sonar.projectKey', 'C1120G1_ReviewCode_TuanLHM'
-        property 'sonar.projectName', 'C1120G1_ReviewCode_TuanLHM'
-    }
-}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -33,18 +25,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation('io.jsonwebtoken:jjwt:0.9.1')
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//    Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
+
+
 
 test {
     useJUnitPlatform()
 }
 
-sonarqube {
-    properties {
-        property 'sonar.host.url', 'http://3.141.165.122:9000'
-        property 'sonar.login', 'f4570cffe1dd5bf39ecbeed0ef04eef921709b5a'
-        property 'sonar.projectKey', 'C1120G1_ReviewCode_ViNTT'
-        property 'sonar.projectName', 'C1120G1_ReviewCode_ViNTT'
-    }
-}

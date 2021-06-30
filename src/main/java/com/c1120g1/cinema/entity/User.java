@@ -58,10 +58,10 @@ public class User {
     private Set<Ticket> ticketSet;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private Set<Comment> commentSet;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private Set<Rating> ratingSet;
 }

@@ -10,5 +10,11 @@ public interface RoomSeatService {
 
     void deleteSeat(Integer roomSeatId);
 
+    List<RoomSeat> getSeatTotal(Integer roomId);
+
+    void creatSeat(Integer roomSeatId);
+
     RoomSeat findById(Integer id);
+
+    List<RoomSeat> showSeatDelete();
 }

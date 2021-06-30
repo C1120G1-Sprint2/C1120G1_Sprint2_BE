@@ -1,11 +1,8 @@
 package com.c1120g1.cinema.controller;
 
-import com.c1120g1.cinema.entity.Room;
 import com.c1120g1.cinema.entity.RoomSeat;
-import com.c1120g1.cinema.entity.Seat;
 import com.c1120g1.cinema.service.RoomSeatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/api/admin")
+@RequestMapping("/api/roomSeat")
 public class RoomSeatController {
 
     @Autowired
@@ -24,9 +21,18 @@ public class RoomSeatController {
     public ResponseEntity<List<RoomSeat>> getListRoom(@PathVariable Integer roomId) {
         List<RoomSeat> roomList = roomSeatService.showAllSeatByRoomId(roomId);
         if (roomList.isEmpty()) {
-            return new ResponseEntity<List<RoomSeat>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<RoomSeat>>(roomList, HttpStatus.OK);
+        return new ResponseEntity<>(roomList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getRoomSeat/{roomId}")
+    public ResponseEntity<List<RoomSeat>> getSeatTotal(@PathVariable Integer roomId) {
+        List<RoomSeat> roomList = roomSeatService.getSeatTotal(roomId);
+        if (roomList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(roomList, HttpStatus.OK);
     }
 
 
@@ -37,8 +43,9 @@ public class RoomSeatController {
      * @return
      */
 
+
     @GetMapping(value = "/seat/delete-seat/{id}")
-    public ResponseEntity<RoomSeat> deleteRoom(@PathVariable("id") Integer id) {
+    public ResponseEntity<RoomSeat> deleteSeat(@PathVariable("id") Integer id) {
 
         RoomSeat roomSeat = roomSeatService.findById(id);
         if (roomSeat.getRoomSeatId() == null) {
@@ -47,5 +54,33 @@ public class RoomSeatController {
             roomSeatService.deleteSeat(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    /**
+     * Method: create seat
+     * Author: TuanLHM
+     *
+     * @return
+     */
+
+    @GetMapping(value = "/seat/create-seat/{id}")
+    public ResponseEntity<RoomSeat> createSeat(@PathVariable("id") Integer id) {
+
+        RoomSeat roomSeat = roomSeatService.findById(id);
+        if (roomSeat.getRoomSeatId() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            roomSeatService.creatSeat(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(value = "/showSeatDelete")
+    public ResponseEntity<List<RoomSeat>> getSeatDelete() {
+        List<RoomSeat> roomSeatList = roomSeatService.showSeatDelete();
+        if (roomSeatList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(roomSeatList, HttpStatus.OK);
     }
 }

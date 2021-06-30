@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+
 
 @Entity
 @Getter
@@ -28,8 +30,8 @@ public class Room {
     private String roomName;
 
     @ManyToOne
+    @JoinColumn(name = "status_room_id", referencedColumnName = "status_room_id")
     @JsonBackReference
-    @JoinColumn(name = "status_room_id")
     private StatusRoom statusRoom;
 
 }

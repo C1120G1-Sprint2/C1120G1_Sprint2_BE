@@ -1,6 +1,5 @@
 package com.c1120g1.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,6 +35,4 @@ public class RoomSeat {
     @ManyToOne
     @JoinColumn(name = "seat_status_id")
     private SeatStatus seatStatus;
-
-
 }

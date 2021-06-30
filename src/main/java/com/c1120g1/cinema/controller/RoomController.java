@@ -18,8 +18,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/api/admin")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@RequestMapping("/api/room")
 public class RoomController {
 
     @Autowired
