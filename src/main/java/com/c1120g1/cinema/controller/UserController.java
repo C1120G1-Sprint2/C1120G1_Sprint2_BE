@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class UserController {
 
     @Autowired
@@ -138,6 +138,20 @@ public class UserController {
     public ResponseEntity<List<UserPreviewDTO>> searchAll(@RequestParam(name = "q") String q) {
         try {
             List<User> userList = this.userService.searchAllUserAttribute(q);
+            if (userList != null) {
+                return new ResponseEntity<>(userMapper.toSearchDto(userList), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/employee/listUser/searchPagination")
+    public ResponseEntity<List<UserPreviewDTO>> searchAllPagination(@RequestParam(name = "q") String q,
+                                                                    @RequestParam(name = "index") int index) {
+        try {
+            List<User> userList = this.userService.searchAllAttributePagination(q,index);
             if (userList != null) {
                 return new ResponseEntity<>(userMapper.toSearchDto(userList), HttpStatus.OK);
             }

@@ -15,6 +15,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * SangTH
+     *
      * @param key
      * @return
      */
@@ -22,12 +23,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "inner join `account` on `user`.username = `account`.username\n" +
             "inner join ward on `user`.ward_id = ward.ward_id\n" +
             "inner join account_status on account_status.account_status_id = `account`.account_status_id\n" +
-            "where concat( email , `name` ,`account`.username, ward.ward_name , account_status.account_status_name ) like concat('%',?1,'%')" ,nativeQuery = true)
-           
+            "where concat( email , `name` ,`account`.username, ward.ward_name , account_status.account_status_name ) like concat('%',?1,'%')", nativeQuery = true)
     List<User> searchAll(String key);
 
     /**
      * SangTH
+     *
      * @param index
      * @return
      */
@@ -48,6 +49,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * SangTH
+     *
      * @param userId
      * @return
      */
@@ -56,6 +58,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * SangTH
+     *
      * @param userId, name,email, phone, ward, avatarUrl, gender,birthday
      */
     @Modifying
@@ -73,6 +76,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * SangTH
+     *
      * @param email
      * @return
      */
@@ -81,6 +85,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * SangTH
+     *
      * @param username
      * @return
      */
@@ -89,6 +94,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * SangTH
+     *
      * @param avatarUrl,name,username,email,birthday,idCard,gender,phone,wardId
      */
     @Modifying
@@ -107,7 +113,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                      @Param("wardId") Integer wardId);
 
     /**
-     *ThuanNN
+     * ThuanNN
+     *
      * @param username
      * @return
      */
@@ -115,4 +122,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "INNER JOIN `account` ON `account`.username = `user`.username " +
             "WHERE `account`.username = ?1", nativeQuery = true)
     User getUserByUsername(String username);
+
+
+    @Query(value = "select * from `user`\n" +
+            "            inner join `account` on `user`.username = `account`.username\n" +
+            "            inner join ward on `user`.ward_id = ward.ward_id\n" +
+            "            inner join account_status on account_status.account_status_id = `account`.account_status_id\n" +
+            "            where concat( email , `name` ,`account`.username, ward.ward_name , account_status.account_status_name ) like concat('%',?1,'%') limit ?2,5" , nativeQuery = true)
+    List<User> getListSearchPagination(String q, int index);
 }
