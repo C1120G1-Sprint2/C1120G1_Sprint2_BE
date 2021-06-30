@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
-@RequestMapping("/api/admin")
+@RequestMapping("/api/room")
 public class RoomController {
 
     @Autowired

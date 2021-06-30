@@ -1,38 +1,21 @@
 package com.c1120g1.cinema.controller;
 
-import com.c1120g1.cinema.entity.Room;
 import com.c1120g1.cinema.entity.Seat;
 import com.c1120g1.cinema.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
-@RequestMapping("/api/admin")
+@RequestMapping("/api/seat")
 public class SeatController {
 
     @Autowired
     private SeatService seatService;
-
-    @Autowired
-    private SeatTypeService seatTypeService;
-
-    @Autowired
-    private SeatStatusService seatStatusService;
-
-    @Autowired
-    private ColumnSeatService columnSeatService;
-
-    @Autowired
-    private RowSeatService rowSeatService;
 
     /**
      * Method: get all seat
@@ -70,6 +53,12 @@ public class SeatController {
     @PutMapping("/seat/edit-seat")
     public ResponseEntity<Void> updateSeat(@RequestBody Seat seat){
         seatService.updateSeat(seat);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PutMapping("/createSeatBySeatType/{seatTypeId}/{seatId}")
+    public ResponseEntity<Void> createSeatBySeatType(@PathVariable Integer seatTypeId, @PathVariable Integer seatId){
+        seatService.createSeatBySeatType(seatTypeId,seatId);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

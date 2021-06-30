@@ -38,4 +38,9 @@ public class RoomSeatServiceImpl implements RoomSeatService {
     public RoomSeat findById(Integer id) {
         return roomSeatRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public List<RoomSeat> showSeatDelete() {
+        return roomSeatRepository.showSeatDelete();
+    }
 }

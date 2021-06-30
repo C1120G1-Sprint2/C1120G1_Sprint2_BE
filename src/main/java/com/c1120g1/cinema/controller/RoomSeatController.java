@@ -63,7 +63,7 @@ public class RoomSeatController {
      * @return
      */
 
-    @PostMapping(value = "/seat/create-seat/{id}")
+    @GetMapping(value = "/seat/create-seat/{id}")
     public ResponseEntity<RoomSeat> createSeat(@PathVariable("id") Integer id) {
 
         RoomSeat roomSeat = roomSeatService.findById(id);
@@ -73,5 +73,14 @@ public class RoomSeatController {
             roomSeatService.creatSeat(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    @GetMapping(value = "/showSeatDelete")
+    public ResponseEntity<List<RoomSeat>> getSeatDelete() {
+        List<RoomSeat> roomSeatList = roomSeatService.showSeatDelete();
+        if (roomSeatList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(roomSeatList, HttpStatus.OK);
     }
 }

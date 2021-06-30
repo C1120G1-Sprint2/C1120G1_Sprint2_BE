@@ -15,4 +15,6 @@ public interface RoomSeatService {
     void creatSeat(Integer roomSeatId);
 
     RoomSeat findById(Integer id);
+
+    List<RoomSeat> showSeatDelete();
 }
