@@ -238,6 +238,20 @@ public class UserController {
         }
     }
 
+    @GetMapping(value = "/employee/listUser/searchPagination")
+    public ResponseEntity<List<UserPreviewDTO>> searchAllPagination(@RequestParam(name = "q") String q,
+                                                                    @RequestParam(name = "index") int index) {
+        try {
+            List<User> userList = this.userService.searchAllAttributePagination(q,index);
+            if (userList != null) {
+                return new ResponseEntity<>(userMapper.toSearchDto(userList), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping(value = "/employee/listUser/delete/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable("id") Integer id) {
         userService.deleteUserById(id);

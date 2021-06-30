@@ -11,8 +11,10 @@ import com.c1120g1.cinema.service.AccountService;
 import com.c1120g1.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import javax.mail.MessagingException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -37,6 +39,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public List<User> findAll(int index) {
         return userRepository.getAllUser(index);
@@ -57,6 +62,7 @@ public class UserServiceImpl implements UserService {
         userRepository.updateUser(userDTO.getUserId(), standardizeName(userDTO.getName()),
                 userDTO.getEmail(), userDTO.getPhone(), userDTO.getWard(),
                 userDTO.getAvatarUrl(),userDTO.getGender(),userDTO.getBirthday());
+
     }
 
     @Override
@@ -74,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
         Account account = new Account();
         account.setUsername(userDTO.getUsername());
-        account.setPassword((userDTO.getPassword()));
+        account.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         if (userDTO.getUsername() == null) {
             account.setRegisterDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         }
@@ -99,6 +105,11 @@ public class UserServiceImpl implements UserService {
                 user.getGender(),
                 user.getPhone(),
                 user.getWard().getWardId());
+//        try {
+//            accountService.sendEmailApprove(user.getEmail());
+//        } catch (MessagingException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -190,6 +201,8 @@ public class UserServiceImpl implements UserService {
     public void updateUser1(User user) {
         userRepository.updateUser1(user.getName(), user.getBirthday(), user.getGender(), user.getEmail(),
                 user.getIdCard(), user.getPhone());
-
+    }
+    public List<User> searchAllAttributePagination(String q, int index) {
+        return userRepository.getListSearchPagination(q,index);
     }
 }
