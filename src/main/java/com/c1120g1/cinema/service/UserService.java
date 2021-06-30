@@ -31,4 +31,6 @@ public interface UserService {
     User findByEmail(String email);
 
     User getUserByUsername(String username);
+
+    List<User> searchAllAttributePagination(String q, int index);
 }
