@@ -1,4 +1,5 @@
 package com.c1120g1.cinema.service.impl;
+import com.c1120g1.cinema.dto.AccountDTO;
 import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.repository.AccountRepository;
 import com.c1120g1.cinema.service.AccountService;
@@ -102,7 +103,6 @@ public class AccountServiceImpl implements AccountService {
                 + "TRANG WEB CINEMA C11 gửi mã code OTP để xác nhận tài khoản.\n"
                 + "Mã CODE bao gồm 6 số : " + code + "\n\n"
                 + "Thanks and regards!");
-
         this.emailSender.send(message);
     }
 
@@ -112,10 +112,21 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void setNewPassword(Account account, String newPassword) {
+    public Integer setNewPassword(AccountDTO accountDTO) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        account.setPassword(passwordEncoder.encode(newPassword));
-        accountRepository.save(account);
+        accountDTO.setNewPassword(passwordEncoder.encode(accountDTO.getNewPassword()));
+        accountRepository.saveAccountDto(accountDTO.getNewPassword(),accountDTO.getUsername());
+        return null;
     }
-
+    @Override
+    public void sendEmailOTP(String email, String code) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Email lấy lại mật khẩu từ Cinema C11");
+        message.setText("Chào bạn!\n"
+                + "TRANG Cinema C11 gửi mã code OTP bên dưới để đổi lại mật khẩu.\n"
+                + "Mã CODE bao gồm 6 số : " + code + "\n\n"
+                + "Thanks and regards!");
+        this.emailSender.send(message);
+    }
 }

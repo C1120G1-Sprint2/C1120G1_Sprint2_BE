@@ -64,8 +64,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserByEmail(email);
     }
 
-
-
     @Override
     public User findByIdCard(String idCard) {
         return userRepository.getUserByIdCard(idCard);

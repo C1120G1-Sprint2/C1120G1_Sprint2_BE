@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.controller;
 
+import com.c1120g1.cinema.dto.AccountDTO;
 import com.c1120g1.cinema.dto.UserDTO;
 import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.TransactionHistory;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.validation.FieldError;
@@ -28,10 +30,9 @@ import java.util.Map;
 
 
 @RestController
-//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class UserController {
-
+    Map<String, String> checkOTP = new HashMap<>();
     @Autowired
     private UserService userService;
 
@@ -74,9 +75,10 @@ public class UserController {
         }
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
+
     @GetMapping("/member/transaction/{username}")
-    public ResponseEntity <List<TransactionHistory>> getTransactionByUsername(@PathVariable(name = "username") String username) {
-        List <TransactionHistory> transaction = transactionHistoryService.findByTransaction(username);
+    public ResponseEntity<List<TransactionHistory>> getTransactionByUsername(@PathVariable(name = "username") String username) {
+        List<TransactionHistory> transaction = transactionHistoryService.findByTransaction(username);
         if (transaction == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -92,7 +94,8 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-@Autowired
+
+    @Autowired
     UserMapper userMapper;
 
     @GetMapping(value = "/employee/listUser")
@@ -182,56 +185,84 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PostMapping("/member/setPass/{username}/{newPassword}")
-    public ResponseEntity<Void> setNewPassword(@PathVariable(name = "username") String username,
-                                               @PathVariable(name = "newPassword") String newPassword) {
-        Account account = accountService.findByUsername(username);
+
+    @PostMapping("/member/setPass")
+    public ResponseEntity<AccountDTO> setNewPassword( @RequestBody AccountDTO accountDTO) {
+        Account account = accountService.findByUsername(accountDTO.getUsername());
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        accountService.setNewPassword(account, newPassword);
+        if (checkOTP.containsKey(accountDTO.getUsername())) {
+            if (checkOTP.get(accountDTO.getUsername()).equals(accountDTO.getOtp())) {
+                if (BCrypt.checkpw(accountDTO.getOldPassword(), account.getPassword())) {
+                    accountService.setNewPassword(accountDTO);
+                    return new ResponseEntity<>(HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/member/sendEmailOTP")
+    public ResponseEntity<String> checkEmailOTP(@RequestParam(name = "email") String email) {
+        System.out.println("Email : " + email);
+        User user = this.userService.findByEmail(email);
+        if (user != null) {
+            String code = accountService.generateCode();
+            checkOTP.put(user.getAccount().getUsername(), code);
+            System.out.println("CODE : " + code);
+            accountService.sendEmailOTP(email, code);
+            return new ResponseEntity<>(code, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @GetMapping(value = "/employee/listUser/search")
+    public ResponseEntity<List<UserPreviewDTO>> searchAll(@RequestParam(name = "q") String q) {
+        try {
+            List<User> userList = this.userService.searchAllUserAttribute(q);
+            if (userList != null) {
+                return new ResponseEntity<>(userMapper.toSearchDto(userList), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "/employee/listUser/delete/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable("id") Integer id) {
+        userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-            @GetMapping(value = "/employee/listUser/search")
-            public ResponseEntity<List<UserPreviewDTO>> searchAll(@RequestParam(name = "q") String q){
-                try {
-                    List<User> userList = this.userService.searchAllUserAttribute(q);
-                    if (userList != null) {
-                        return new ResponseEntity<>(userMapper.toSearchDto(userList), HttpStatus.OK);
-                    }
-                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-                } catch (Exception e) {
-                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            }
-
-        @PutMapping(value = "/employee/listUser/delete/{id}")
-        public ResponseEntity<User> deleteUser (@PathVariable("id") Integer id){
-            userService.deleteUserById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-
-        public ResponseEntity<List<Ward>> getWard () {
-            try {
-                List<Ward> wards = wardService.getAllWard();
-                return ResponseEntity.ok().body(wards);
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        @ResponseStatus(HttpStatus.BAD_REQUEST)
-        @ExceptionHandler(MethodArgumentNotValidException.class)
-        public Map<String, String> handleValidationExceptions (
-                MethodArgumentNotValidException ex){
-            Map<String, String> errors = new HashMap<>();
-            ex.getBindingResult().getAllErrors().forEach(error -> {
-                String fieldName = ((FieldError) error).getField();
-                String errorMessage = error.getDefaultMessage();
-                errors.put(fieldName, errorMessage);
-            });
-            return errors;
+    public ResponseEntity<List<Ward>> getWard() {
+        try {
+            List<Ward> wards = wardService.getAllWard();
+            return ResponseEntity.ok().body(wards);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
+    }
+}
