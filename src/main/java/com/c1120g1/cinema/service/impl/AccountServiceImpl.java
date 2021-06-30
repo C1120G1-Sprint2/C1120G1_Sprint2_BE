@@ -1,5 +1,4 @@
 package com.c1120g1.cinema.service.impl;
-
 import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.repository.AccountRepository;
@@ -9,15 +8,16 @@ import com.c1120g1.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import org.springframework.stereotype.Service;
 import java.util.Random;
 
 @Service
@@ -118,5 +118,5 @@ public class AccountServiceImpl implements AccountService {
                 + "Thanks and regards!");
 
         this.emailSender.send(message);
-    }
+
 }

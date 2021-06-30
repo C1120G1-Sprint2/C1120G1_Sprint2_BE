@@ -10,4 +10,10 @@ public class MovieCategoryServiceImpl implements MovieCategoryService {
 
     @Autowired
     private MovieCategoryRepository movieCategoryRepository;
+
+
+    @Override
+    public void createMovieCategory(Integer movie, Integer category) {
+        movieCategoryRepository.createMovieCategory(movie, category);
+    }
 }
