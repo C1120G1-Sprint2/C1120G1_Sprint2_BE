@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.service;
 
+import com.c1120g1.cinema.dto.AccountDTO;
 import com.c1120g1.cinema.entity.Account;
 
 
@@ -40,4 +41,9 @@ public interface AccountService {
      */
     void sendEmail(String email, String code);
 
+    Account findByAccount(String username);
+
+    Integer setNewPassword(AccountDTO accountDTO);
+
+    void sendEmailOTP(String email, String code);
 }

@@ -24,6 +24,7 @@ public class Province {
     private String provinceName;
 
     @OneToMany(mappedBy = "province", cascade = CascadeType.ALL)
+//    @JsonManagedReference
     @JsonIgnore
     private Set<District> districtSet;
 }

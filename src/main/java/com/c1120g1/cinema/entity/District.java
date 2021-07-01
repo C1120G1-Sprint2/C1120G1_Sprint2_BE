@@ -25,10 +25,12 @@ public class District {
     private String districtName;
 
     @ManyToOne
+//    @JsonBackReference
     @JoinColumn(name = "province_id", referencedColumnName = "province_id")
     private Province province;
 
     @OneToMany(mappedBy = "district", cascade = CascadeType.ALL)
+//    @JsonManagedReference
     @JsonIgnore
     private Set<Ward> wardSet;
 

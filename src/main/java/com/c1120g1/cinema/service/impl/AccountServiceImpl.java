@@ -1,4 +1,5 @@
 package com.c1120g1.cinema.service.impl;
+import com.c1120g1.cinema.dto.AccountDTO;
 import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.repository.AccountRepository;
@@ -6,10 +7,12 @@ import com.c1120g1.cinema.repository.UserRepository;
 import com.c1120g1.cinema.service.AccountService;
 import com.c1120g1.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.mail.MailSender;
+
 import org.springframework.mail.javamail.MimeMessageHelper;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -17,6 +20,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Random;
 
@@ -116,7 +123,30 @@ public class AccountServiceImpl implements AccountService {
                 + "TRANG WEB CINEMA C11 gửi mã code OTP để xác nhận tài khoản.\n"
                 + "Mã CODE bao gồm 6 số : " + code + "\n\n"
                 + "Thanks and regards!");
-
         this.emailSender.send(message);
+    }
 
+    @Override
+    public Account findByAccount(String username) {
+        return accountRepository.findByUsername(username);
+    }
+
+    @Override
+    public Integer setNewPassword(AccountDTO accountDTO) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        accountDTO.setNewPassword(passwordEncoder.encode(accountDTO.getNewPassword()));
+        accountRepository.saveAccountDto(accountDTO.getNewPassword(),accountDTO.getUsername());
+        return null;
+    }
+    @Override
+    public void sendEmailOTP(String email, String code) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Email lấy lại mật khẩu từ Cinema C11");
+        message.setText("Chào bạn!\n"
+                + "TRANG Cinema C11 gửi mã code OTP bên dưới để đổi lại mật khẩu.\n"
+                + "Mã CODE bao gồm 6 số : " + code + "\n\n"
+                + "Thanks and regards!");
+        this.emailSender.send(message);
+    }
 }

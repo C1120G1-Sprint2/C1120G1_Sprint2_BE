@@ -2,7 +2,6 @@ package com.c1120g1.cinema.service.impl;
 
 
 import com.c1120g1.cinema.dto.UserDTO;
-import com.c1120g1.cinema.dto.UserEditDTO;
 import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.AccountStatus;
 import com.c1120g1.cinema.entity.User;
@@ -20,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 
 
 @Service
@@ -47,6 +48,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findById1(Integer userId) {
+        return userRepository.findById(userId);
+    }
+
+    @Override
     public User findById(Integer userId) {
         return userRepository.findUserById(userId);
     }
@@ -62,11 +68,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return userRepository.getUserByEmail(email);
-    }
-
-    @Override
-    public User findByUsername(String username) {
-        return userRepository.getUserByUsername(username);
     }
 
     @Override
@@ -158,7 +159,12 @@ public class UserServiceImpl implements UserService {
 
     /**
      * ThuanNN
+<<<<<<< HEAD
+     *
+//     * @param email
+=======
      * @param username
+>>>>>>> dbc7e23685ab6a6912c5aad71da35b3557538da0
      * @return
      */
     @Override
@@ -167,6 +173,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByUsername1(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.getUserByUsername(username);
+    }
+
+    @Override
+    public void updateUser(User user, String username) {
+        User user1 = this.findByUsername(username);
+        if (user1 != null) {
+//            repository.updateUser(username, user.getName(), user.getBirthday(), user.getGender(), user.getEmail(), user.getIdCard(), user.getPhone());
+       user.setAccount(user1.getAccount());
+       user.setWard(user1.getWard());
+       user.setAvatarUrl(user1.getAvatarUrl());
+       user.setUserId(user1.getUserId());
+
+       userRepository.save(user);
+
+        }
+    }
+
+    @Override
+    public void updateUser1(User user) {
+        userRepository.updateUser1(user.getName(), user.getBirthday(), user.getGender(), user.getEmail(),
+                user.getIdCard(), user.getPhone());
+    }
     public List<User> searchAllAttributePagination(String q, int index) {
         return userRepository.getListSearchPagination(q,index);
     }

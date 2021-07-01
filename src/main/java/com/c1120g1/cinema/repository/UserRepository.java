@@ -73,13 +73,40 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             " where u.userId = ?1")
     void updateUser(Integer userId, String name, String email, String phone,
                     Ward ward, String avatarUrl, int gender, String birthday);
-
     /**
      * SangTH
      *
      * @param email
      * @return
      */
+    User findByEmail(String email);
+
+    @Query(value = "SELECT * FROM `user` " +
+            "WHERE username = ?1", nativeQuery = true)
+    User findByUsername(String username);
+
+    @Modifying
+    @Query(value ="update `user`" +
+            " set `name` = ?2, " +
+            "birthday =?3, " +
+            "gender =?4, " +
+            "email =?5, " +
+            "idCard =?6, " +
+            "phone =?7" +
+            " where username = ?1",nativeQuery = true)
+    void updateUser(String username,String name, String birthday, Integer gender, String email, String idCard, String phone);
+
+    @Modifying
+    @Query(value ="update `user`" +
+            " set `name` = ?2, " +
+            "birthday =?3, " +
+            "gender =?4, " +
+            "email =?5, " +
+            "idCard =?6, " +
+            "phone =?7" +
+            " where user_id = ?1",nativeQuery = true)
+    void updateUser1(String name, String birthday, Integer gender, String email, String idCard, String phone);
+
     @Query(value = "select  * from `user` where `user`.email = ?1", nativeQuery = true)
     User getUserByEmail(String email);
 

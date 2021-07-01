@@ -31,4 +31,11 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query(value = "select * from `account`", nativeQuery = true)
     List<Account> getListAccount();
+
+    @Transactional
+    @Modifying
+    @Query(value = "update `account`\n" +
+            "set `password`=?1\n" +
+            "where `username`=?2",nativeQuery = true)
+    Integer saveAccountDto(String password,String username);
 }

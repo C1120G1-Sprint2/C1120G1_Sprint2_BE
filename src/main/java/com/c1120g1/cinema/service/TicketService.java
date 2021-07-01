@@ -1,10 +1,13 @@
 package com.c1120g1.cinema.service;
 
 import com.c1120g1.cinema.entity.Ticket;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface TicketService {
+    Page<Ticket> findAllTicketByUsername(Pageable pageable, String username);
 
-    List<Ticket> findAll();
+    void deleteById(Integer id);
+
+    Ticket findById(Integer ticketId);
 }
