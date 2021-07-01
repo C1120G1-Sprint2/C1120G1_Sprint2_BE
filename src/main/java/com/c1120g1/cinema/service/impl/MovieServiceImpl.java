@@ -1,6 +1,8 @@
 package com.c1120g1.cinema.service.impl;
 
 import com.c1120g1.cinema.entity.Movie;
+import com.c1120g1.cinema.entity.dto.MovieDTO;
+import com.c1120g1.cinema.repository.MovieCategoryRepository;
 import com.c1120g1.cinema.repository.MovieRepository;
 import com.c1120g1.cinema.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -20,6 +24,41 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private MovieCategoryRepository movieCategoryRepository;
+
+    @Override
+    public Movie getMovieById(Integer movieId) {
+        return movieRepository.getMovieById(movieId);
+    }
+
+//    @Override
+//    public List<Movie> getAllMovie() {
+//        return movieRepository.getAllMovie();
+//    }
+
+    @Override
+    public Page<Movie> getAllMovieAvailable(Pageable pageable) {
+        return movieRepository.getAllMovieAvailable(pageable);
+    }
+
+    @Override
+    public void addMovie(List<MovieDTO> listMovieDTO) {
+
+        Integer idMovie = listMovieDTO.get(0).getMovie().getMovieId();
+        this.movieRepository.save(listMovieDTO.get(0).getMovie());
+
+        for (MovieDTO movieDTO : listMovieDTO) {
+            movieCategoryRepository.createMovieCategory(idMovie, movieDTO.getCategoryId());
+        }
+
+    }
+
+    @Override
+    public void setStatus(Integer movieId) {
+        movieRepository.setMovieStatusById(movieId);
+    }
 
     @Override
     public List<Movie> findAll() {
@@ -104,5 +143,16 @@ public class MovieServiceImpl implements MovieService {
         }
 
         return PageRequest.of(page, pageSize);
+    }
+
+    @Override
+    public void editMovie(Movie movie) {
+        movieRepository.editMovie(movie.getMovieName(), movie.getPosterMovie(), movie.getStartDate(), movie.getEndDate(),
+                movie.getMovieStudio(), movie.getActor(), movie.getDirector(), movie.getMovieLength(), movie.getTrailer(),
+                movie.getMovieId());
+
+//        for (MovieDTO movieDTO : movie) {
+//            movieCategoryRepository.editMovieCategory(temp.getMovieId(), movieDTO.getCategoryId());
+//        }
     }
 }
