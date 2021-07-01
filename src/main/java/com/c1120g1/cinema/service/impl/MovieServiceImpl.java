@@ -71,16 +71,21 @@ public class MovieServiceImpl implements MovieService {
      */
     @Override
     public Page<Movie> advancedSearch(String keySearch, String categoryId, String date, String showTimeId, Pageable pageable) {
+        Page<Movie> movies;
         if (categoryId.equals("")) {
-            categoryId = "%" + categoryId + "%";
+            if (date.equals("")) {
+                movies = movieRepository.findByTitleContaining(keySearch, pageable);
+            } else {
+                movies = movieRepository.findByTitleAndDateAndShowTime(keySearch, date, showTimeId, pageable);
+            }
+        } else {
+            if (date.equals("")) {
+                movies = movieRepository.findByTitleAndCategory(keySearch, categoryId, pageable);
+            } else {
+                movies = movieRepository.findByTitleAndCategoryAndDateAndShowTime(keySearch, categoryId, date, showTimeId, pageable);
+            }
         }
-        if (date.equals("")) {
-            date = "%" + date + "%";
-        }
-        if (showTimeId.equals("")) {
-            showTimeId = "%" + showTimeId + "%";
-        }
-        return movieRepository.findByTitleAndCategoryAndDateAndShowTime(keySearch, categoryId, date, showTimeId, pageable);
+        return movies;
     }
 
     /**
