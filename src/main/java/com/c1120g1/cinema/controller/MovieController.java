@@ -34,7 +34,7 @@ public class MovieController {
     MovieCategoryService movieCategoryService;
 
 
-    @GetMapping("/admin/list-movie")
+    @GetMapping("")
     public ResponseEntity<?> getAllMovies() {
         try {
             List<Movie> movieList = this.movieService.findAll();
@@ -76,8 +76,8 @@ public class MovieController {
      * function to get movie by id
      */
     @GetMapping("/movie_id/{id}")
-    public Movie getMovieById(@PathVariable Integer id) {
-        return movieService.getMovieById(id);
+    public ResponseEntity<Movie> getMovieById(@PathVariable Integer id) {
+        return new ResponseEntity(movieService.getMovieById(id), HttpStatus.OK);
     }
 
 
@@ -96,9 +96,9 @@ public class MovieController {
     }
 
     @PutMapping("/edit_movie")
-    public ResponseEntity<Void> editMovie(@RequestBody Movie movie) {
+    public ResponseEntity<Void> editMovie(@RequestBody List<MovieDTO> listMovieDTO) {
         try {
-            movieService.editMovie(movie);
+            movieService.editMovie(listMovieDTO);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

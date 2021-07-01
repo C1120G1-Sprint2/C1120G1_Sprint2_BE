@@ -315,5 +315,25 @@ public class TicketController {
         return new ResponseEntity<>(listShowTime, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/booking", params = {"page", "username"})
+    public ResponseEntity<Page<Ticket>> getListTickets(
+            @RequestParam("username") String username, Pageable pageable) {
+        Page<Ticket> tickets = ticketService.findAllTicketByUsername(pageable, username);
+        if (tickets == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(tickets, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/cancelTicket/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        Ticket currentTicket = ticketService.findById(id);
+        if (currentTicket == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        ticketService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

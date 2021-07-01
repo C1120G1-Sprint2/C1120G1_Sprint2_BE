@@ -22,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
-
+@RequestMapping("/api/room")
 public class RoomController {
 
     @Autowired
@@ -39,7 +39,7 @@ public class RoomController {
     @Autowired
     private SeatService seatService;
 
-    @GetMapping("/api/admin/room")
+    @GetMapping("")
     public ResponseEntity<List<Room>> getAllRoom() {
         try {
             List<Room> roomList = this.roomService.findAll();
@@ -49,7 +49,7 @@ public class RoomController {
         }
     }
 
-    @GetMapping(value = "/api/admin/room/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Room> getRoomById(@PathVariable("id") Integer id) {
         Room room = this.roomService.findById(id);
         if (room == null) {
@@ -58,7 +58,7 @@ public class RoomController {
         return new ResponseEntity<>(room, HttpStatus.OK);
 
     }
-    @GetMapping("api/room/room")
+    @GetMapping("/room")
     public ResponseEntity<Page<Room>> getListRoom(@PageableDefault(size = 5) Pageable pageable, @RequestParam String roomName) {
         Page<Room> roomList = roomService.findAllRoom(pageable,roomName);
         if (roomList.isEmpty()) {
@@ -95,7 +95,7 @@ public class RoomController {
         roomService.addRoom(room);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/room/{id}").buildAndExpand(room.getRoomId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     /**
@@ -114,7 +114,7 @@ public class RoomController {
         Room room1 = roomService.findRoomById(id);
 
         if (room1 == null || id == null) {
-            return new ResponseEntity<Room>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
 
             room1.setRoomName(room.getRoomName());
@@ -122,7 +122,7 @@ public class RoomController {
             room1.setRoomId(id);
 
             roomService.editRoom(room1);
-            return new ResponseEntity<Room>(room1, HttpStatus.OK);
+            return new ResponseEntity<>(room1, HttpStatus.OK);
         }
     }
 

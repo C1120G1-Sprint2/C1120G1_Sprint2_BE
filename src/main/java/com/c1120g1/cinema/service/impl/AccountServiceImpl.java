@@ -71,12 +71,12 @@ public class AccountServiceImpl implements AccountService {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper messageApprove = new MimeMessageHelper(message, "utf-8");
         String mailContent = "<h1 style='color: #FF8C00 '>C11-Cinema</h1>";
-             mailContent += "<p>Xin chúc mừng bạn đã đăng kí thành công</p><br>" ;
-             mailContent += "<a href=http://localhost:4200/ style='color: lightblue'>Nhấp vào đây</a>" + "<span> để đến với trang của chúng tôi</span>" +
+        mailContent += "<p>Xin chúc mừng bạn đã đăng kí thành công</p><br>";
+        mailContent += "<a href=http://localhost:4200/ style='color: lightblue'>Nhấp vào đây</a>" + "<span> để đến với trang của chúng tôi</span>" +
                 "<p>Thanks and regards!</p>";
         messageApprove.setTo(email);
         messageApprove.setSubject("[C11-Cinema]-Thông báo");
-        messageApprove.setText(mailContent,true);
+        messageApprove.setText(mailContent, true);
         emailSender.send(message);
     }
 
@@ -93,6 +93,7 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * ThuanNN
+     *
      * @return
      */
     @Override
@@ -120,6 +121,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
+
     @Override
     public Account findByAccount(String username) {
         return accountRepository.findByUsername(username);
@@ -142,5 +144,6 @@ public class AccountServiceImpl implements AccountService {
                 + "Mã CODE bao gồm 6 số : " + code + "\n\n"
                 + "Thanks and regards!");
         this.emailSender.send(message);
+
     }
 }

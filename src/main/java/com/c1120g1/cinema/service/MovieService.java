@@ -12,12 +12,12 @@ import java.util.Optional;
 @Service
 public interface MovieService {
 
-    void editMovie(Movie movie);
+    void editMovie(List<MovieDTO> listMovieDTO);
 
     /**
      * Author: ThinhTHB
      */
-    Movie getMovieById(Integer id);
+    List<MovieDTO> getMovieById(Integer movieId);
 
     /**
      * Author: ThinhTHB

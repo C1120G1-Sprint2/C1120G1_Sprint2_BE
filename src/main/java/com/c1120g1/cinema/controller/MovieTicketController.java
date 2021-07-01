@@ -197,7 +197,7 @@ public class MovieTicketController {
     }
 
 
-    @GetMapping(value = "/movie-ticket/search", params = {"size", "q"})
+    @GetMapping(value = "/api/admin/movie-ticket/search", params = {"size", "q"})
     public ResponseEntity<Page<MovieTicket>> searchMovieTicket(@RequestParam("q") String q, @RequestParam("size") int size) {
         try {
             Page<MovieTicket> movieTicketList = this.movieTicketService.searchMovieTicket(PageRequest.of(0, size), q);

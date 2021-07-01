@@ -151,8 +151,8 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
 
 
     @Modifying
-    @Query(value = "update ticket\n" +
-            "set ticket_status_id=3\n" +
+    @Query(value = "update ticket " +
+            "set ticket_status_id=3 " +
             "where ticket_id=?1 and ticket_status_id=1", nativeQuery = true)
     void deleteById(Integer id);
 

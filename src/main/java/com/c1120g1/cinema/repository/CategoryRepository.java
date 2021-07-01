@@ -4,7 +4,9 @@ import com.c1120g1.cinema.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category,Integer> {
@@ -19,5 +21,8 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
     @Query(value = "select * from category", nativeQuery = true)
     List<Category> getCategory();
 
-
+    @Transactional
+    @Modifying
+    @Query(value = "select * from movie_category inner join category on category.category_id = movie_category.category_id where movie_id = :movieId ", nativeQuery = true)
+    List<Category> getMovieCategory(@Param("movieId") Integer movieId);
 }

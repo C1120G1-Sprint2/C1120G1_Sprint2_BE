@@ -33,7 +33,7 @@ public class Ticket {
     private Seat seat;
 
     @Column(name = "time_create",columnDefinition = "date")
-    private String timeCreate;
+    private String createTime;
 
     @ManyToOne
     @JoinColumn(name = "ticket_status_id", referencedColumnName = "ticket_status_id")

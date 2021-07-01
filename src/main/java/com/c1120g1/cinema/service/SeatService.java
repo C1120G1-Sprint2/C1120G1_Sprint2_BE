@@ -13,4 +13,6 @@ public interface SeatService {
     void updateSeat(Seat seat);
     Seat findSeatByColumn_ColumnIdAndRow_RowId(Integer column_columnId, Integer row_rowId);
 
+    void createSeatBySeatType(Integer seatTypeId, Integer seatId);
+
 }

@@ -15,12 +15,11 @@ public interface SeatRepository extends JpaRepository<Seat,Integer> {
 
     @Transactional
     @Modifying(clearAutomatically = true, flushAutomatically = true)
-    @Query(value = "UPDATE cinema_db.seat SET seat.seat_type = ?1 WHERE seat.seat_id = ?2",nativeQuery = true)
+    @Query(value = "UPDATE cinema_db.seat SET seat.seat_type_id = ?1 WHERE seat.seat_id = ?2",nativeQuery = true)
     void updateSeat(Integer seatTypeId, Integer seatId);
 
     @Query(value = "select * from cinema_db.seat inner join cinema_db.room_seat on seat.seat_id = room_seat.seat_id " +
             "where seat_status_id = 1 or seat_status_id = 2",nativeQuery = true)
     List<Seat> showSeat();
-
 
 }

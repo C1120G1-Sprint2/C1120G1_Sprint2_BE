@@ -22,6 +22,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     void editMovie(String movieName, String posterMovie, String startDate, String endDate, String studio,
                    String actor, String director, String length, String trailer, Integer movieId);
 
+
     /**
      * Author : ThinhTHB
      * function to get movie by id
@@ -118,6 +119,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
             "ORDER BY m.movie_name", nativeQuery = true)
     Page<Movie> findByTitleAndCategoryAndDateAndShowTime(String keySearch, String categoryIdSearch,
                                                          String dateSearch, String showTimeIdSearch, Pageable pageable);
+
 
 
 }
