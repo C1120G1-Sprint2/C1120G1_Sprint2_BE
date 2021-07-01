@@ -9,6 +9,9 @@ import com.c1120g1.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,11 +29,16 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public void save(Comment comment, Integer id) {
-        Optional<Movie> movie = this.movieRepository.findById(id);
-        comment.setMovie(movie.get());
-        comment.setUser(userService.findById(id));
-        commentRepository.save(comment);
+    public void save(Comment comment) {
+        String localDt = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date());
+
+        commentRepository.createComment(
+                comment.getContent(),
+                comment.getMovie().getMovieId(),
+                comment.getUser().getUserId(),
+                "sang ga",
+                localDt);
+
     }
 
     @Override

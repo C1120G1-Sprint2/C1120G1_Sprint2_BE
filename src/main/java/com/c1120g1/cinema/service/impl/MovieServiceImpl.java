@@ -28,6 +28,13 @@ public class MovieServiceImpl implements MovieService {
     private MovieCategoryRepository movieCategoryRepository;
 
     @Override
+    public void editMovie(Movie movie) {
+        movieRepository.editMovie(movie.getMovieName(), movie.getPosterMovie(), movie.getStartDate(), movie.getEndDate(),
+                movie.getMovieStudio(), movie.getActor(), movie.getDirector(), movie.getMovieLength(), movie.getTrailer(),
+                movie.getMovieId());
+    }
+
+    @Override
     public Movie getMovieById(Integer id) {
         return movieRepository.getMovieById(id);
     }

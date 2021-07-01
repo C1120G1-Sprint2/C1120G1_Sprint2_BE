@@ -14,10 +14,6 @@ public class RoomSeatServiceImpl implements RoomSeatService {
     @Autowired
     private RoomSeatRepository roomSeatRepository;
 
-    @Override
-    public List<RoomSeat> showAllSeatByRoomId(Integer roomId) {
-        return roomSeatRepository.showAllSeatByRoomId(roomId);
-    }
 
     @Override
     public void deleteSeat(Integer roomSeatId) {
@@ -27,5 +23,37 @@ public class RoomSeatServiceImpl implements RoomSeatService {
     @Override
     public RoomSeat findById(Integer id) {
         return roomSeatRepository.findById(id).orElse(null);
+    }
+        @Override
+    public List<RoomSeat> findAllByRoomId(Integer roomId) {
+        return roomSeatRepository.findAllByRoomId(roomId);
+    }
+
+    @Override
+    public void updateRoomSeatStatus(Integer seatId, Integer roomId) {
+        roomSeatRepository.updateRoomSeatStatus( seatId, roomId );
+    }
+
+    /**
+     * Method: get all room seat by room id and row id
+     * Author: HanTH
+     * @param roomId
+     * @return
+     */
+    @Override
+    public List<RoomSeat> showAllSeatByRoomId(Integer roomId) {
+        return roomSeatRepository.showAllRoomSeatByRoomId( roomId );
+    }
+
+    /**
+     * Method: update status seat
+     * Author: HanTH
+     *
+     * @param seatId
+     * @param seatStatusId
+     */
+    @Override
+    public void updateStatusSeat(Integer roomId, Integer seatId, Integer seatStatusId) {
+        roomSeatRepository.updateStatusSeat(roomId, seatId,seatStatusId );
     }
 }

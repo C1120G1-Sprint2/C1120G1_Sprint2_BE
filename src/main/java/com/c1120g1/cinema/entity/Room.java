@@ -1,3 +1,4 @@
+
 package com.c1120g1.cinema.entity;
 
 
@@ -35,3 +36,4 @@ public class Room {
     private StatusRoom statusRoom;
 
 }
+

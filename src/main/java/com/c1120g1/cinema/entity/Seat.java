@@ -1,5 +1,5 @@
-package com.c1120g1.cinema.entity;
 
+package com.c1120g1.cinema.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,10 +25,6 @@ public class Seat {
     private Integer seatId;
 
     @ManyToOne
-    @JoinColumn(name = "seat_status")
-    private SeatStatus seatStatus;
-
-    @ManyToOne
     @JoinColumn(name = "row_id")
     private RowSeat row;
 
@@ -37,10 +33,11 @@ public class Seat {
     private ColumnSeat column;
 
     @ManyToOne
-    @JoinColumn(name = "seat_type")
+    @JoinColumn(name = "seat_type_id")
     private SeatType seatType;
 
     @OneToMany(mappedBy = "seat")
     @JsonIgnore
     private Set<Ticket> ticketSet;
+
 }

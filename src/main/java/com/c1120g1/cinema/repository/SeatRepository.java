@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface SeatRepository extends JpaRepository<Seat,Integer> {
 
+
     Seat findSeatByColumn_ColumnIdAndRow_RowId(Integer column_columnId, Integer row_rowId);
 
     @Transactional
@@ -20,5 +21,6 @@ public interface SeatRepository extends JpaRepository<Seat,Integer> {
     @Query(value = "select * from cinema_db.seat inner join cinema_db.room_seat on seat.seat_id = room_seat.seat_id " +
             "where seat_status_id = 1 or seat_status_id = 2",nativeQuery = true)
     List<Seat> showSeat();
+
 
 }

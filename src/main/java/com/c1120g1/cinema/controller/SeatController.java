@@ -1,6 +1,8 @@
 package com.c1120g1.cinema.controller;
 
-
+import org.springframework.web.bind.annotation.*;
+import com.c1120g1.cinema.service.SeatService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
@@ -48,9 +49,9 @@ public class SeatController {
     public ResponseEntity<List<Seat>> getListSeat() {
         List<Seat> seatList = seatService.findAllSeat();
         if (seatList.isEmpty()) {
-            return new ResponseEntity<List<Seat>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Seat>>(seatList, HttpStatus.OK);
+        return new ResponseEntity<>(seatList, HttpStatus.OK);
     }
 
     /**
@@ -77,7 +78,7 @@ public class SeatController {
         seatService.addSeat(seat);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/room/{id}").buildAndExpand(seat.getSeatId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     /**
@@ -88,8 +89,9 @@ public class SeatController {
     @PutMapping("/seat/edit-seat")
     public ResponseEntity<Void> updateSeat(@RequestBody Seat seat){
         seatService.updateSeat(seat);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
 }
 

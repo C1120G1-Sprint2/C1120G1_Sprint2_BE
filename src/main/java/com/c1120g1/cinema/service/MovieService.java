@@ -12,6 +12,8 @@ import java.util.Optional;
 @Service
 public interface MovieService {
 
+    void editMovie(Movie movie);
+
     /**
      * Author: ThinhTHB
      */

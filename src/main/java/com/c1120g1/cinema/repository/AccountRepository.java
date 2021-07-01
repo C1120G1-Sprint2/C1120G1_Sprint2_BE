@@ -17,7 +17,9 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Transactional
     @Modifying
-    @Query(value = "update `account` set `account`.account_status_id = 3 where `account`.username = ?1", nativeQuery = true)
+    @Query(value = "update `account` " +
+            "set `account`.account_status_id = 3 " +
+            "where `account`.username = ?1", nativeQuery = true)
     void deleteUserAccount(String username);
 
     @Modifying
@@ -31,4 +33,12 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query(value = "select * from `account`" ,nativeQuery = true)
     List<Account> getListAccount();
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "update `account`\n" +
+            "set `password`=?1\n" +
+            "where `username`=?2",nativeQuery = true)
+    Integer saveAccountDto(String password,String username);
 }

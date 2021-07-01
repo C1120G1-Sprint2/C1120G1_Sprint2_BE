@@ -1,9 +1,15 @@
 package com.c1120g1.cinema.service;
-import com.c1120g1.cinema.entity.User;
+
 import com.c1120g1.cinema.dto.UserDTO;
+import com.c1120g1.cinema.entity.User;
 import java.util.List;
 
 public interface UserService {
+
+
+
+    List<User> findAll();
+
 
     List<User> findAll(int index);
 
@@ -13,7 +19,7 @@ public interface UserService {
 
     User findByUsername(String username);
 
-    User findByIdCard(String idCard);
+    User findByIdCard(String username);
 
     void saveUserCus(UserDTO userDTO);
 
@@ -30,5 +36,13 @@ public interface UserService {
     User findByEmail(String email);
 
     User getUserByUsername(String username);
+
+
+    User createUserNoAccount(User user);
+
+
+     User findByUsername1(String username);
+
+    void updateUser1(User user);
 
 }

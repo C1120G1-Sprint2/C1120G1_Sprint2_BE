@@ -22,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
-@RequestMapping("/api/admin")
+
 public class RoomController {
 
     @Autowired
@@ -39,7 +39,7 @@ public class RoomController {
     @Autowired
     private SeatService seatService;
 
-    @GetMapping("")
+    @GetMapping("/api/admin/room")
     public ResponseEntity<List<Room>> getAllRoom() {
         try {
             List<Room> roomList = this.roomService.findAll();
@@ -49,7 +49,7 @@ public class RoomController {
         }
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/api/admin/room/{id}")
     public ResponseEntity<Room> getRoomById(@PathVariable("id") Integer id) {
         Room room = this.roomService.findById(id);
         if (room == null) {
@@ -58,13 +58,13 @@ public class RoomController {
         return new ResponseEntity<>(room, HttpStatus.OK);
 
     }
-    @GetMapping("/room")
+    @GetMapping("api/room/room")
     public ResponseEntity<Page<Room>> getListRoom(@PageableDefault(size = 5) Pageable pageable, @RequestParam String roomName) {
         Page<Room> roomList = roomService.findAllRoom(pageable,roomName);
         if (roomList.isEmpty()) {
-            return new ResponseEntity<Page<Room>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Page<Room>>(roomList, HttpStatus.OK);
+        return new ResponseEntity<>(roomList, HttpStatus.OK);
     }
 
     /**

@@ -28,11 +28,23 @@ public class CommentController {
     private MovieService movieService;
 
 //    Tao comment
-    @PostMapping("/detail-movie/{id}/create")
-    public ResponseEntity<Void> createComment(@PathVariable("id") Integer id, @RequestBody Comment comment) {
-        try {
-            commentService.save(comment, id);
-            return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping("/detail-movie/{id}/{idUser}/create")
+    public ResponseEntity<Void> createComment(@PathVariable("id") Integer id,
+                                              @PathVariable("idUser") Integer idUser,
+                                              @RequestBody Comment comment) {
+            try {
+                Movie movie = this.movieService.findById(id);
+                User user = this.userService.findById(idUser);
+                if (movie == null || user == null) {
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                }
+                comment.setMovie(movie);
+                comment.setUser(user);
+                commentService.save(comment);
+                System.out.println(comment);
+                return new ResponseEntity<>(HttpStatus.OK);
+
+
         }catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

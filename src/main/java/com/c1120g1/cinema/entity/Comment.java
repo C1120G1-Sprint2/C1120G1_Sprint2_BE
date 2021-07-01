@@ -25,7 +25,7 @@ public class Comment {
     @Column(name = "img", columnDefinition = "LONGTEXT")
     private String img;
 
-    @Column(name = "date")
+    @Column(name = "date", columnDefinition = "DATETIME")
     private String date;
 
     @ManyToOne

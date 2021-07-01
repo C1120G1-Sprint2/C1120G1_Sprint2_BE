@@ -20,7 +20,7 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("api/movie")
 public class MovieController {
 
@@ -90,6 +90,16 @@ public class MovieController {
         try {
             List<Movie> movie = movieService.getAllMovie();
             return new ResponseEntity<>(movie, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/edit_movie")
+    public ResponseEntity<Void> editMovie(@RequestBody Movie movie) {
+        try {
+            movieService.editMovie(movie);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -167,6 +177,8 @@ public class MovieController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+
 
     /**
      * Author : ThinhTHB

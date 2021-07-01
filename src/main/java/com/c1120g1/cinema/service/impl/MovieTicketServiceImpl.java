@@ -17,6 +17,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import java.util.List;
+
 @Service
 public class MovieTicketServiceImpl implements MovieTicketService {
     final Integer basicPrice = 45000;
@@ -47,7 +49,7 @@ public class MovieTicketServiceImpl implements MovieTicketService {
 
         int projectionId = movieTicket.getProjectionType().getProjectionId();
 
-        String priceTicket = getPrice(isNormalDate, isEarly17, projectionId);
+        Integer priceTicket = getPrice(isNormalDate, isEarly17, projectionId);
         movieTicket.setTicketPrice(priceTicket);
         movieTicketRepository.save(movieTicket);
 
@@ -78,7 +80,7 @@ public class MovieTicketServiceImpl implements MovieTicketService {
      * @param isEarly17 : a boolean variable is early than 17:00
      * @return a price string
      */
-    public String getPrice(boolean isNormalDate, boolean isEarly17, int projectionId) {
+    public Integer getPrice(boolean isNormalDate, boolean isEarly17, int projectionId) {
         int price;
 
         if (isNormalDate && isEarly17 && projectionId == 1) {
@@ -94,7 +96,7 @@ public class MovieTicketServiceImpl implements MovieTicketService {
         } else {
             price = basicPrice * 2;
         }
-        return Math.round(price) + "";
+        return Math.round(price);
 
 
     }
@@ -133,7 +135,7 @@ public class MovieTicketServiceImpl implements MovieTicketService {
         int projectionId = movieTicket.getProjectionType().getProjectionId();
 
 
-        String priceTicket = getPrice(isNormalDate, isEarly17, projectionId);
+        Integer priceTicket = getPrice(isNormalDate, isEarly17, projectionId);
         movieTicket.setTicketPrice(priceTicket);
         movieTicketRepository.editMovieTicket(movieTicket.getShowDate(),
                 movieTicket.getTicketPrice(),
@@ -164,6 +166,70 @@ public class MovieTicketServiceImpl implements MovieTicketService {
     @Override
     public MovieTicket getMovieTicket(Integer movieId, String date, Integer showTimeId) {
         return movieTicketRepository.getMovieTicket(movieId, date, showTimeId);
+    }
+
+
+
+    @Override
+    public MovieTicket getMovieTicketById(Integer movieTicketId) {
+        return movieTicketRepository.getMovieTicketById( movieTicketId );
+    }
+
+    /**
+     * Method: get all movie ticket
+     * Author: HanTH
+     *
+     * @return
+     */
+    @Override
+    public List<MovieTicket> showAllMovieTicket(){
+        return movieTicketRepository.showAllMovieTicket();
+    }
+
+    /**
+     * Method: get all movie ticket by id
+     * Author: HanTH
+     *
+     * @param movieId
+     * @return
+     */
+    @Override
+    public List<MovieTicket> showAllMovieTicketByMovieId(Integer movieId) {
+        return movieTicketRepository.showAllMovieTicketByMovieId( movieId );
+    }
+
+    /**
+     * Method: get all movie ticket by id
+     * Author: HanTH
+     *
+     * @param showDate
+     * @return
+     */
+    @Override
+    public List<MovieTicket> showAllMovieTicketByShowDate(String showDate) {
+        return movieTicketRepository.showAllMovieTicketByShowDate( showDate );
+    }
+
+    /**
+     * Method: get all movie ticket by id and show date
+     *
+     * @param movieId
+     * @param showDate
+     * @return
+     */
+    @Override
+    public List<MovieTicket> showAllMovieTicketByMovieIdAndShowDate(Integer movieId, String showDate) {
+        return movieTicketRepository.showAllMovieTicketByMovieIdAndShowDate( movieId, showDate );
+    }
+
+    @Override
+    public MovieTicket findMovieTicketById(Integer movieTicketId) {
+        return movieTicketRepository.findMovieTicketById( movieTicketId );
+    }
+
+    @Override
+    public MovieTicket findMovieTicketBySelect(Integer movieId, String showDate, Integer showTimeId) {
+        return movieTicketRepository.showAllMovieTicketBySelect(movieId,showDate,showTimeId );
     }
 
 }

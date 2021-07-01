@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CommentService {
 
-    void save(Comment comment, Integer id);
+    void save(Comment comment);
 
     Comment findById(Integer id);
 
@@ -17,4 +17,6 @@ public interface CommentService {
     List<Comment> findAll();
 
     boolean editComment(Comment comment);
+
+
 }
