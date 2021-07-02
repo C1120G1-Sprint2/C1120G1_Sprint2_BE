@@ -1,6 +1,10 @@
+
 package com.c1120g1.cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +29,7 @@ public class SeatStatus {
     private String statusName;
 
     @OneToMany(mappedBy = "seatStatus")
-    @JsonManagedReference
-    private Set<Seat> seatSet;
+    @JsonIgnore
+    private Set<RoomSeat> roomSeatSet;
 }
+

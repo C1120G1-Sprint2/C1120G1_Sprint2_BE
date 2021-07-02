@@ -20,6 +20,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
+
     @Autowired(required = false)
     private UserDetailsServiceImpl userDetailService;
 

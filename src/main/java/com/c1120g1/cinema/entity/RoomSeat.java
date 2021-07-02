@@ -1,10 +1,7 @@
 package com.c1120g1.cinema.entity;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.persistence.Column;
 
@@ -22,13 +19,19 @@ public class RoomSeat {
     @Column(name = "room_seat_id")
     private Integer roomSeatId;
 
-    @JsonBackReference
+
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
 
-    @JsonBackReference
+
     @ManyToOne
     @JoinColumn(name = "seat_id")
     private Seat seat;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "seat_status_id")
+    private SeatStatus seatStatus;
 }

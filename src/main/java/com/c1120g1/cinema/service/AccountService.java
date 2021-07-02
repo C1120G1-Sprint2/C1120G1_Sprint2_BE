@@ -1,11 +1,17 @@
 package com.c1120g1.cinema.service;
 
+import com.c1120g1.cinema.dto.AccountDTO;
 import com.c1120g1.cinema.entity.Account;
+
 
 import javax.mail.MessagingException;
 import java.util.List;
 
 public interface AccountService {
+
+
+    List<Account> findAll();
+
 
     void deleteUserAccount(String username);
 
@@ -15,7 +21,7 @@ public interface AccountService {
 
     void saveUserAccount(Account account);
 
-     void sendEmailDelete(String email) throws  MessagingException;
+    void sendEmailDelete(String email) throws  MessagingException;
 
     void sendEmailApprove(String email) throws MessagingException;
     /**
@@ -37,4 +43,12 @@ public interface AccountService {
      * @param code
      */
     void sendEmail(String email, String code);
+
+
+    Account findByAccount(String username);
+
+    Integer setNewPassword(AccountDTO accountDTO);
+
+    void sendEmailOTP(String email, String code);
+
 }

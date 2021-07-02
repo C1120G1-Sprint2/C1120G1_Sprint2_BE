@@ -1,14 +1,14 @@
 package com.c1120g1.cinema.repository;
 
-        import com.c1120g1.cinema.entity.Account;
-        import org.springframework.data.jpa.repository.JpaRepository;
-        import org.springframework.data.jpa.repository.Modifying;
-        import org.springframework.data.jpa.repository.Query;
-        import org.springframework.data.repository.query.Param;
+import com.c1120g1.cinema.entity.Account;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-        import javax.transaction.Transactional;
-        import java.time.LocalDate;
-        import java.util.List;
+import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, String> {
 
@@ -17,7 +17,9 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Transactional
     @Modifying
-    @Query(value = "update `account` set `account`.account_status_id = 3 where `account`.username = ?1", nativeQuery = true)
+    @Query(value = "update `account` " +
+            "set `account`.account_status_id = 3 " +
+            "where `account`.username = ?1", nativeQuery = true)
     void deleteUserAccount(String username);
 
     @Modifying
@@ -29,13 +31,13 @@ public interface AccountRepository extends JpaRepository<Account, String> {
                          @Param("password") String password,
                          @Param("registerDate") LocalDate registerDate);
 
-    @Query(value = "select * from `account`" ,nativeQuery = true)
+    @Query(value = "select * from `account`", nativeQuery = true)
     List<Account> getListAccount();
-    /**
-     * ThuanNN
-     * @param username
-     * @return
-     */
-    Account findByUsername(String username);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update `account`\n" +
+            "set `password`=?1\n" +
+            "where `username`=?2",nativeQuery = true)
+    Integer saveAccountDto(String password,String username);
 }
