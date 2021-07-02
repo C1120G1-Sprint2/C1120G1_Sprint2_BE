@@ -18,4 +18,9 @@ public class TicketStatusServiceImpl implements TicketStatusService {
     public List<TicketStatus> findAll() {
         return ticketStatusRepository.findAll();
     }
+
+    @Override
+    public TicketStatus findById(Integer ticketStatusId) {
+        return ticketStatusRepository.findById(ticketStatusId).orElse(null);
+    }
 }

@@ -1,3 +1,4 @@
+
 package com.c1120g1.cinema.entity;
 
 import lombok.Getter;
@@ -17,9 +18,10 @@ public class ProjectionType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "projection_type_id")
-    private Integer projectTypeId;
+    private Integer projectionId;
 
     @Column(name = "projection_type_name")
-    private String projectTypeName;
+    private String projectionName;
 
 }
+

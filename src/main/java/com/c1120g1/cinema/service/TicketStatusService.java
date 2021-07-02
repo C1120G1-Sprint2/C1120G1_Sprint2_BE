@@ -7,4 +7,6 @@ import java.util.List;
 public interface TicketStatusService {
 
     List<TicketStatus> findAll();
+
+    TicketStatus findById(Integer ticketStatusId);
 }

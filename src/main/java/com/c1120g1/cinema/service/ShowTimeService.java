@@ -6,5 +6,18 @@ import java.util.List;
 
 public interface ShowTimeService {
 
+
+    ShowTime findById(Integer id);
+
+
+    List<ShowTime> getAllShowTimeByDate(String date);
+
     List<ShowTime> getAllShowTimeByDateAndMovie(String date, Integer movieId);
+
+
+    /**
+     * Author: ViNTT
+     */
+    List<ShowTime> findAll();
+
 }
