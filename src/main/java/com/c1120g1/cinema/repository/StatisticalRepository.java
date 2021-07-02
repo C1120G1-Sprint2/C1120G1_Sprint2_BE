@@ -20,7 +20,8 @@ public interface StatisticalRepository extends JpaRepository<Ticket, Integer> {
             "on ticket.movie_ticket_id = movie_ticket.movie_ticket_id " +
             "where ticket.ticket_status_id = 2 " +
             "group by ticket.time_create " +
-            "having ticket.time_create between ?1 and ?2", nativeQuery = true)
+            "having ticket.time_create between ?1 and ?2 " + 
+            "order by ticket.time_create", nativeQuery = true)
     List<MovieStatisticalDTO> getMovieStatisticsByDate(String startDate, String endDate);
 
     @Query(value = "select ticket.time_create as createDate, " +
