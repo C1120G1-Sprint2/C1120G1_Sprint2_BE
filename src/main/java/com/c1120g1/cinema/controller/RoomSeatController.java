@@ -70,7 +70,6 @@ public class RoomSeatController {
     }
 
     /**
-<<<<<<< HEAD
      * HoangTQ
      * getAllSeat()
      *
