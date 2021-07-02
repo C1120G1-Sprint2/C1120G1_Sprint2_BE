@@ -18,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 
 
 @Service
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AccountService accountService;
 
+
     @Override
     public List<User> findAll(int index) {
         return userRepository.getAllUser( index );
@@ -47,6 +50,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public Optional<User> findById1(Integer userId) {
+        return userRepository.findById(userId);
     }
 
     @Override
@@ -156,6 +164,8 @@ public class UserServiceImpl implements UserService {
     /**
      * ThuanNN
      *
+     *
+     *
      * @param username
      * @return
      */
@@ -174,11 +184,32 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username);
     }
 
+
+
+
+    @Override
+    public void updateUser(User user, String username) {
+        User user1 = this.findByUsername(username);
+        if (user1 != null) {
+//            repository.updateUser(username, user.getName(), user.getBirthday(), user.getGender(), user.getEmail(), user.getIdCard(), user.getPhone());
+       user.setAccount(user1.getAccount());
+       user.setWard(user1.getWard());
+       user.setAvatarUrl(user1.getAvatarUrl());
+       user.setUserId(user1.getUserId());
+
+       userRepository.save(user);
+
+        }
+    }
+
     @Override
     public void updateUser1(User user) {
         userRepository.updateUser1(user.getName(), user.getBirthday(), user.getGender(), user.getEmail(),
                 user.getIdCard(), user.getPhone());
     }
 
-
+    @Override
+    public List<User> searchAllAttributePagination(String q, int index) {
+        return userRepository.getListSearchPagination(q,index);
+    }
 }

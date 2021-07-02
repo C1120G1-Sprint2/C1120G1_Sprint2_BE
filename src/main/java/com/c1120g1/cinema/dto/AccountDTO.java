@@ -1,7 +1,12 @@
 package com.c1120g1.cinema.dto;
 
+
+
+import lombok.Data;
+
+@Data
 public class AccountDTO {
-    private String username;
+   private String username;
     private String newPassword;
     private String oldPassword;
     private String otp;

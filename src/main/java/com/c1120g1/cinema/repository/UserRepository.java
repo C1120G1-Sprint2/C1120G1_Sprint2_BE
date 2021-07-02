@@ -15,6 +15,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * SangTH
+     *
      * @param key
      * @return
      */
@@ -22,12 +23,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "inner join `account` on `user`.username = `account`.username\n" +
             "inner join ward on `user`.ward_id = ward.ward_id\n" +
             "inner join account_status on account_status.account_status_id = `account`.account_status_id\n" +
-            "where concat( email , `name` ,`account`.username, ward.ward_name , account_status.account_status_name ) like concat('%',?1,'%')" ,nativeQuery = true)
-           
+            "where concat( email , `name` ,`account`.username, ward.ward_name , account_status.account_status_name ) like concat('%',?1,'%')", nativeQuery = true)
     List<User> searchAll(String key);
 
     /**
      * SangTH
+     *
      * @param index
      * @return
      */
@@ -48,6 +49,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * SangTH
+     *
      * @param userId
      * @return
      */
@@ -56,6 +58,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * SangTH
+     *
      * @param userId, name,email, phone, ward, avatarUrl, gender,birthday
      */
     @Modifying
@@ -70,17 +73,46 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             " where u.userId = ?1")
     void updateUser(Integer userId, String name, String email, String phone,
                     Ward ward, String avatarUrl, int gender, String birthday);
-
     /**
      * SangTH
+     *
      * @param email
      * @return
      */
+    User findByEmail(String email);
+
+    @Query(value = "SELECT * FROM `user` " +
+            "WHERE username = ?1", nativeQuery = true)
+    User findByUsername(String username);
+
+    @Modifying
+    @Query(value ="update `user`" +
+            " set `name` = ?2, " +
+            "birthday =?3, " +
+            "gender =?4, " +
+            "email =?5, " +
+            "idCard =?6, " +
+            "phone =?7" +
+            " where username = ?1",nativeQuery = true)
+    void updateUser(String username,String name, String birthday, Integer gender, String email, String idCard, String phone);
+
+    @Modifying
+    @Query(value ="update `user`" +
+            " set `name` = ?2, " +
+            "birthday =?3, " +
+            "gender =?4, " +
+            "email =?5, " +
+            "idCard =?6, " +
+            "phone =?7" +
+            " where user_id = ?1",nativeQuery = true)
+    void updateUser1(String name, String birthday, Integer gender, String email, String idCard, String phone);
+
     @Query(value = "select  * from `user` where `user`.email = ?1", nativeQuery = true)
     User getUserByEmail(String email);
 
     /**
      * SangTH
+     *
      * @param username
      * @return
      */
@@ -89,6 +121,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * SangTH
+     *
      * @param avatarUrl,name,username,email,birthday,idCard,gender,phone,wardId
      */
     @Modifying
@@ -107,7 +140,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                      @Param("wardId") Integer wardId);
 
     /**
-     *ThuanNN
+     * ThuanNN
+     *
      * @param username
      * @return
      */
@@ -115,6 +149,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "INNER JOIN `account` ON `account`.username = `user`.username " +
             "WHERE `account`.username = ?1", nativeQuery = true)
     User getUserByUsername(String username);
+
 
     /**
      * HanTH
@@ -125,20 +160,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findUserByCardId(String cardId);
 
 
-    @Query(value = "SELECT * FROM `user` " +
-            "WHERE username = ?1", nativeQuery = true)
-    User findByUsername(String username);
 
 
-    @Modifying
-    @Query(value ="update `user`" +
-            " set `name` = ?2, " +
-            "birthday =?3, " +
-            "gender =?4, " +
-            "email =?5, " +
-            "idCard =?6, " +
-            "phone =?7" +
-            " where user_id = ?1",nativeQuery = true)
-    void updateUser1(String name, String birthday, Integer gender, String email, String idCard, String phone);
-
+    @Query(value = "select * from `user`\n" +
+            "            inner join `account` on `user`.username = `account`.username\n" +
+            "            inner join ward on `user`.ward_id = ward.ward_id\n" +
+            "            inner join account_status on account_status.account_status_id = `account`.account_status_id\n" +
+            "            where concat( email , `name` ,`account`.username, ward.ward_name , account_status.account_status_name ) like concat('%',?1,'%') limit ?2,5" , nativeQuery = true)
+    List<User> getListSearchPagination(String q, int index);
 }

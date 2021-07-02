@@ -1,14 +1,14 @@
 package com.c1120g1.cinema.repository;
 
-        import com.c1120g1.cinema.entity.Account;
-        import org.springframework.data.jpa.repository.JpaRepository;
-        import org.springframework.data.jpa.repository.Modifying;
-        import org.springframework.data.jpa.repository.Query;
-        import org.springframework.data.repository.query.Param;
+import com.c1120g1.cinema.entity.Account;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-        import javax.transaction.Transactional;
-        import java.time.LocalDate;
-        import java.util.List;
+import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, String> {
 
@@ -31,9 +31,8 @@ public interface AccountRepository extends JpaRepository<Account, String> {
                          @Param("password") String password,
                          @Param("registerDate") LocalDate registerDate);
 
-    @Query(value = "select * from `account`" ,nativeQuery = true)
+    @Query(value = "select * from `account`", nativeQuery = true)
     List<Account> getListAccount();
-
 
     @Transactional
     @Modifying

@@ -16,19 +16,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
 @Service
 public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private TicketRepository ticketRepository;
 
+
     @Autowired
     private TicketStatusService ticketStatusService;
 
-    @Override
-    public List<Ticket> findAll() {
-        return ticketRepository.findAll();
-    }
+
 
     /**
      * author: QuangHL

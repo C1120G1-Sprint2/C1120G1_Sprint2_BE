@@ -2,11 +2,12 @@ package com.c1120g1.cinema.controller;
 
 import com.c1120g1.cinema.dto.AccountDTO;
 import com.c1120g1.cinema.dto.UserDTO;
-import com.c1120g1.cinema.dto.UserEditDTO;
-import com.c1120g1.cinema.dto.UserPreviewDTO;
 import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.TransactionHistory;
 import com.c1120g1.cinema.entity.User;
+
+import com.c1120g1.cinema.dto.UserEditDTO;
+import com.c1120g1.cinema.dto.UserPreviewDTO;
 import com.c1120g1.cinema.entity.Ward;
 
 import com.c1120g1.cinema.service.*;
@@ -16,15 +17,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+
 
 import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,8 +60,12 @@ public class UserController {
     private NotificationService notificationService;
 
     @Autowired
-    private UserMapper userMapper;
 
+    private TicketService ticketService;
+
+
+    @Autowired
+    UserMapper userMapper;
 
     @GetMapping(value = "/employee/listUser")
 
@@ -78,7 +83,7 @@ public class UserController {
         if (userList != null) {
             return new ResponseEntity<>(userMapper.toDto(userList), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 
@@ -122,7 +127,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/employee/listUser/email")
-    public ResponseEntity<?> sendEmailApprove(@RequestParam(name = "email") String email) throws MessagingException {
+    public ResponseEntity<?> sendEmailApprove(@RequestParam(name = "email") String email) throws
+            MessagingException {
         accountService.sendEmailApprove(email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -162,6 +168,20 @@ public class UserController {
             }
             return new ResponseEntity<>( HttpStatus.NOT_FOUND );
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/employee/listUser/searchPagination")
+    public ResponseEntity<List<UserPreviewDTO>> searchAllPagination(@RequestParam(name = "q") String q,
+                                                                    @RequestParam(name = "index") int index) {
+        try {
+            List<User> userList = this.userService.searchAllAttributePagination(q,index);
+            if (userList != null) {
+                return new ResponseEntity<>(userMapper.toSearchDto(userList), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
             return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR );
         }
     }
@@ -172,8 +192,6 @@ public class UserController {
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 
 
     public ResponseEntity<List<Ward>> getWard() {

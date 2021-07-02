@@ -2,10 +2,14 @@ package com.c1120g1.cinema.service.impl;
 
 import com.c1120g1.cinema.entity.Category;
 import com.c1120g1.cinema.entity.Movie;
+
+
 import com.c1120g1.cinema.entity.dto.MovieDTO;
 import com.c1120g1.cinema.repository.CategoryRepository;
 import com.c1120g1.cinema.repository.MovieCategoryRepository;
+
 import com.c1120g1.cinema.repository.MovieRepository;
+import com.c1120g1.cinema.repository.TicketRepository;
 import com.c1120g1.cinema.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +32,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
+    private TicketRepository ticketRepository;
 
     @Autowired
     private MovieCategoryRepository movieCategoryRepository;

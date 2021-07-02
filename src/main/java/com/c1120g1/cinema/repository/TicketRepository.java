@@ -140,6 +140,7 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
 
 
 
+
     @Query(value = "select * \n" +
             "from `ticket`\n" +
             "inner join `user` on `ticket`.user_id = `user`.user_id\n" +
@@ -150,9 +151,11 @@ public interface TicketRepository extends JpaRepository<Ticket,Integer> {
     Page<Ticket> findTicketOfUser(Pageable pageable, String username);
 
 
+
+
     @Modifying
-    @Query(value = "update ticket " +
-            "set ticket_status_id=3 " +
+    @Query(value = "update ticket\n" +
+            "set ticket_status_id=3\n" +
             "where ticket_id=?1 and ticket_status_id=1", nativeQuery = true)
     void deleteById(Integer id);
 

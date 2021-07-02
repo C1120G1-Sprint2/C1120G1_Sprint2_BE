@@ -6,5 +6,9 @@ import java.util.List;
 
 public interface TransactionHistoryService {
 
-    List<TransactionHistory> findByTransaction(String username);
+
+
+  List<TransactionHistory> findByTransaction(String username);
+
+
 }
