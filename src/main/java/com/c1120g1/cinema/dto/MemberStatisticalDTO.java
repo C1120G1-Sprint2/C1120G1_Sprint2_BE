@@ -4,5 +4,5 @@ public interface MemberStatisticalDTO {
 
     String getName();
     int getTotalMoney();
-    int getPoint();
+    String getPoint();
 }
