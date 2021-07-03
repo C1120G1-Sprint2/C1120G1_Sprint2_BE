@@ -50,7 +50,8 @@ public interface RoomSeatRepository extends JpaRepository<RoomSeat,Integer> {
      * @param roomId
      * @return
      */
-    @Query(value = "SELECT * FROM cinema_db.room_seat WHERE room_id = ?1 AND (seat_status_id = 1 or seat_status_id = 2)", nativeQuery = true)
+    @Query(value = "SELECT * FROM cinema_db.room_seat " +
+            "WHERE room_id = ?1 AND (seat_status_id = 1 or seat_status_id = 2)", nativeQuery = true)
     List<RoomSeat> showAllRoomSeatByRoomId(Integer roomId);
 
     /**
