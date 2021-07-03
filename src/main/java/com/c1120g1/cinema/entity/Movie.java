@@ -1,8 +1,5 @@
 package com.c1120g1.cinema.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,6 +50,7 @@ public class Movie {
     @Column(name = "trailer", columnDefinition = "varchar(255)")
     private String trailer;
 
+
     @Column(name = "banner", columnDefinition = "VARCHAR(255)")
     private String banner;
 
@@ -63,7 +61,7 @@ public class Movie {
     private String description;
 
     @OneToMany(mappedBy = "movie")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<MovieCategory> movieCategorySet;
 
     @OneToMany(mappedBy = "movie")
@@ -75,16 +73,12 @@ public class Movie {
     private Set<Comment> commentSet;
 
     @OneToMany(mappedBy = "movie")
-
-//    @JsonManagedReference
-
     @JsonIgnore
     private Set<MovieTicket> movieTicketSet;
 
     @ManyToOne
-
-//    @JsonBackReference
-
     @JoinColumn(name = "movie_status_id", referencedColumnName = "movie_status_id")
     private MovieStatus movieStatus;
+
 }
+

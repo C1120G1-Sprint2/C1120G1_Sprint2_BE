@@ -18,4 +18,10 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
     public List<TransactionHistory> findByTransaction(String username) {
         return transactionHistoryRepository.findByUsernameOfTransaction(username);
     }
+
+
+    @Override
+    public List<TransactionHistory> searchByNameMovie(String username, String keySearch) {
+        return transactionHistoryRepository.searchByNameMovie(username,keySearch);
+    }
 }

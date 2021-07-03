@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/api/admin")
+@RequestMapping("/api/seatType")
 public class SeatTypeController {
 
     @Autowired

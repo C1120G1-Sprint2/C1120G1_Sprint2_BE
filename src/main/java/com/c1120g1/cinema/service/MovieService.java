@@ -13,10 +13,12 @@ import java.util.Optional;
 @Service
 public interface MovieService {
 
+    void editMovie(List<MovieDTO> listMovieDTO);
+
     /**
      * Author: ThinhTHB
      */
-    Movie getMovieById(Integer id);
+    List<MovieDTO> getMovieById(Integer movieId);
 
     /**
      * Author: ThinhTHB
@@ -40,6 +42,9 @@ public interface MovieService {
 
 
     List<Movie> findAll();
+
+
+    Movie findById(Integer id);
 
     /**
      * Author: ViNTT
@@ -75,5 +80,6 @@ public interface MovieService {
      * Author: ViNTT
      */
     Pageable getPageable(Optional<String> pageParam, Optional<String> pageSizeParam);
+
 
 }

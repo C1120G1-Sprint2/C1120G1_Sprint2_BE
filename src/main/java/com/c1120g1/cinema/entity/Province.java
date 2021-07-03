@@ -1,3 +1,4 @@
+
 package com.c1120g1.cinema.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,3 +29,4 @@ public class Province {
     @JsonIgnore
     private Set<District> districtSet;
 }
+

@@ -1,3 +1,4 @@
+
 package com.c1120g1.cinema.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,6 +24,7 @@ public class MovieStatus {
 
     @Column(name = "movie_status_name",columnDefinition = "varchar(50)")
     private String movieStatusName;
+
 
     @OneToMany(mappedBy = "movieStatus")
 //    @JsonManagedReference
