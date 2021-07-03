@@ -26,9 +26,9 @@ public class Seat {
     @Column(name = "seat_id",columnDefinition = "int")
     private Integer seatId;
 
-    @ManyToOne
-    @JoinColumn(name = "seat_status")
-    private SeatStatus seatStatus;
+//    @ManyToOne
+//    @JoinColumn(name = "seat_status")
+//    private SeatStatus seatStatus;
 
 
     @ManyToOne
@@ -36,7 +36,6 @@ public class Seat {
     private RowSeat row;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "column_id")
     private ColumnSeat column;
 
