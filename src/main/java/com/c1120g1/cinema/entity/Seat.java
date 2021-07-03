@@ -27,11 +27,10 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seat_id",columnDefinition = "int")
     private Integer seatId;
-
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "seat_status")
-    private SeatStatus seatStatus;
+//    @ManyToOne
+//    @JsonBackReference
+//    @JoinColumn(name = "seat_status")
+//    private SeatStatus seatStatus;
 
     @ManyToOne
     @JsonBackReference

@@ -57,7 +57,7 @@ public class UserController {
     @Autowired
 
     private TicketService ticketService;
-
+//Dong
     @GetMapping("/member/user/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable(name = "username") String username) {
         User user = userService.findByUsername1(username);
@@ -66,7 +66,7 @@ public class UserController {
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
+//Dong
     @GetMapping("/member/account/{username}")
     public ResponseEntity<Account> getAccountByUsername(@PathVariable(name = "username") String username) {
         Account account = accountService.findByAccount(username);
@@ -75,7 +75,7 @@ public class UserController {
         }
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
-
+//Dong
     @GetMapping("/member/transaction/{username}")
     public ResponseEntity<List<TransactionHistory>> getTransactionByUsername(@PathVariable(name = "username") String username) {
         List<TransactionHistory> transaction = transactionHistoryService.findByTransaction(username);
@@ -84,7 +84,7 @@ public class UserController {
         }
         return new ResponseEntity<>(transaction, HttpStatus.OK);
     }
-
+//Dong
     @PutMapping(value = "/member/editUser/{username}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<User> editUser(@PathVariable("username") String username, @RequestBody User user) {
         try {
@@ -94,6 +94,18 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+//Dong
+    @GetMapping("/member/searchNameMovie")
+    public ResponseEntity<List<TransactionHistory>> searchByNameMovie(@RequestParam(name = "username") String username,
+                                                                      @RequestParam(name = "keySearch") String keySearch
+    ) {
+        List<TransactionHistory> transaction = transactionHistoryService.searchByNameMovie(username,keySearch);
+        if (transaction == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(transaction, HttpStatus.OK);
+    }
+
 
     @Autowired
     UserMapper userMapper;
@@ -185,7 +197,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+//Dong
     @PostMapping("/member/setPass")
     public ResponseEntity<AccountDTO> setNewPassword( @RequestBody AccountDTO accountDTO) {
         Account account = accountService.findByUsername(accountDTO.getUsername());
@@ -207,7 +219,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
+//Dong
     @GetMapping("/member/sendEmailOTP")
     public ResponseEntity<String> checkEmailOTP(@RequestParam(name = "email") String email) {
         System.out.println("Email : " + email);

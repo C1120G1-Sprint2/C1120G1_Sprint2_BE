@@ -144,7 +144,7 @@ public class AccountServiceImpl implements AccountService {
         message.setTo(email);
         message.setSubject("Email lấy lại mật khẩu từ Cinema C11");
         message.setText("Chào bạn!\n"
-                + "TRANG Cinema C11 gửi mã code OTP bên dưới để đổi lại mật khẩu.\n"
+                + "Trang Cinema C11 gửi mã code OTP bên dưới để đổi lại mật khẩu.\n"
                 + "Mã CODE bao gồm 6 số : " + code + "\n\n"
                 + "Thanks and regards!");
         this.emailSender.send(message);
