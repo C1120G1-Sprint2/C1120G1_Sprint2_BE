@@ -9,6 +9,11 @@ import java.util.List;
 
 public interface RoomService {
 
+    List<Room> findAll();
+
+    Room findById(Integer id);
+
+
     List<Room> findAllRoom();
 
     Page<Room> findAllRoom(Pageable pageable, String roomName);
@@ -26,4 +31,5 @@ public interface RoomService {
     List<Room> searchAllRoom(String roomName);
 
     Page<Room> findAllByRoomName(String roomName, Pageable pageable);
+
 }

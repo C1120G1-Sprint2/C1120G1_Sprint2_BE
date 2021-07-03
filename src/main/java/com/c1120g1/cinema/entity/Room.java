@@ -1,3 +1,4 @@
+
 package com.c1120g1.cinema.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
@@ -33,3 +34,4 @@ public class Room {
     private StatusRoom statusRoom;
 
 }
+

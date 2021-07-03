@@ -14,6 +14,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Override
+    public List<Category> getMovieCategoryById(Integer movieId) {
+        return categoryRepository.getMovieCategoryByMovieId(movieId);
+    }
     /**
      * Author: ThinhTHB
      */

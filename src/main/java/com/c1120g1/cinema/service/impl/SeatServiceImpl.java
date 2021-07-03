@@ -2,17 +2,18 @@ package com.c1120g1.cinema.service.impl;
 
 import com.c1120g1.cinema.entity.Seat;
 import com.c1120g1.cinema.repository.SeatRepository;
+
 import com.c1120g1.cinema.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+
 
 @Service
 public class SeatServiceImpl implements SeatService {
-
     @Autowired
     private SeatRepository seatRepository;
+
 
     @Override
     public List<Seat> findAllSeat() {
@@ -43,5 +44,8 @@ public class SeatServiceImpl implements SeatService {
         return seatRepository.findSeatByColumn_ColumnIdAndRow_RowId(column_columnId, row_rowId);
     }
 
-
+    @Override
+    public void createSeatBySeatType(Integer seatTypeId, Integer seatId) {
+        seatRepository.updateSeat(seatTypeId,seatId);
+    }
 }

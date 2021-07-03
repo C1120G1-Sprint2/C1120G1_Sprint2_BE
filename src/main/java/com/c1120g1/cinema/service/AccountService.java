@@ -10,6 +10,9 @@ import java.util.List;
 public interface AccountService {
 
 
+    List<Account> findAll();
+
+
     void deleteUserAccount(String username);
 
     List<Account> findAllAccount();
@@ -41,9 +44,11 @@ public interface AccountService {
      */
     void sendEmail(String email, String code);
 
+
     Account findByAccount(String username);
 
     Integer setNewPassword(AccountDTO accountDTO);
 
     void sendEmailOTP(String email, String code);
+
 }

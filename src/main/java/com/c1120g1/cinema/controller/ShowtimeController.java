@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("api/showtime")
+@RequestMapping("api/showTime")
 public class ShowtimeController {
 
     @Autowired

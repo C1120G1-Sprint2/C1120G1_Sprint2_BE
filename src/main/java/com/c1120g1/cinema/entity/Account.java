@@ -1,8 +1,7 @@
 package com.c1120g1.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,9 +32,6 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "account_status_id", referencedColumnName = "account_status_id")
-
-    @JsonBackReference
-
     private AccountStatus accountStatus;
 
     @OneToOne(mappedBy = "account")

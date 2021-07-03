@@ -18,4 +18,6 @@ public class RowSeatServiceImpl implements RowSeatService {
     public List<RowSeat> findAllRow() {
         return rowRepository.findAll();
     }
+
+
 }

@@ -35,7 +35,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "select * from `user` \n" +
             "inner join `account` on `user`.username = `account`.username\n" +
             "inner join account_role on `account`.username = account_role.username\n" +
-            "where account_role.role_id = 1\n" +
+            "where account_role.role_id = 3\n" +
             "group by `user`.user_id \n" +
             "limit ?1 , 5", nativeQuery = true)
     List<User> getAllUser(int index);
@@ -43,7 +43,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "select * from `user` \n" +
             "inner join `account` on `user`.username = `account`.username\n" +
             "inner join account_role on `account`.username = account_role.username\n" +
-            "where account_role.role_id = 1\n", nativeQuery = true)
+            "where account_role.role_id = 3\n", nativeQuery = true)
     List<User> findAllUser();
 
 
@@ -149,6 +149,17 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "INNER JOIN `account` ON `account`.username = `user`.username " +
             "WHERE `account`.username = ?1", nativeQuery = true)
     User getUserByUsername(String username);
+
+
+    /**
+     * HanTH
+     * @param cardId
+     * @return
+     */
+    @Query(value = "SELECT * FROM cinema_db.user WHERE user.id_card = ?1",nativeQuery = true)
+    User findUserByCardId(String cardId);
+
+
 
 
     @Query(value = "select * from `user`\n" +

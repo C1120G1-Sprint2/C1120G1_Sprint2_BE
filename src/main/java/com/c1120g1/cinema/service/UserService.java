@@ -7,6 +7,11 @@ import java.util.Optional;
 
 public interface UserService {
 
+
+
+    List<User> findAll();
+
+
     List<User> findAll(int index);
 
     Optional<User> findById1(Integer userId);
@@ -15,7 +20,7 @@ public interface UserService {
 
     User findByUsername1(String username);
 
-    User findByIdCard(String idCard);
+    User findByIdCard(String username);
 
     void saveUserCus(UserDTO userDTO);
 
@@ -43,5 +48,11 @@ public interface UserService {
 
     User getUserByUsername(String username);
 
+
+
+    User createUserNoAccount(User user);
+
+
     List<User> searchAllAttributePagination(String q, int index);
+
 }
