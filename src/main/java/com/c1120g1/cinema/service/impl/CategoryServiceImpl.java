@@ -14,6 +14,18 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Override
+    public List<Category> getMovieCategoryById(Integer movieId) {
+        return categoryRepository.getMovieCategoryByMovieId(movieId);
+    }
+    /**
+     * Author: ThinhTHB
+     */
+    @Override
+    public List<Category> getCategory() {
+        return categoryRepository.getCategory();
+    }
+
     /**
      * Author: ViNTT
      */
@@ -21,5 +33,6 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> findAll() {
         return categoryRepository.findAll();
     }
+
 
 }

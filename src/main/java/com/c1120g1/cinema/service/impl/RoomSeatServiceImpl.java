@@ -14,6 +14,27 @@ public class RoomSeatServiceImpl implements RoomSeatService {
     @Autowired
     private RoomSeatRepository roomSeatRepository;
 
+
+    @Override
+    public void deleteSeat(Integer roomSeatId) {
+        roomSeatRepository.deleteSeat(roomSeatId);
+    }
+
+    @Override
+    public List<RoomSeat> getSeatTotal(Integer roomId) {
+        return roomSeatRepository.getSeatTotal(roomId);
+    }
+
+    @Override
+    public void creatSeat(Integer roomSeatId) {
+        roomSeatRepository.creatSeat(roomSeatId);
+    }
+
+    @Override
+    public RoomSeat findById(Integer id) {
+        return roomSeatRepository.findById(id).orElse(null);
+    }
+
     @Override
     public List<RoomSeat> findAllByRoomId(Integer roomId) {
         return roomSeatRepository.findAllByRoomId(roomId);
@@ -44,6 +65,11 @@ public class RoomSeatServiceImpl implements RoomSeatService {
      */
     @Override
     public void updateStatusSeat(Integer roomId, Integer seatId, Integer seatStatusId) {
-        roomSeatRepository.updateStatusSeat(roomId, seatId,seatStatusId );
+        roomSeatRepository.updateStatusSeat(roomId, seatId, seatStatusId);
+    }
+
+    @Override
+    public List<RoomSeat> showSeatDelete() {
+        return roomSeatRepository.showSeatDelete();
     }
 }

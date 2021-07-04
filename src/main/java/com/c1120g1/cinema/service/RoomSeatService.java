@@ -6,6 +6,18 @@ import java.util.List;
 
 public interface RoomSeatService {
 
+
+
+
+    void deleteSeat(Integer roomSeatId);
+
+    List<RoomSeat> getSeatTotal(Integer roomId);
+
+    void creatSeat(Integer roomSeatId);
+
+    RoomSeat findById(Integer id);
+
+
     List<RoomSeat> findAllByRoomId(Integer roomId);
 
     void updateRoomSeatStatus(Integer seatId, Integer roomId);
@@ -15,5 +27,8 @@ public interface RoomSeatService {
 
     void updateStatusSeat(Integer roomId, Integer seatId, Integer seatStatusId);
 //    HanTH
+
+
+    List<RoomSeat> showSeatDelete();
 
 }

@@ -1,17 +1,23 @@
 package com.c1120g1.cinema.controller;
-
 import com.c1120g1.cinema.dto.MemberTicketDTO;
+import com.c1120g1.cinema.entity.Ticket;
 import com.c1120g1.cinema.entity.Movie;
 import com.c1120g1.cinema.entity.MovieTicket;
 import com.c1120g1.cinema.entity.ShowTime;
-import com.c1120g1.cinema.entity.Ticket;
 import com.c1120g1.cinema.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+
+
 
 import java.util.List;
 
@@ -34,6 +40,7 @@ public class TicketController {
 
     @Autowired
     private ShowTimeService showTimeService;
+
 
 
     /**
@@ -61,6 +68,8 @@ public class TicketController {
         }
         return new ResponseEntity<>(bookedTicketList, HttpStatus.OK);
     }
+
+
 
     /**
      * author: QuangHL
@@ -286,12 +295,47 @@ public class TicketController {
     public ResponseEntity<Void> createTicket(@RequestBody List<MemberTicketDTO> memberTicketDTO, @PathVariable Integer roomId) {
         try {
             for (MemberTicketDTO ticketDTO : memberTicketDTO) {
-                ticketService.createTicket( ticketDTO );
-                roomSeatService.updateStatusSeat( roomId, ticketDTO.getSeatId(), 2 );
+                ticketService.createTicket(ticketDTO);
+                roomSeatService.updateStatusSeat(roomId, ticketDTO.getSeatId(), 2);
             }
-            return new ResponseEntity<>( HttpStatus.OK );
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping(value = "/booking", params = {"page", "username"})
+    public ResponseEntity<Page<Ticket>> getListTickets(
+            @RequestParam("username") String username, Pageable pageable) {
+        Page<Ticket> tickets = ticketService.findAllTicketByUsername(pageable, username);
+        if (tickets == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(tickets, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/cancelTicket/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        Ticket currentTicket = ticketService.findById(id);
+        if (currentTicket == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        ticketService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+    @GetMapping("/listShowTime/{date}")
+    public ResponseEntity<List<ShowTime>> getListShowTime(@PathVariable(name = "date") String date) {
+        List<ShowTime> listShowTime = showTimeService.getAllShowTimeByDate(date);
+        if (listShowTime.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(listShowTime, HttpStatus.OK);
+    }
+
 }
+
+
+

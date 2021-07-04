@@ -27,6 +27,7 @@ public class MovieStatus {
 
 
     @OneToMany(mappedBy = "movieStatus")
+//    @JsonManagedReference
     @JsonIgnore
     private Set<Movie> movieSet;
 }

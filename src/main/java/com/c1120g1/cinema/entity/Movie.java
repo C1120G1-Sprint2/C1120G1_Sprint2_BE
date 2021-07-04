@@ -50,6 +50,7 @@ public class Movie {
     @Column(name = "trailer", columnDefinition = "varchar(255)")
     private String trailer;
 
+
     @Column(name = "banner", columnDefinition = "VARCHAR(255)")
     private String banner;
 
@@ -60,6 +61,7 @@ public class Movie {
     private String description;
 
     @OneToMany(mappedBy = "movie")
+    @JsonIgnore
     private Set<MovieCategory> movieCategorySet;
 
     @OneToMany(mappedBy = "movie")

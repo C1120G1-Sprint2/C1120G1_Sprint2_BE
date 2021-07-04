@@ -1,19 +1,27 @@
 package com.c1120g1.cinema.controller;
 
-import com.c1120g1.cinema.dto.UserDTO;
-
+import ch.qos.logback.core.encoder.EchoEncoder;
+import com.c1120g1.cinema.dto.*;
+import com.c1120g1.cinema.entity.Account;
+import com.c1120g1.cinema.entity.TransactionHistory;
 import com.c1120g1.cinema.entity.User;
+
 import com.c1120g1.cinema.entity.Ward;
 
 import com.c1120g1.cinema.service.*;
 import com.c1120g1.cinema.service.mapper.UserMapper;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
 
+
+import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +31,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class UserController {
+    Map<String, String> checkOTP = new HashMap<>();
 
     @Autowired
     private UserService userService;
@@ -49,17 +59,32 @@ public class UserController {
     private NotificationService notificationService;
 
     @Autowired
-    private UserMapper userMapper;
 
+    private TicketService ticketService;
+
+
+    @Autowired
+    UserMapper userMapper;
 
     @GetMapping(value = "/employee/listUser")
-    public ResponseEntity<?> listUser(@RequestParam int index) {
-        List<User> userList = this.userService.findAll( index );
+
+    public ResponseEntity<List<UserPreviewDTO>> listUser(@RequestParam int index) {
+        List<User> userList = this.userService.findAll(index);
         if (userList != null) {
             return new ResponseEntity<>( userMapper.toDto( userList ), HttpStatus.OK );
         }
         return new ResponseEntity<>( HttpStatus.NOT_FOUND );
     }
+
+    @GetMapping(value = "/employee/listUser/getAll")
+    public ResponseEntity<List<UserPreviewDTO>> findListUser() {
+        List<User> userList = this.userService.findAllUser();
+        if (userList != null) {
+            return new ResponseEntity<>(userMapper.toDto(userList), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 
     @PostMapping(value = "/employee/listUser/create")
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
@@ -77,13 +102,14 @@ public class UserController {
             if (!userDTO.getPassword().equals( userDTO.getConfirmPassword() )) {
                 listError.put( "notCorrect", "Mật khẩu không trùng khớp , vui lòng nhập lại !" );
             }
+
             if (!listError.isEmpty()) {
                 return ResponseEntity
                         .badRequest()
                         .body( listError );
             }
             userService.saveUserCus( userDTO );
-            accountRoleService.saveAccountRoleUser( userDTO.getUsername(), 1 );
+            accountRoleService.saveAccountRoleUser( userDTO.getUsername(), 3 );
             return new ResponseEntity<>( HttpStatus.OK );
         } catch (Exception e) {
             return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR );
@@ -91,13 +117,21 @@ public class UserController {
     }
 
     @GetMapping("/employee/listUser/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable("id") Integer id) {
-        User user = userService.findById( id );
+    public ResponseEntity<UserEditDTO> getUserById(@PathVariable("id") Integer id) {
+        User user = userService.findById(id);
         if (user != null) {
             return new ResponseEntity<>( userMapper.toEditDto( user ), HttpStatus.OK );
         }
         return new ResponseEntity<>( HttpStatus.NOT_FOUND );
     }
+
+    @GetMapping(value = "/employee/listUser/email")
+    public ResponseEntity<?> sendEmailApprove(@RequestParam(name = "email") String email) throws
+            MessagingException {
+        accountService.sendEmailApprove(email);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     @PutMapping(value = "/employee/listUser/edit")
     public ResponseEntity<?> editUser(@RequestBody UserDTO userDTO) {
@@ -115,18 +149,17 @@ public class UserController {
                         .badRequest()
                         .body( listError );
             }
-            userService.updateUser( userDTO );
-//            accountRoleService.saveAccountRoleUser(userDTO.getUsername(), 1);
-            return new ResponseEntity<>( HttpStatus.OK );
+
+            userService.updateUser(userDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+
         } catch (Exception e) {
             return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR );
         }
     }
 
-    ;
-
     @GetMapping(value = "/employee/listUser/search")
-    public ResponseEntity<?> searchAll(@RequestParam(name = "q") String q) {
+    public ResponseEntity<List<UserPreviewDTO>> searchAll(@RequestParam(name = "q") String q) {
         try {
             List<User> userList = this.userService.searchAllUserAttribute( q );
             if (userList != null) {
@@ -134,19 +167,30 @@ public class UserController {
             }
             return new ResponseEntity<>( HttpStatus.NOT_FOUND );
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/employee/listUser/searchPagination")
+    public ResponseEntity<List<UserPreviewDTO>> searchAllPagination(@RequestParam(name = "q") String q,
+                                                                    @RequestParam(name = "index") int index) {
+        try {
+            List<User> userList = this.userService.searchAllAttributePagination(q,index);
+            if (userList != null) {
+                return new ResponseEntity<>(userMapper.toSearchDto(userList), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
             return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR );
         }
     }
 
-    ;
 
     @PutMapping(value = "/employee/listUser/delete/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
-        userService.deleteUserById( id );
-        return new ResponseEntity<>( HttpStatus.OK );
+    public ResponseEntity<User> deleteUser(@PathVariable("id") Integer id) {
+        userService.deleteUserById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    ;
 
 
     public ResponseEntity<List<Ward>> getWard() {
@@ -158,14 +202,13 @@ public class UserController {
         }
     }
 
-    ;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach( (error) -> {
+        ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put( fieldName, errorMessage );
@@ -199,4 +242,95 @@ public class UserController {
         }
     }
 
+
+    @GetMapping("/member/user/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable(name = "username") String username) {
+        User user = userService.findByUsername1(username);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/member/account/{username}")
+    public ResponseEntity<Account> getAccountByUsername(@PathVariable(name = "username") String username) {
+        Account account = accountService.findByAccount(username);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    @GetMapping("/member/transaction/{username}")
+    public ResponseEntity<List<TransactionHistory>> getTransactionByUsername(@PathVariable(name = "username") String username) {
+        List<TransactionHistory> transaction = transactionHistoryService.findByTransaction(username);
+        if (transaction == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(transaction, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/member/editUser/{username}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<User> editUser(@PathVariable("username") String username, @RequestBody User user) {
+        try {
+            userService.updateUser1(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PostMapping("/member/setPass")
+    public ResponseEntity<AccountDTO> setNewPassword(@RequestBody AccountDTO accountDTO) {
+        Account account = accountService.findByUsername(accountDTO.getUsername());
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (checkOTP.containsKey(accountDTO.getUsername())) {
+            if (checkOTP.get(accountDTO.getUsername()).equals(accountDTO.getOtp())) {
+                if (BCrypt.checkpw(accountDTO.getOldPassword(), account.getPassword())) {
+                    accountService.setNewPassword(accountDTO);
+                    return new ResponseEntity<>(HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/member/sendEmailOTP")
+    public ResponseEntity<String> checkEmailOTP(@RequestParam(name = "email") String email) {
+        System.out.println("Email : " + email);
+        User user = this.userService.findByEmail(email);
+        if (user != null) {
+            String code = accountService.generateCode();
+            checkOTP.put(user.getAccount().getUsername(), code);
+            System.out.println("CODE : " + code);
+            accountService.sendEmailOTP(email, code);
+            return new ResponseEntity<>(code, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * author : HoangTQ
+     * @param userNoAccountDTO : UserNoAccountDTO
+     * @return a User object
+     */
+    @PostMapping("/api/user/createUserNoAccount")
+    public ResponseEntity<User> createUserWithNoAccount(@RequestBody UserNoAccountDTO userNoAccountDTO){
+        try {
+            this.userService.createUserWithNoAccount(userNoAccountDTO);
+            User user = this.userService.getUserByUserNoAccountDTO(userNoAccountDTO);
+            return new ResponseEntity<>(user,HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

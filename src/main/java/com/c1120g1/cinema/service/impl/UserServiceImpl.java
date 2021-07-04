@@ -1,31 +1,47 @@
 package com.c1120g1.cinema.service.impl;
 
+import com.c1120g1.cinema.dto.UserNoAccountDTO;
+import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.dto.UserDTO;
 import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.AccountStatus;
-import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.repository.AccountRepository;
 
 import com.c1120g1.cinema.repository.UserRepository;
+import com.c1120g1.cinema.service.AccountService;
 import com.c1120g1.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
+
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
+    private  PasswordEncoder passwordEncoder;
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
     private UserRepository userRepository;
+
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private AccountService accountService;
+
 
     @Override
     public List<User> findAll(int index) {
@@ -35,6 +51,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public Optional<User> findById1(Integer userId) {
+        return userRepository.findById(userId);
     }
 
     @Override
@@ -69,13 +90,14 @@ public class UserServiceImpl implements UserService {
 
         Account account = new Account();
         account.setUsername( userDTO.getUsername() );
-        account.setPassword( (userDTO.getPassword()) );
+        account.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         if (userDTO.getUsername() == null) {
             account.setRegisterDate( new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" ).format( new Date() ) );
         }
         accountRepository.saveUserAccount( account.getUsername(), account.getPassword(), LocalDate.now() );
 
         User user = new User();
+
         user.setName( userDTO.getName() );
         user.setEmail( userDTO.getEmail() );
         user.setPhone( userDTO.getPhone() );
@@ -115,6 +137,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.searchAll( key );
     }
 
+    @Override
+    public List<User> findAllUser() {
+        return userRepository.findAllUser();
+    }
+
 
     // chuẩn hoá tên
     public String standardizeName(String name) {
@@ -138,6 +165,8 @@ public class UserServiceImpl implements UserService {
     /**
      * ThuanNN
      *
+     *
+     *
      * @param username
      * @return
      */
@@ -151,4 +180,53 @@ public class UserServiceImpl implements UserService {
        return userRepository.save( user );
     }
 
+    @Override
+    public User findByUsername1(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+
+
+
+    @Override
+    public void updateUser(User user, String username) {
+        User user1 = this.findByUsername(username);
+        if (user1 != null) {
+//            repository.updateUser(username, user.getName(), user.getBirthday(), user.getGender(), user.getEmail(), user.getIdCard(), user.getPhone());
+       user.setAccount(user1.getAccount());
+       user.setWard(user1.getWard());
+       user.setAvatarUrl(user1.getAvatarUrl());
+       user.setUserId(user1.getUserId());
+
+       userRepository.save(user);
+
+        }
+    }
+
+    @Override
+    public void updateUser1(User user) {
+        userRepository.updateUser1(user.getName(), user.getBirthday(), user.getGender(), user.getEmail(),
+                user.getIdCard(), user.getPhone());
+    }
+
+    @Override
+    public List<User> searchAllAttributePagination(String q, int index) {
+        return userRepository.getListSearchPagination(q,index);
+    }
+
+    @Override
+    public void createUserWithNoAccount(UserNoAccountDTO userNoAccountDTO) {
+        userRepository.createUserWithNoAccount( userNoAccountDTO.getEmail(),
+                                                userNoAccountDTO.getIdCard(),
+                                                userNoAccountDTO.getName(),
+                                                userNoAccountDTO.getPhone());
+    }
+
+    @Override
+    public User getUserByUserNoAccountDTO(UserNoAccountDTO userNoAccountDTO) {
+        return userRepository.getUserByUserNoAccountDTO(userNoAccountDTO.getEmail(),
+                                                        userNoAccountDTO.getIdCard(),
+                                                        userNoAccountDTO.getName(),
+                                                        userNoAccountDTO.getPhone());
+    }
 }

@@ -19,15 +19,19 @@ public class RoomSeat {
     @Column(name = "room_seat_id")
     private Integer roomSeatId;
 
+
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
+
 
     @ManyToOne
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
+
+
     @ManyToOne
-    @JoinColumn(name = "seat_status")
+    @JoinColumn(name = "seat_status_id")
     private SeatStatus seatStatus;
 }

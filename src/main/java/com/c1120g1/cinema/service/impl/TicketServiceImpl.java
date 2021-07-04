@@ -16,22 +16,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
 @Service
 public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private TicketRepository ticketRepository;
 
+
     @Autowired
     private TicketStatusService ticketStatusService;
 
-    @Override
-    public List<Ticket> findAll() {
-        return ticketRepository.findAll();
-    }
+
 
     /**
-<<<<<<< HEAD
      * author: QuangHL
      * method: Show list booked ticket
      */
@@ -166,5 +164,16 @@ public class TicketServiceImpl implements TicketService {
         String createTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         memberTicketDTO.setCreateTime( createTime );
         ticketRepository.createTicket( memberTicketDTO.getMovieTicketId(), memberTicketDTO.getSeatId(), memberTicketDTO.getUserId(), memberTicketDTO.getCreateTime(), memberTicketDTO.getTicketStatusId() );
+    }
+
+
+    @Override
+    public Page<Ticket> findAllTicketByUsername(Pageable pageable, String username) {
+        return ticketRepository.findTicketOfUser(pageable,username);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        ticketRepository.deleteById(id);
     }
 }

@@ -67,6 +67,7 @@ public class SecurityController {
      * @param email
      * @return
      */
+
     @GetMapping("/api/checkEmail/{email}")
     public ResponseEntity<String> checkEmail(@PathVariable(name = "email") String email) {
         System.out.println("Email : " + email);

@@ -4,12 +4,11 @@ import com.c1120g1.cinema.dto.MemberTicketDTO;
 import com.c1120g1.cinema.entity.Ticket;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import java.util.List;
+
 
 public interface TicketService {
 
-    List<Ticket> findAll();
 
     /**
      * author: QuangHL
@@ -89,4 +88,11 @@ public interface TicketService {
     //HanTH
     void createTicket(MemberTicketDTO memberTicketDTO);
     //HanTH
+
+
+    Page<Ticket> findAllTicketByUsername(Pageable pageable, String username);
+
+    void deleteById(Integer id);
+
+
 }
