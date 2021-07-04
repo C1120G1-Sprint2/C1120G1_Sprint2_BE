@@ -1,17 +1,16 @@
 package com.c1120g1.cinema.controller;
 
-import com.c1120g1.cinema.dto.AccountDTO;
-import com.c1120g1.cinema.dto.UserDTO;
+import ch.qos.logback.core.encoder.EchoEncoder;
+import com.c1120g1.cinema.dto.*;
 import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.TransactionHistory;
 import com.c1120g1.cinema.entity.User;
 
-import com.c1120g1.cinema.dto.UserEditDTO;
-import com.c1120g1.cinema.dto.UserPreviewDTO;
 import com.c1120g1.cinema.entity.Ward;
 
 import com.c1120g1.cinema.service.*;
 import com.c1120g1.cinema.service.mapper.UserMapper;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -319,5 +318,19 @@ public class UserController {
         }
     }
 
-
+    /**
+     * author : HoangTQ
+     * @param userNoAccountDTO : UserNoAccountDTO
+     * @return a User object
+     */
+    @PostMapping("/api/user/createUserNoAccount")
+    public ResponseEntity<User> createUserWithNoAccount(@RequestBody UserNoAccountDTO userNoAccountDTO){
+        try {
+            this.userService.createUserWithNoAccount(userNoAccountDTO);
+            User user = this.userService.getUserByUserNoAccountDTO(userNoAccountDTO);
+            return new ResponseEntity<>(user,HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

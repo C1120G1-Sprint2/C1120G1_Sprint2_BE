@@ -1,5 +1,6 @@
 package com.c1120g1.cinema.service.impl;
 
+import com.c1120g1.cinema.dto.UserNoAccountDTO;
 import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.dto.UserDTO;
 import com.c1120g1.cinema.entity.Account;
@@ -211,5 +212,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> searchAllAttributePagination(String q, int index) {
         return userRepository.getListSearchPagination(q,index);
+    }
+
+    @Override
+    public void createUserWithNoAccount(UserNoAccountDTO userNoAccountDTO) {
+        userRepository.createUserWithNoAccount( userNoAccountDTO.getEmail(),
+                                                userNoAccountDTO.getIdCard(),
+                                                userNoAccountDTO.getName(),
+                                                userNoAccountDTO.getPhone());
+    }
+
+    @Override
+    public User getUserByUserNoAccountDTO(UserNoAccountDTO userNoAccountDTO) {
+        return userRepository.getUserByUserNoAccountDTO(userNoAccountDTO.getEmail(),
+                                                        userNoAccountDTO.getIdCard(),
+                                                        userNoAccountDTO.getName(),
+                                                        userNoAccountDTO.getPhone());
     }
 }
