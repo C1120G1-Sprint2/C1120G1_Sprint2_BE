@@ -1,11 +1,16 @@
 package com.c1120g1.cinema.controller;
 
+
 import com.c1120g1.cinema.entity.Movie;
 import com.c1120g1.cinema.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.c1120g1.cinema.entity.Category;
+import com.c1120g1.cinema.entity.dto.MovieDTO;
+import com.c1120g1.cinema.service.CategoryService;
+import com.c1120g1.cinema.service.MovieCategoryService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +18,93 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("api/movie")
 public class MovieController {
 
     @Autowired
-    private MovieService movieService;
+    MovieService movieService;
+
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    MovieCategoryService movieCategoryService;
+
+
+    @GetMapping("")
+    public ResponseEntity<?> getAllMovies() {
+        try {
+            List<Movie> movieList = this.movieService.findAll();
+            return new ResponseEntity<>(movieList, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/detail-movie/{id}")
+    public ResponseEntity<Movie> getMovieByIdm(@PathVariable("id") Integer id) {
+        Movie movie = this.movieService.findById(id);
+        if (movie == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(movie, HttpStatus.OK);
+    }
+
+    /**
+     * Author : ThinhTHB
+     * function to set status
+     */
+    @PutMapping("/set_status/{id}")
+    public void setMovieStatus(@PathVariable("id") Integer id) {
+        movieService.setStatus(id);
+    }
+
+    /**
+     * Author : ThinhTHB
+     * function to get category
+     */
+    @GetMapping("/category")
+    public List<Category> getCategory() {
+        return categoryService.getCategory();
+    }
+
+    /**
+     * Author : ThinhTHB
+     * function to get movie by id
+     */
+    @GetMapping("/movie_id/{id}")
+    public ResponseEntity<Movie> getMovieById(@PathVariable Integer id) {
+        return new ResponseEntity(movieService.getMovieById(id), HttpStatus.OK);
+    }
+
+
+    /**
+     * Author : ThinhTHB
+     * function to get all movie
+     */
+    @GetMapping("/all_movie")
+    public ResponseEntity<List<Movie>> getAllMovie() {
+        try {
+            List<Movie> movie = movieService.getAllMovie();
+            return new ResponseEntity<>(movie, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/edit_movie")
+    public ResponseEntity<Void> editMovie(@RequestBody List<MovieDTO> listMovieDTO) {
+        try {
+            movieService.editMovie(listMovieDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     /**
      * Author: ViNTT
@@ -93,6 +178,22 @@ public class MovieController {
         }
     }
 
+
+
+    /**
+     * Author : ThinhTHB
+     * function to get movie available
+     */
+    @GetMapping("/movie_ava")
+    public ResponseEntity<Page<Movie>> getAllMovieAvailable(@PageableDefault(size = 5) Pageable pageable) {
+        try {
+            Page<Movie> movieAva = movieService.getAllMovieAvailable(pageable);
+            return new ResponseEntity<>(movieAva, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+        }
+    }
+
     /**
      * Author: ViNTT
      */
@@ -114,20 +215,37 @@ public class MovieController {
             return new ResponseEntity<>(movieList, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     /**
-     * Author: ViNTT
+     * Author : ThinhTHB
+     * function to add movie
+     */
+    @PostMapping("/add_movie")
+    public ResponseEntity<Void> addMovie(@RequestBody List<MovieDTO> listMovieDTO) {
+        try {
+            movieService.addMovie(listMovieDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Author:
+     * ViNTT
      */
     @GetMapping("/advancedSearch")
-    public ResponseEntity<Page<Movie>> advancedSearch(@RequestParam("q") Optional<String> keySearchParam,
-                                                      @RequestParam("categoryId") Optional<String> categoryIdParam,
-                                                      @RequestParam("date") Optional<String> dateParam,
-                                                      @RequestParam("showTimeId") Optional<String> showTimeIdParam,
-                                                      @RequestParam("page") Optional<String> pageParam,
-                                                      @RequestParam("size") Optional<String> pageSizeParam) {
+    public ResponseEntity<Page<Movie>> advancedSearch
+    (@RequestParam("q") Optional<String> keySearchParam,
+     @RequestParam("categoryId") Optional<String> categoryIdParam,
+     @RequestParam("date") Optional<String> dateParam,
+     @RequestParam("showTimeId") Optional<String> showTimeIdParam,
+     @RequestParam("page") Optional<String> pageParam,
+     @RequestParam("size") Optional<String> pageSizeParam) {
         try {
             String keySearch = "";
             String categoryId = "";
@@ -158,5 +276,5 @@ public class MovieController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
 }
+

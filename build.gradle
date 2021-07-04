@@ -2,7 +2,8 @@ plugins {
     id 'org.springframework.boot' version '2.5.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id "org.sonarqube" version "3.0"
+    id 'org.sonarqube' version '3.0'
+
 }
 
 group = 'com.c1120g1'
@@ -11,6 +12,14 @@ sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+}
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'http://3.141.165.122:9000'
+        property 'sonar.login', 'f4570cffe1dd5bf39ecbeed0ef04eef921709b5a'
+        property 'sonar.projectKey', 'C1120G1_ReviewCode_NgocNHB'
+        property 'sonar.projectName', 'C1120G1_ReviewCode_NgocNHB'
+    }
 }
 
 
@@ -25,9 +34,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation('io.jsonwebtoken:jjwt:0.9.1')
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+//    Security
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
     compile group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.14.0'
-
-
     compile group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.4.2'
 
 //    Security
@@ -37,7 +51,8 @@ dependencies {
 
 }
 
-test {
-    useJUnitPlatform()
-}
+
+    test {
+        useJUnitPlatform()
+    }
 
