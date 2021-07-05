@@ -81,7 +81,7 @@ public class MovieTicketServiceImpl implements MovieTicketService {
      * @return a price string
      */
     public Integer getPrice(boolean isNormalDate, boolean isEarly17, int projectionId) {
-        int price;
+        int price = 0;
 
         if (isNormalDate && isEarly17 && projectionId == 1) {
             price = basicPrice;
@@ -92,8 +92,8 @@ public class MovieTicketServiceImpl implements MovieTicketService {
         } else if ((!isNormalDate && !isEarly17 && projectionId == 1) ||
         (!isNormalDate && isEarly17 && projectionId == 2) ||
         (isNormalDate && !isEarly17 && projectionId == 2)){
-            price = 16 * basicPrice / 9;
-        } else {
+            price = 5 * basicPrice / 3;
+        } else if (!isNormalDate && !isEarly17 && projectionId == 2){
             price = basicPrice * 2;
         }
         return Math.round(price);
