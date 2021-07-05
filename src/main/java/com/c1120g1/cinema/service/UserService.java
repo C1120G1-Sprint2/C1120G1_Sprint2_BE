@@ -1,6 +1,7 @@
 package com.c1120g1.cinema.service;
 
 import com.c1120g1.cinema.dto.UserDTO;
+import com.c1120g1.cinema.dto.UserNoAccountDTO;
 import com.c1120g1.cinema.entity.User;
 import java.util.List;
 import java.util.Optional;
@@ -55,4 +56,13 @@ public interface UserService {
 
     List<User> searchAllAttributePagination(String q, int index);
 
+    /**
+     * author : HoangTQ
+     */
+    void createUserWithNoAccount(UserNoAccountDTO userNoAccountDTO);
+
+    /**
+     * author : HoangTQ
+     */
+    User getUserByUserNoAccountDTO(UserNoAccountDTO userNoAccountDTO);
 }

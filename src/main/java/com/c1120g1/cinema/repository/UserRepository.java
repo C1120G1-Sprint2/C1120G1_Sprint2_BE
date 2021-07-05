@@ -168,4 +168,23 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "            inner join account_status on account_status.account_status_id = `account`.account_status_id\n" +
             "            where concat( email , `name` ,`account`.username, ward.ward_name , account_status.account_status_name ) like concat('%',?1,'%') limit ?2,5" , nativeQuery = true)
     List<User> getListSearchPagination(String q, int index);
+
+
+    /**
+     * author : HoangTQ
+     */
+    @Modifying
+    @Transactional
+    @Query(value =  "insert into `user`(avatar_url,birthday,email,gender,id_card,`name`,phone,username,ward_id) " +
+                    "value (null,null, ?1 ,null, ?2 , ?3 , ?4 , null,null) "
+            , nativeQuery = true)
+    void createUserWithNoAccount(String email, String idCard, String name, String phone);
+
+    /**
+     * author : HoangTQ
+     */
+    @Query(value =  "select * from `user` " +
+                    "where `user`.email = ?1 and `user`.id_card = ?2 and `user`.`name` = ?3 and `user`.phone = ?4 "
+            , nativeQuery = true)
+    User getUserByUserNoAccountDTO(String email, String idCard, String name, String phone);
 }
