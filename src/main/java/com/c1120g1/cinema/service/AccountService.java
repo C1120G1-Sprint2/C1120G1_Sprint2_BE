@@ -9,9 +9,7 @@ import java.util.List;
 
 public interface AccountService {
 
-
     List<Account> findAll();
-
 
     void deleteUserAccount(String username);
 
@@ -39,11 +37,15 @@ public interface AccountService {
 
     /**
      * ThuanNN
-     * @param email
-     * @param code
+     * @param email,code
      */
     void sendEmail(String email, String code);
 
+    /**
+     * ThuanNN
+     * @param username
+     */
+    void changeAccountStatus(String username);
 
     Account findByAccount(String username);
 
@@ -51,4 +53,10 @@ public interface AccountService {
 
     void sendEmailOTP(String email, String code);
 
+    /**
+     * ThuanNN
+     * @param email
+     * @throws MessagingException
+     */
+    void sendEmailConfirm(String email) throws MessagingException;
 }

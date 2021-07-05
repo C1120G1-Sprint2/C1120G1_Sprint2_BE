@@ -8,10 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-
-
     List<User> findAll();
-
 
     List<User> findAll(int index);
 
@@ -28,15 +25,10 @@ public interface UserService {
     void deleteUserById(Integer id);
 
     List<User> searchAllUserAttribute(String key);
+
     List<User> findAllUser( );
 
-    /**
-     * ThuanNN
-     * @param email
-     * @return
-     */
     User findByEmail(String email);
-
 
     User findById(Integer id);
 
@@ -44,17 +36,17 @@ public interface UserService {
 
     void updateUser(User user,String username);
 
-
     void updateUser1(User user);
 
     User getUserByUsername(String username);
 
-
-
     User createUserNoAccount(User user);
 
-
     List<User> searchAllAttributePagination(String q, int index);
+
+    void saveUserCusConfirm(UserDTO userDTO);
+
+    void saveUserSocial(User user);
 
     /**
      * author : HoangTQ
