@@ -1,9 +1,15 @@
 package com.c1120g1.cinema.service.impl;
 
+import com.c1120g1.cinema.entity.Category;
 import com.c1120g1.cinema.entity.Movie;
+
+
 import com.c1120g1.cinema.entity.dto.MovieDTO;
+import com.c1120g1.cinema.repository.CategoryRepository;
 import com.c1120g1.cinema.repository.MovieCategoryRepository;
+
 import com.c1120g1.cinema.repository.MovieRepository;
+import com.c1120g1.cinema.repository.TicketRepository;
 import com.c1120g1.cinema.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,17 +27,17 @@ public class MovieServiceImpl implements MovieService {
 
     public static final int DEFAULT_PAGE = 0;
     public static final int DEFAULT_PAGE_SIZE = 8;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private MovieRepository movieRepository;
+    private TicketRepository ticketRepository;
 
     @Autowired
     private MovieCategoryRepository movieCategoryRepository;
 
-    @Override
-    public Movie getMovieById(Integer id) {
-        return movieRepository.getMovieById(id);
-    }
+
 
     @Override
     public List<Movie> getAllMovie() {
@@ -60,6 +67,10 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findAll();
     }
 
+    @Override
+    public Movie findById(Integer id) {
+        return movieRepository.findById(id).orElse(null);
+    }
     /**
      * Author: ViNTT
      */
@@ -133,5 +144,32 @@ public class MovieServiceImpl implements MovieService {
         }
 
         return PageRequest.of(page, pageSize);
+
+    }
+
+    @Override
+    public List<MovieDTO> getMovieById(Integer movieId) {
+        List<MovieDTO> listMovieDTO = new ArrayList<>();
+        List<Category> listCategory = categoryRepository.getMovieCategory(movieId);
+        for (int i = 0; i < listCategory.size(); i++) {
+            MovieDTO movieDTO = new MovieDTO();
+            movieDTO.setMovie(movieRepository.getMovieById(movieId));
+            movieDTO.setCategoryId(listCategory.get(i).getCategoryId());
+            listMovieDTO.add(movieDTO);
+        }
+        return listMovieDTO;
+    }
+
+    @Override
+    public void editMovie(List<MovieDTO> listMovieDTO) {
+        Integer idMovie = listMovieDTO.get(0).getMovie().getMovieId();
+        Movie movie = listMovieDTO.get(0).getMovie();
+        movieRepository.editMovie(movie.getMovieName(), movie.getPosterMovie(), movie.getStartDate(), movie.getEndDate(),
+                movie.getMovieStudio(), movie.getActor(), movie.getDirector(), movie.getMovieLength(), movie.getTrailer(),
+                movie.getMovieId());
+        movieCategoryRepository.deleteMovieCategory(idMovie);
+        for (MovieDTO movieDTO : listMovieDTO) {
+            movieCategoryRepository.createMovieCategory(idMovie, movieDTO.getCategoryId());
+        }
     }
 }

@@ -21,7 +21,6 @@ public class Rating {
     private Integer ratingId;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
@@ -29,7 +28,6 @@ public class Rating {
     private Integer rating;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")
     private Movie movie;
 }

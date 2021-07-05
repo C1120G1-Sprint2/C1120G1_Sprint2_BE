@@ -1,5 +1,5 @@
-package com.c1120g1.cinema.entity;
 
+package com.c1120g1.cinema.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +24,7 @@ public class Ticket {
     private MovieTicket movieTicket;
 
     @ManyToOne
+
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
@@ -32,7 +33,8 @@ public class Ticket {
     private Seat seat;
 
     @Column(name = "time_create",columnDefinition = "date")
-    private String timeCreate;
+    private String createTime;
+
 
     @ManyToOne
     @JoinColumn(name = "ticket_status_id", referencedColumnName = "ticket_status_id")

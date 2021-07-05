@@ -1,6 +1,5 @@
+
 package com.c1120g1.cinema.entity;
-
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +29,9 @@ public class Room {
     private String roomName;
 
     @ManyToOne
-    @JoinColumn(name = "status_room_id", referencedColumnName = "status_room_id")
     @JsonBackReference
+    @JoinColumn(name = "status_room_id", referencedColumnName = "status_room_id")
     private StatusRoom statusRoom;
 
 }
+

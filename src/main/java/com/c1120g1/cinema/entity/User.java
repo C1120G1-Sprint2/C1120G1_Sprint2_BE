@@ -1,8 +1,6 @@
-package com.c1120g1.cinema.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+package com.c1120g1.cinema.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +25,6 @@ public class User {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
     @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
 
@@ -65,3 +62,4 @@ public class User {
     @JsonIgnore
     private Set<Rating> ratingSet;
 }
+

@@ -1,7 +1,9 @@
 package com.c1120g1.cinema.service.impl;
 
 import com.c1120g1.cinema.entity.Room;
+import com.c1120g1.cinema.entity.RoomSeat;
 import com.c1120g1.cinema.repository.RoomRepository;
+import com.c1120g1.cinema.repository.RoomSeatRepository;
 import com.c1120g1.cinema.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,15 +13,28 @@ import org.springframework.validation.Errors;
 
 import java.util.List;
 
+
 @Service
 public class RoomServiceImpl implements RoomService {
 
     @Autowired
     private RoomRepository roomRepository;
 
+    @Autowired
+    private RoomSeatRepository roomSeatRepository;
+
+    @Override
+    public List<Room> findAll() {
+        return roomRepository.findAll();
+    }
     @Override
     public List<Room> findAllRoom() {
         return roomRepository.findAll();
+    }
+
+    @Override
+    public Room findById(Integer id) {
+        return roomRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -34,7 +49,8 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void addRoom(Room room) {
-        roomRepository.save(room);
+        Room room1 = roomRepository.save(room);
+//        roomSeatRepository.saveRoom(room1.getRoomId());
     }
 
     @Override
@@ -65,4 +81,5 @@ public class RoomServiceImpl implements RoomService {
     public Page<Room> findAllByRoomName(String roomName, Pageable pageable) {
         return roomRepository.findAllByRoomName(roomName, pageable);
     }
+
 }

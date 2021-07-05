@@ -2,24 +2,27 @@ package com.c1120g1.cinema.controller;
 
 import com.c1120g1.cinema.entity.Room;
 import com.c1120g1.cinema.service.RoomService;
+import com.c1120g1.cinema.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.util.UriComponentsBuilder;
+
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
-@RequestMapping("/api/admin")
+@RequestMapping("/api/room")
 public class RoomController {
 
     @Autowired
@@ -32,13 +35,36 @@ public class RoomController {
      * @return
      */
 
+
+    @Autowired
+    private SeatService seatService;
+
+    @GetMapping("")
+    public ResponseEntity<List<Room>> getAllRoom() {
+        try {
+            List<Room> roomList = this.roomService.findAll();
+            return new ResponseEntity<>(roomList, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Room> getRoomById(@PathVariable("id") Integer id) {
+        Room room = this.roomService.findById(id);
+        if (room == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(room, HttpStatus.OK);
+
+    }
     @GetMapping("/room")
     public ResponseEntity<Page<Room>> getListRoom(@PageableDefault(size = 5) Pageable pageable, @RequestParam String roomName) {
         Page<Room> roomList = roomService.findAllRoom(pageable,roomName);
         if (roomList.isEmpty()) {
-            return new ResponseEntity<Page<Room>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Page<Room>>(roomList, HttpStatus.OK);
+        return new ResponseEntity<>(roomList, HttpStatus.OK);
     }
 
     /**
@@ -69,7 +95,7 @@ public class RoomController {
         roomService.addRoom(room);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/room/{id}").buildAndExpand(room.getRoomId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     /**
@@ -88,7 +114,7 @@ public class RoomController {
         Room room1 = roomService.findRoomById(id);
 
         if (room1 == null || id == null) {
-            return new ResponseEntity<Room>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
 
             room1.setRoomName(room.getRoomName());
@@ -96,7 +122,7 @@ public class RoomController {
             room1.setRoomId(id);
 
             roomService.editRoom(room1);
-            return new ResponseEntity<Room>(room1, HttpStatus.OK);
+            return new ResponseEntity<>(room1, HttpStatus.OK);
         }
     }
 
@@ -127,5 +153,6 @@ public class RoomController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(roomList, HttpStatus.OK);
+
     }
 }
