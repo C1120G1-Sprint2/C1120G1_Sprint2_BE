@@ -1,5 +1,7 @@
 package com.c1120g1.cinema.service.impl;
 
+import com.c1120g1.cinema.dto.UserNoAccountDTO;
+import com.c1120g1.cinema.entity.User;
 import com.c1120g1.cinema.dto.UserDTO;
 import com.c1120g1.cinema.entity.Account;
 import com.c1120g1.cinema.entity.AccountStatus;
@@ -35,7 +37,6 @@ public class UserServiceImpl implements UserService {
     private AccountRepository accountRepository;
     @Autowired
     private AccountService accountService;
-
 
     @Override
     public List<User> findAll(int index) {
@@ -123,7 +124,6 @@ public class UserServiceImpl implements UserService {
                 accountRepository.save(account);
             }
         }
-
     }
 
     @Override
@@ -135,7 +135,6 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllUser() {
         return userRepository.findAllUser();
     }
-
 
     // chuẩn hoá tên
     public String standardizeName(String name) {
@@ -158,7 +157,6 @@ public class UserServiceImpl implements UserService {
 
     /**
      * ThuanNN
-     *
      * @param username
      * @return
      */
@@ -188,7 +186,6 @@ public class UserServiceImpl implements UserService {
             user.setUserId(user1.getUserId());
 
             userRepository.save(user);
-
         }
     }
 
@@ -243,5 +240,21 @@ public class UserServiceImpl implements UserService {
     public void saveUserSocial(User user) {
         userRepository.saveUserSocial(user.getName(), user.getEmail(), "", user.getAccount().getUsername(),
                 user.getAvatarUrl(), null, user.getBirthday(), user.getIdCard(), user.getGender());
+    }
+
+    @Override
+    public void createUserWithNoAccount(UserNoAccountDTO userNoAccountDTO) {
+        userRepository.createUserWithNoAccount( userNoAccountDTO.getEmail(),
+                                                userNoAccountDTO.getIdCard(),
+                                                userNoAccountDTO.getName(),
+                                                userNoAccountDTO.getPhone());
+    }
+
+    @Override
+    public User getUserByUserNoAccountDTO(UserNoAccountDTO userNoAccountDTO) {
+        return userRepository.getUserByUserNoAccountDTO(userNoAccountDTO.getEmail(),
+                                                        userNoAccountDTO.getIdCard(),
+                                                        userNoAccountDTO.getName(),
+                                                        userNoAccountDTO.getPhone());
     }
 }

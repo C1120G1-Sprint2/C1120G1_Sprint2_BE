@@ -141,7 +141,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "WHERE `account`.username = ?1", nativeQuery = true)
     User getUserByUsername(String username);
 
-
     /**
      * HanTH
      * @param cardId
@@ -167,4 +166,22 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             , nativeQuery = true)
     void saveUserSocial(String name, String email, String phone, String username, String avatarUrl, Integer wardId,
                         String birthday, String idCard, Integer gender);
+
+    /**
+     * author : HoangTQ
+     */
+    @Modifying
+    @Transactional
+    @Query(value =  "insert into `user`(avatar_url,birthday,email,gender,id_card,`name`,phone,username,ward_id) " +
+                    "value (null,null, ?1 ,null, ?2 , ?3 , ?4 , null,null) "
+            , nativeQuery = true)
+    void createUserWithNoAccount(String email, String idCard, String name, String phone);
+
+    /**
+     * author : HoangTQ
+     */
+    @Query(value =  "select * from `user` " +
+                    "where `user`.email = ?1 and `user`.id_card = ?2 and `user`.`name` = ?3 and `user`.phone = ?4 "
+            , nativeQuery = true)
+    User getUserByUserNoAccountDTO(String email, String idCard, String name, String phone);
 }
