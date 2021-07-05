@@ -54,24 +54,24 @@ public class MovieController {
      * function to get movie by id
      */
     @GetMapping("/movie_id/{id}")
-    public Movie getMovieById(@PathVariable Integer id) {
-        return movieService.getMovieById(id);
+    public ResponseEntity<Movie> getMovieById(@PathVariable Integer id) {
+        return new ResponseEntity(movieService.getMovieById(id), HttpStatus.OK);
     }
 
 
-    /**
-     * Author : ThinhTHB
-     * function to get all movie
-     */
-    @GetMapping("/all_movie")
-    public ResponseEntity<List<Movie>> getAllMovie() {
-        try {
-            List<Movie> movie = movieService.getAllMovie();
-            return new ResponseEntity<>(movie, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    /**
+//     * Author : ThinhTHB
+//     * function to get all movie
+//     */
+//    @GetMapping("/all_movie")
+//    public ResponseEntity<List<Movie>> getAllMovie() {
+//        try {
+//            List<Movie> movie = movieService.getAllMovie();
+//            return new ResponseEntity<>(movie, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
 
     /**
@@ -194,6 +194,20 @@ public class MovieController {
     public ResponseEntity<Void> addMovie(@RequestBody List<MovieDTO> listMovieDTO) {
         try {
             movieService.addMovie(listMovieDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Author : ThinhTHB
+     * function to edit movie
+     */
+    @PutMapping("/edit_movie")
+    public ResponseEntity<Void> editMovie(@RequestBody Movie movie) {
+        try {
+            movieService.editMovie(movie);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

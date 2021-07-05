@@ -52,9 +52,9 @@ public class Movie {
     @Column(name = "trailer", columnDefinition = "varchar(255)")
     private String trailer;
 
-    @OneToMany(mappedBy = "movie")
-    @Column(name = "banner", columnDefinition = "VARCHAR(255)")
-    private String banner;
+//    @OneToMany(mappedBy = "movie")
+//    @Column(name = "banner", columnDefinition = "VARCHAR(255)")
+//    private String banner;
 
     @Column(name = "promote", columnDefinition = "BIT(1)")
     private Boolean promote;
