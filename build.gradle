@@ -24,35 +24,31 @@ sonarqube {
 
 
 dependencies {
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    compile group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.14.0'
+    compile group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.4.2'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly 'mysql:mysql-connector-java'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation('io.jsonwebtoken:jjwt:0.9.1')
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
-
 //    Security
-
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-social-facebook', version: '1.5.22.RELEASE'
     testImplementation 'org.springframework.security:spring-security-test'
-    compile group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.14.0'
-    compile group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.4.2'
-
-//    Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    testImplementation 'org.springframework.security:spring-security-test'
-
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation group: 'com.google.api-client', name: 'google-api-client', version: '1.30.9'
 
 }
 
 
-    test {
-        useJUnitPlatform()
-    }
+test {
+    useJUnitPlatform()
+}
 

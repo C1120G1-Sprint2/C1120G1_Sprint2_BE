@@ -24,12 +24,13 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Modifying
     @Query(value = "insert into `account` (username, password, point, register_date, account_status_id ) " +
-            "values (:username, :password, 0, :registerDate, 2)",
+            "values (:username, :password, 0, :registerDate, :accountStatusId)",
             nativeQuery = true)
     @Transactional
     void saveUserAccount(@Param("username") String username,
                          @Param("password") String password,
-                         @Param("registerDate") LocalDate registerDate);
+                         @Param("registerDate") LocalDate registerDate,
+                         @Param("accountStatusId") String accountStatusId);
 
     @Query(value = "select * from `account`", nativeQuery = true)
     List<Account> getListAccount();
@@ -40,4 +41,9 @@ public interface AccountRepository extends JpaRepository<Account, String> {
             "set `password`=?1\n" +
             "where `username`=?2",nativeQuery = true)
     Integer saveAccountDto(String password,String username);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update `account` set `account`.account_status_id = 2 where `account`.username = ?1", nativeQuery = true)
+    void changeAccountStatus(String username); //chang status id to active
 }

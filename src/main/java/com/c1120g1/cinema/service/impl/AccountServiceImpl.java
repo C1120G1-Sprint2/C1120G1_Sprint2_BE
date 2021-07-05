@@ -67,10 +67,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void saveUserAccount(Account account) {
+        String statusAccount = "2";
         if (account.getUsername() == null) {
             account.setRegisterDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         }
-        accountRepository.saveUserAccount(account.getUsername(), account.getPassword(), LocalDate.now());
+        accountRepository.saveUserAccount(account.getUsername(), account.getPassword(), LocalDate.now(), statusAccount);
     }
 
     @Override
@@ -106,7 +107,6 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * ThuanNN
-     *
      * @return
      */
     @Override
@@ -116,7 +116,6 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * ThuanNN
-     *
      * @param email
      * @param code
      */
@@ -158,4 +157,39 @@ public class AccountServiceImpl implements AccountService {
         this.emailSender.send(message);
     }
 
+    /**
+     * ThuanNN
+     *
+     * @param username
+     */
+    @Override
+    public void changeAccountStatus(String username) {
+        accountRepository.changeAccountStatus(username);
+    }
+
+    /**
+     * ThuanNN
+     * Send email
+     * @param email
+     * @throws MessagingException
+     */
+    @Override
+    public void sendEmailConfirm(String email) throws MessagingException {
+        User user = userService.findByEmail(email);
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper messageApprove = new MimeMessageHelper(message, "utf-8");
+        String mailContent = "<h1 style='color: #FF8C00 '>C11-Cinema</h1>";
+        mailContent += "<p>Xin chúc mừng bạn đã đăng kí thành công</p><br>";
+        mailContent += "<p>Tài khoản: " + user.getAccount().getUsername() + "</p>";
+        mailContent += "<p>Ngày tạo : " + user.getAccount().getRegisterDate() + "</p>";
+        mailContent += "<a href=\"http://localhost:4200/register/confirmEmail/"
+                + user.getAccount().getUsername() + "/" + user.getEmail() +
+                "\" style='color: lightblue'>Nhấp vào đây để xác nhận tài khoản</a>" +
+                "<span> để đến với trang của chúng tôi</span>" +
+                "<p>Thanks and regards!</p>";
+        messageApprove.setTo(email);
+        messageApprove.setSubject("[C11-Cinema]-Thông báo");
+        messageApprove.setText(mailContent, true);
+        emailSender.send(message);
+    }
 }
